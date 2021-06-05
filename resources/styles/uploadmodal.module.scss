@@ -1,0 +1,95 @@
+
+
+    .dropBox{
+        display:inline-block;
+        height: 100px;
+        border:solid 1px black,
+    }
+
+    .uploadModal{
+        position:absolute;
+        z-index: 1;
+        transition:1s;
+
+        height:auto;
+        width:70vw;
+        transform:translateX(15vw);
+        margin-top: 12vh;
+        
+        border: solid 0.05px gray;
+
+        border-radius: 5px;
+        background-color: whitesmoke;
+        &__label{
+            display: flex;
+            justify-content: space-between;
+
+            padding-top:1vh;
+            padding-bottom:1vh;
+            padding-left:1vh;
+            padding-right:1vh;
+            margin-bottom:2vh;
+            border-bottom:solid 0.5px gray;
+        }
+
+        &__dropContainer{
+            // border: solid 0.5px green;
+            height:50vh;
+            width:auto;
+            aspect-ratio: 3/2;
+            margin:0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2vh;
+
+            &__previewPhoto{
+          
+                width:100%;
+                height: auto;
+                background-color: white;
+                padding:1%;
+                border: 1px solid gray;
+                border-radius: 2vh;
+                
+            }
+            
+        }
+
+        // &__dropContainer::before{
+        //     padding-top: 75%/2;
+        //     padding-bottom: 75%/2;
+        // }
+
+        &__upperContainer{
+            display: flex;
+            justify-content: space-between;
+
+            // height: auto;
+            margin:5vh;
+            overflow: hidden;
+
+            &__left{
+                width:50%;
+            }
+
+    
+            &__right{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                width:50%;
+                height: 40vh;
+                border:0.5px dashed  gray;
+            }
+        }
+
+        &__lowerContainer{
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 5%;
+        }
+
+}

@@ -1,0 +1,68 @@
+.header{
+    // border-bottom:solid black;
+    
+    display:flex;	
+    justify-content: space-between;
+
+    height:10vh;
+    // width: 100%;
+    // margin-bottom:5vh;
+
+    
+
+    &__logo{
+        // border:solid blue;
+        display:flex;
+        align-items: center;
+
+        margin-left:3%;
+
+        text-decoration:none;
+        color: black;
+
+        &:hover{
+            color: black;
+        }
+    }
+
+
+    &__menu{
+        // border:solid red;
+        
+        display:flex;	
+        align-items: center;
+        justify-content:flex-end;
+
+        width:50%;
+        margin-right:3%;
+
+        &__menuIcon{
+            // border:solid pink;
+
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+
+            height:100%;
+            width:10%;
+            // margin-right:5%;
+
+
+
+            &__image{
+                height: 50%;
+                width: 50%;
+                margin:0 auto;
+            }
+
+            &__name{
+                height:30%;
+            }
+        }
+    }
+    
+}
+
+.logo{
+    border:solid pink;
+}

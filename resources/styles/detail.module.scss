@@ -1,0 +1,22 @@
+.SelectedPhotoContainer{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    p{
+        font-size: 10vh;
+        margin:5vh;
+    }
+}
+
+.bottomImageList{
+    display:flex;
+    margin:0 auto;
+    // justify-content: ;
+    width:35%;
+    &__images{
+        width:18%; 
+        // height:10%;
+        margin:1%;
+    }
+}

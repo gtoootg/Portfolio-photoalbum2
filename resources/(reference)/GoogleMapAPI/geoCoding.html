@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #target{
+            width: 550px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="target"></div>
+        <input type ="text" id="address">
+        <button id="search">search</button>
+    
+
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8&callback=initMap">
+    </script>
+    <script>
+        function initMap(){
+            'use strict';
+
+            //Geocoding: Address-> latLng
+
+                    var target = document.getElementById('target');
+                    var geocoder = new google.maps.Geocoder();
+
+                    document.getElementById('search').addEventListener('click', function(){
+                        geocoder.geocode({
+                            address: document.getElementById('address').value
+                        }, function(results, status){
+                            if(status !== 'OK'){
+                                alert('Failer:' + status);
+                                return;
+                            }
+
+                            if(results[0]){
+                                new google.maps.Map(target, {
+                                    center: results[0].geometry.location,
+                                    zoom: 15
+                                })
+                            }else{
+                                alert('No results found');
+                                return;
+                            }
+                        })
+                    });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>My Map</title>
+  <style>
+    #target {
+      width: 550px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div id="target"></div>
+  <script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8&callback=initMap">
+  </script>
+  <script>
+    function initMap() {
+      'use strict';
+
+      var target = document.getElementById('target');
+      var geocoder = new google.maps.Geocoder();
+      var map;
+
+      // Geocoding: Address -> LatLng
+      // Reverse Geocoding: LatLng -> Address
+
+      map = new google.maps.Map(target, {
+        center: {
+          lat: 35.681167,
+          lng: 139.767052
+        },
+        zoom: 15
+      });
+
+      map.addListener('click', function(e) {
+        geocoder.geocode({
+          location: e.latLng
+        }, function(results, status) {
+          if (status !== 'OK') {
+            alert('Failed: ' + status);
+            return;
+          }
+          // results[0].formatted_address
+          if (results[0]) {
+            new google.maps.Marker({
+              position: e.latLng,
+              map: map,
+              title: results[0].formatted_address,
+              animation: google.maps.Animation.DROP
+            });
+          } else {
+            alert('No results found');
+            return;
+          }
+        });
+      });
+
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>My Map</title>
+  <style>
+    #target {
+      width: 550px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div id="target"></div>
+  <input type="text" id="keyword">
+  <button id="search">Search</button>
+  <script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8&callback=initMap&libraries=places">
+</script>
+  <script>
+    function initMap() {
+      'use strict';
+
+      var target = document.getElementById('target');
+      var map;
+      var tokyo = {lat: 35.681167, lng: 139.767052};
+      var service;
+
+      map = new google.maps.Map(target, {
+        center: tokyo,
+        zoom: 15
+      });
+
+      document.getElementById('search').addEventListener('click', function() {
+        service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
+          location: tokyo,
+          radius: '500',
+          name: document.getElementById('keyword').value
+        }, function(results, status) {
+          var i;
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (i = 0; i < results.length; i++) {
+              new google.maps.Marker({
+                map: map,
+                position: results[i].geometry.location,
+                title: results[i].name
+              });
+            }
+          } else {
+            alert('Failed: ' + status);
+            return;
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
+
+<!-- <script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8&callback=initMap&libraries=places">
+</script> -->
