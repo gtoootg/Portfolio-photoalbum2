@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('travelposts', 'App\Http\Controllers\TravelpostController@index');
+Route::get('travelposts', 'TravelpostController@index');
 
 
-Route::post('upload', 'App\Http\Controllers\TravelpostController@upload');
+Route::post('upload', 'TravelpostController@upload');
