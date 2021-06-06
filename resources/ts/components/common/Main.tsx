@@ -27,7 +27,7 @@ const Main = ()=> {
         .catch(error=>console.log(error))
     }
 
-    // useEffect(loadTravelPosts,[]);
+    useEffect(loadTravelPosts,[]);
 
 
     let Posts = travelPosts.map((travelPost:any,index:number) =>{
