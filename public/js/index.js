@@ -11737,9 +11737,9 @@ var Main = function Main() {
     ["catch"](function (error) {
       return console.log(error);
     });
-  };
+  }; // useEffect(loadTravelPosts,[]);
 
-  react_1.useEffect(loadTravelPosts, []);
+
   var Posts = travelPosts.map(function (travelPost, index) {
     return react_1["default"].createElement(react_router_dom_1.Link, {
       className: main_module_scss_1["default"].main__imageContainer,
