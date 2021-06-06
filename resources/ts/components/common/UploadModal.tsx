@@ -111,7 +111,7 @@ const UploadModal: React.FC<{}> = ()=> {
     const uploadHandler = (
       event: React.MouseEvent<HTMLButtonElement>
     ):void=>{
-      axios.post('http://127.0.0.1:8000/api/upload', uploadData)
+      axios.post('api/upload', uploadData)
       .then(()=>{
         const slice = travelPosts.slice();
         slice.push(uploadData);

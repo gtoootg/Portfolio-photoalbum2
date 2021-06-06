@@ -11730,7 +11730,7 @@ var Main = function Main() {
     // axios.get('http://127.0.0.1:8000/api/travelposts')
     //////////////////////////////////////////////////
     //API connection to CLEAR DB//////////////////////
-    axios_1["default"].get('http://eu-cdbr-west-01.cleardb.com:3306/api/travelposts') ///////////////////////////////////////////////////
+    axios_1["default"].get('api/travelposts') ///////////////////////////////////////////////////
     .then(function (response) {
       return setTravelPosts(response.data);
     }) // .then(()=>console.log(travelPosts))
@@ -12033,7 +12033,7 @@ var UploadModal = function UploadModal() {
   //Api/////////////////////////////////////
 
   var uploadHandler = function uploadHandler(event) {
-    axios_1["default"].post('http://127.0.0.1:8000/api/upload', uploadData).then(function () {
+    axios_1["default"].post('api/upload', uploadData).then(function () {
       var slice = travelPosts.slice();
       slice.push(uploadData);
       setTravelPosts(slice);
