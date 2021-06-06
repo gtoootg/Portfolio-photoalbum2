@@ -6303,10 +6303,10 @@ var Clusterer = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./node_modules/@react-spring/animated/dist/react-spring-animated.esm.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/@react-spring/animated/dist/react-spring-animated.esm.js ***!
-  \*******************************************************************************/
+/***/ "./node_modules/@react-spring/animated/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@react-spring/animated/index.js ***!
+  \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6324,88 +6324,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isAnimated": () => (/* binding */ isAnimated),
 /* harmony export */   "setAnimated": () => (/* binding */ setAnimated)
 /* harmony export */ });
-/* harmony import */ var _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/shared */ "./node_modules/@react-spring/shared/dist/react-spring-shared.esm.js");
+/* harmony import */ var _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/shared */ "./node_modules/@react-spring/shared/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
 
-
-const $node = Symbol.for('Animated:node');
-const isAnimated = value => !!value && value[$node] === value;
-const getAnimated = owner => owner && owner[$node];
+const $node = Symbol.for("Animated:node");
+const isAnimated = (value) => !!value && value[$node] === value;
+const getAnimated = (owner) => owner && owner[$node];
 const setAnimated = (owner, node) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.defineHidden)(owner, $node, node);
-const getPayload = owner => owner && owner[$node] && owner[$node].getPayload();
+const getPayload = (owner) => owner && owner[$node] && owner[$node].getPayload();
 class Animated {
   constructor() {
     setAnimated(this, this);
   }
-
   getPayload() {
     return this.payload || [];
   }
-
 }
 
 class AnimatedValue extends Animated {
   constructor(_value) {
     super();
+    this._value = _value;
     this.done = true;
     this.durationProgress = 0;
-    this._value = _value;
-
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.num(this._value)) {
       this.lastPosition = this._value;
     }
   }
-
   static create(value) {
     return new AnimatedValue(value);
   }
-
   getPayload() {
     return [this];
   }
-
   getValue() {
     return this._value;
   }
-
   setValue(value, step) {
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.num(value)) {
       this.lastPosition = value;
-
       if (step) {
         value = Math.round(value / step) * step;
-
         if (this.done) {
           this.lastPosition = value;
         }
       }
     }
-
     if (this._value === value) {
       return false;
     }
-
     this._value = value;
     return true;
   }
-
   reset() {
-    const {
-      done
-    } = this;
+    const {done} = this;
     this.done = false;
-
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.num(this._value)) {
       this.elapsedTime = 0;
       this.durationProgress = 0;
       this.lastPosition = this._value;
-      if (done) this.lastVelocity = null;
+      if (done)
+        this.lastVelocity = null;
       this.v0 = null;
     }
   }
-
 }
 
 class AnimatedString extends AnimatedValue {
@@ -6416,22 +6400,18 @@ class AnimatedString extends AnimatedValue {
       output: [value, value]
     });
   }
-
   static create(value) {
     return new AnimatedString(value);
   }
-
   getValue() {
     let value = this._string;
     return value == null ? this._string = this._toString(this._value) : value;
   }
-
   setValue(value) {
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.str(value)) {
       if (value == this._string) {
         return false;
       }
-
       this._string = value;
       this._value = 1;
     } else if (super.setValue(value)) {
@@ -6439,26 +6419,20 @@ class AnimatedString extends AnimatedValue {
     } else {
       return false;
     }
-
     return true;
   }
-
   reset(goal) {
     if (goal) {
       this._toString = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.createInterpolator)({
         output: [this.getValue(), goal]
       });
     }
-
     this._value = 0;
     super.reset();
   }
-
 }
 
-const TreeContext = {
-  dependencies: null
-};
+const TreeContext = {dependencies: null};
 
 class AnimatedObject extends Animated {
   constructor(source) {
@@ -6466,7 +6440,6 @@ class AnimatedObject extends Animated {
     this.source = source;
     this.setValue(source);
   }
-
   getValue(animated) {
     const values = {};
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.eachProp)(this.source, (source, key) => {
@@ -6480,18 +6453,15 @@ class AnimatedObject extends Animated {
     });
     return values;
   }
-
   setValue(source) {
     this.source = source;
     this.payload = this._makePayload(source);
   }
-
   reset() {
     if (this.payload) {
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(this.payload, node => node.reset());
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(this.payload, (node) => node.reset());
     }
   }
-
   _makePayload(source) {
     if (source) {
       const payload = new Set();
@@ -6499,47 +6469,36 @@ class AnimatedObject extends Animated {
       return Array.from(payload);
     }
   }
-
   _addToPayload(source) {
     if (TreeContext.dependencies && (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(source)) {
       TreeContext.dependencies.add(source);
     }
-
     const payload = getPayload(source);
-
     if (payload) {
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(payload, node => this.add(node));
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(payload, (node) => this.add(node));
     }
   }
-
 }
 
 class AnimatedArray extends AnimatedObject {
   constructor(source) {
     super(source);
   }
-
   static create(source) {
     return new AnimatedArray(source);
   }
-
   getValue() {
-    return this.source.map(node => node.getValue());
+    return this.source.map((node) => node.getValue());
   }
-
   setValue(source) {
     const payload = this.getPayload();
-
     if (source.length == payload.length) {
       return payload.some((node, i) => node.setValue(source[i]));
     }
-
     super.setValue(source.map(makeAnimated));
     return true;
   }
-
 }
-
 function makeAnimated(value) {
   const nodeType = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isAnimatedString)(value) ? AnimatedString : AnimatedValue;
   return nodeType.create(value);
@@ -6550,153 +6509,124 @@ function getAnimatedType(value) {
   return parentNode ? parentNode.constructor : _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(value) ? AnimatedArray : (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isAnimatedString)(value) ? AnimatedString : AnimatedValue;
 }
 
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
 const withAnimated = (Component, host) => {
   const hasInstance = !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(Component) || Component.prototype && Component.prototype.isReactComponent;
   return (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)((givenProps, givenRef) => {
     const instanceRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-    const ref = hasInstance && (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(value => {
+    const ref = hasInstance && (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((value) => {
       instanceRef.current = updateRef(givenRef, value);
     }, [givenRef]);
     const [props, deps] = getAnimatedState(givenProps, host);
     const forceUpdate = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useForceUpdate)();
-
     const callback = () => {
       const instance = instanceRef.current;
-
       if (hasInstance && !instance) {
         return;
       }
-
       const didUpdate = instance ? host.applyAnimatedValues(instance, props.getValue(true)) : false;
-
       if (didUpdate === false) {
         forceUpdate();
       }
     };
-
     const observer = new PropsObserver(callback, deps);
     const observerRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
       const lastObserver = observerRef.current;
       observerRef.current = observer;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(deps, dep => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.addFluidObserver)(dep, observer));
-
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(deps, (dep) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.addFluidObserver)(dep, observer));
       if (lastObserver) {
-        (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(lastObserver.deps, dep => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.removeFluidObserver)(dep, lastObserver));
+        (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(lastObserver.deps, (dep) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.removeFluidObserver)(dep, lastObserver));
         _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.cancel(lastObserver.update);
       }
     });
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(callback, []);
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useOnce)(() => () => {
-      const observer = observerRef.current;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(observer.deps, dep => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.removeFluidObserver)(dep, observer));
+      const observer2 = observerRef.current;
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(observer2.deps, (dep) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.removeFluidObserver)(dep, observer2));
     });
     const usedProps = host.getComponentProps(props.getValue());
-    return react__WEBPACK_IMPORTED_MODULE_1__.createElement(Component, _extends({}, usedProps, {
-      ref: ref
-    }));
+    return /* @__PURE__ */ (0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(Component, {
+      ...usedProps,
+      ref
+    });
   });
 };
-
 class PropsObserver {
   constructor(update, deps) {
     this.update = update;
     this.deps = deps;
   }
-
   eventObserved(event) {
-    if (event.type == 'change') {
+    if (event.type == "change") {
       _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.write(this.update);
     }
   }
-
 }
-
 function getAnimatedState(props, host) {
   const dependencies = new Set();
   TreeContext.dependencies = dependencies;
-  if (props.style) props = _extends({}, props, {
-    style: host.createAnimatedStyle(props.style)
-  });
+  if (props.style)
+    props = {
+      ...props,
+      style: host.createAnimatedStyle(props.style)
+    };
   props = new AnimatedObject(props);
   TreeContext.dependencies = null;
   return [props, dependencies];
 }
-
 function updateRef(ref, value) {
   if (ref) {
-    if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(ref)) ref(value);else ref.current = value;
+    if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(ref))
+      ref(value);
+    else
+      ref.current = value;
   }
-
   return value;
 }
 
-const cacheKey = Symbol.for('AnimatedComponent');
+const cacheKey = Symbol.for("AnimatedComponent");
 const createHost = (components, {
-  applyAnimatedValues: _applyAnimatedValues = () => false,
-  createAnimatedStyle: _createAnimatedStyle = style => new AnimatedObject(style),
-  getComponentProps: _getComponentProps = props => props
+  applyAnimatedValues = () => false,
+  createAnimatedStyle = (style) => new AnimatedObject(style),
+  getComponentProps = (props) => props
 } = {}) => {
   const hostConfig = {
-    applyAnimatedValues: _applyAnimatedValues,
-    createAnimatedStyle: _createAnimatedStyle,
-    getComponentProps: _getComponentProps
+    applyAnimatedValues,
+    createAnimatedStyle,
+    getComponentProps
   };
-
-  const animated = Component => {
-    const displayName = getDisplayName(Component) || 'Anonymous';
-
+  const animated = (Component) => {
+    const displayName = getDisplayName(Component) || "Anonymous";
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.str(Component)) {
       Component = animated[Component] || (animated[Component] = withAnimated(Component, hostConfig));
     } else {
       Component = Component[cacheKey] || (Component[cacheKey] = withAnimated(Component, hostConfig));
     }
-
     Component.displayName = `Animated(${displayName})`;
     return Component;
   };
-
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.eachProp)(components, (Component, key) => {
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(components)) {
       key = getDisplayName(Component);
     }
-
     animated[key] = animated(Component);
   });
   return {
     animated
   };
 };
+const getDisplayName = (arg) => _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.str(arg) ? arg : arg && _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.str(arg.displayName) ? arg.displayName : _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(arg) && arg.name || null;
 
-const getDisplayName = arg => _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.str(arg) ? arg : arg && _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.str(arg.displayName) ? arg.displayName : _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(arg) && arg.name || null;
 
-
+//# sourceMappingURL=index.js.map
 
 
 /***/ }),
 
-/***/ "./node_modules/@react-spring/core/dist/react-spring-core.esm.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/@react-spring/core/dist/react-spring-core.esm.js ***!
-  \***********************************************************************/
+/***/ "./node_modules/@react-spring/core/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/@react-spring/core/index.js ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6726,9 +6656,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "useTrail": () => (/* binding */ useTrail),
 /* harmony export */   "useTransition": () => (/* binding */ useTransition)
 /* harmony export */ });
-/* harmony import */ var _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/shared */ "./node_modules/@react-spring/shared/dist/react-spring-shared.esm.js");
+/* harmony import */ var _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/shared */ "./node_modules/@react-spring/shared/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _react_spring_animated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @react-spring/animated */ "./node_modules/@react-spring/animated/dist/react-spring-animated.esm.js");
+/* harmony import */ var _react_spring_animated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @react-spring/animated */ "./node_modules/@react-spring/animated/index.js");
 /* harmony import */ var _react_spring_types_animated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @react-spring/types/animated */ "./node_modules/@react-spring/types/animated.js");
 /* harmony import */ var _react_spring_types_animated__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_react_spring_types_animated__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
@@ -6746,55 +6676,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
 function callProp(value, ...args) {
   return _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(value) ? value(...args) : value;
 }
 const matchProp = (value, key) => value === true || !!(key && value && (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(value) ? value(key) : (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(value).includes(key)));
 const resolveProp = (prop, key) => _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(prop) ? key && prop[key] : prop;
-const getDefaultProp = (props, key) => props.default === true ? props[key] : props.default ? props.default[key] : undefined;
-
-const noopTransform = value => value;
-
+const getDefaultProp = (props, key) => props.default === true ? props[key] : props.default ? props.default[key] : void 0;
+const noopTransform = (value) => value;
 const getDefaultProps = (props, transform = noopTransform) => {
   let keys = DEFAULT_PROPS;
-
   if (props.default && props.default !== true) {
     props = props.default;
     keys = Object.keys(props);
   }
-
   const defaults = {};
-
   for (const key of keys) {
     const value = transform(props[key], key);
-
     if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(value)) {
       defaults[key] = value;
     }
   }
-
   return defaults;
 };
-const DEFAULT_PROPS = ['config', 'onProps', 'onStart', 'onChange', 'onPause', 'onResume', 'onRest'];
+const DEFAULT_PROPS = [
+  "config",
+  "onProps",
+  "onStart",
+  "onChange",
+  "onPause",
+  "onResume",
+  "onRest"
+];
 const RESERVED_PROPS = {
   config: 1,
   from: 1,
@@ -6829,7 +6741,6 @@ const RESERVED_PROPS = {
   callId: 1,
   parentId: 1
 };
-
 function getForwardProps(props) {
   const forward = {};
   let count = 0;
@@ -6839,24 +6750,18 @@ function getForwardProps(props) {
       count++;
     }
   });
-
   if (count) {
     return forward;
   }
 }
-
 function inferTo(props) {
   const to = getForwardProps(props);
-
   if (to) {
-    const out = {
-      to
-    };
+    const out = {to};
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.eachProp)(props, (val, key) => key in to || (out[key] = val));
     return out;
   }
-
-  return _extends({}, props);
+  return {...props};
 }
 function computeGoal(value) {
   value = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(value);
@@ -6866,44 +6771,43 @@ function computeGoal(value) {
   })(1) : value;
 }
 function hasProps(props) {
-  for (const _ in props) return true;
-
+  for (const _ in props)
+    return true;
   return false;
 }
 function isAsyncTo(to) {
   return _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(to) || _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(to) && _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to[0]);
 }
 function detachRefs(ctrl, ref) {
-  var _ctrl$ref;
-
-  (_ctrl$ref = ctrl.ref) == null ? void 0 : _ctrl$ref.delete(ctrl);
+  var _a;
+  (_a = ctrl.ref) == null ? void 0 : _a.delete(ctrl);
   ref == null ? void 0 : ref.delete(ctrl);
 }
 function replaceRef(ctrl, ref) {
+  var _a;
   if (ref && ctrl.ref !== ref) {
-    var _ctrl$ref2;
-
-    (_ctrl$ref2 = ctrl.ref) == null ? void 0 : _ctrl$ref2.delete(ctrl);
+    (_a = ctrl.ref) == null ? void 0 : _a.delete(ctrl);
     ref.add(ctrl);
     ctrl.ref = ref;
   }
 }
 
-function useChain(refs, timeSteps, timeFrame = 1000) {
+function useChain(refs, timeSteps, timeFrame = 1e3) {
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
     if (timeSteps) {
       let prevDelay = 0;
       (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(refs, (ref, i) => {
         const controllers = ref.current;
-
         if (controllers.length) {
           let delay = timeFrame * timeSteps[i];
-          if (isNaN(delay)) delay = prevDelay;else prevDelay = delay;
-          (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(controllers, ctrl => {
-            (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(ctrl.queue, props => {
+          if (isNaN(delay))
+            delay = prevDelay;
+          else
+            prevDelay = delay;
+          (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(controllers, (ctrl) => {
+            (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(ctrl.queue, (props) => {
               const memoizedDelayProp = props.delay;
-
-              props.delay = key => delay + callProp(memoizedDelayProp || 0, key);
+              props.delay = (key) => delay + callProp(memoizedDelayProp || 0, key);
             });
             ctrl.start();
           });
@@ -6911,17 +6815,16 @@ function useChain(refs, timeSteps, timeFrame = 1000) {
       });
     } else {
       let p = Promise.resolve();
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(refs, ref => {
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(refs, (ref) => {
         const controllers = ref.current;
-
         if (controllers.length) {
-          const queues = controllers.map(ctrl => {
+          const queues = controllers.map((ctrl) => {
             const q = ctrl.queue;
             ctrl.queue = [];
             return q;
           });
           p = p.then(() => {
-            (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(controllers, (ctrl, i) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(queues[i] || [], update => ctrl.queue.push(update)));
+            (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(controllers, (ctrl, i) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(queues[i] || [], (update) => ctrl.queue.push(update)));
             return ref.start();
           });
         }
@@ -6931,93 +6834,63 @@ function useChain(refs, timeSteps, timeFrame = 1000) {
 }
 
 const config = {
-  default: {
-    tension: 170,
-    friction: 26
-  },
-  gentle: {
-    tension: 120,
-    friction: 14
-  },
-  wobbly: {
-    tension: 180,
-    friction: 12
-  },
-  stiff: {
-    tension: 210,
-    friction: 20
-  },
-  slow: {
-    tension: 280,
-    friction: 60
-  },
-  molasses: {
-    tension: 280,
-    friction: 120
-  }
+  default: {tension: 170, friction: 26},
+  gentle: {tension: 120, friction: 14},
+  wobbly: {tension: 180, friction: 12},
+  stiff: {tension: 210, friction: 20},
+  slow: {tension: 280, friction: 60},
+  molasses: {tension: 280, friction: 120}
 };
 
-const linear = t => t;
-
-const defaults = _extends({}, config.default, {
+const linear = (t) => t;
+const defaults = {
+  ...config.default,
   mass: 1,
   damping: 1,
   easing: linear,
   clamp: false
-});
-
+};
 class AnimationConfig {
   constructor() {
     this.velocity = 0;
     Object.assign(this, defaults);
   }
-
 }
 function mergeConfig(config, newConfig, defaultConfig) {
   if (defaultConfig) {
-    defaultConfig = _extends({}, defaultConfig);
+    defaultConfig = {...defaultConfig};
     sanitizeConfig(defaultConfig, newConfig);
-    newConfig = _extends({}, defaultConfig, newConfig);
+    newConfig = {...defaultConfig, ...newConfig};
   }
-
   sanitizeConfig(config, newConfig);
   Object.assign(config, newConfig);
-
   for (const key in defaults) {
     if (config[key] == null) {
       config[key] = defaults[key];
     }
   }
-
-  let {
-    mass,
-    frequency,
-    damping
-  } = config;
-
+  let {mass, frequency, damping} = config;
   if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(frequency)) {
-    if (frequency < 0.01) frequency = 0.01;
-    if (damping < 0) damping = 0;
+    if (frequency < 0.01)
+      frequency = 0.01;
+    if (damping < 0)
+      damping = 0;
     config.tension = Math.pow(2 * Math.PI / frequency, 2) * mass;
     config.friction = 4 * Math.PI * damping * mass / frequency;
   }
-
   return config;
 }
-
 function sanitizeConfig(config, props) {
   if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.decay)) {
-    config.duration = undefined;
+    config.duration = void 0;
   } else {
     const isTensionConfig = !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.tension) || !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.friction);
-
     if (isTensionConfig || !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.frequency) || !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.damping) || !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.mass)) {
-      config.duration = undefined;
-      config.decay = undefined;
+      config.duration = void 0;
+      config.decay = void 0;
     }
-
     if (isTensionConfig) {
-      config.frequency = undefined;
+      config.frequency = void 0;
     }
   }
 }
@@ -7032,38 +6905,25 @@ class Animation {
     this.config = new AnimationConfig();
     this.immediate = false;
   }
-
 }
 
-function scheduleProps(callId, {
-  key,
-  props,
-  defaultProps,
-  state,
-  actions
-}) {
+function scheduleProps(callId, {key, props, defaultProps, state, actions}) {
   return new Promise((resolve, reject) => {
-    var _props$cancel;
-
+    var _a;
     let delay;
     let timeout;
-    let cancel = matchProp((_props$cancel = props.cancel) != null ? _props$cancel : defaultProps == null ? void 0 : defaultProps.cancel, key);
-
+    let cancel = matchProp((_a = props.cancel) != null ? _a : defaultProps == null ? void 0 : defaultProps.cancel, key);
     if (cancel) {
       onStart();
     } else {
       if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.pause)) {
         state.paused = matchProp(props.pause, key);
       }
-
       let pause = defaultProps == null ? void 0 : defaultProps.pause;
-
       if (pause !== true) {
         pause = state.paused || matchProp(pause, key);
       }
-
       delay = callProp(props.delay || 0, key);
-
       if (pause) {
         state.resumeQueue.add(onResume);
         actions.pause();
@@ -7072,14 +6932,12 @@ function scheduleProps(callId, {
         onResume();
       }
     }
-
     function onPause() {
       state.resumeQueue.add(onResume);
       state.timeouts.delete(timeout);
       timeout.cancel();
       delay = timeout.time - _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.now();
     }
-
     function onResume() {
       if (delay > 0) {
         timeout = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.setTimeout(onStart, delay);
@@ -7089,20 +6947,14 @@ function scheduleProps(callId, {
         onStart();
       }
     }
-
     function onStart() {
       state.pauseQueue.delete(onPause);
       state.timeouts.delete(timeout);
-
       if (callId <= (state.cancelId || 0)) {
         cancel = true;
       }
-
       try {
-        actions.start(_extends({}, props, {
-          callId,
-          cancel
-        }), resolve);
+        actions.start({...props, callId, cancel}, resolve);
       } catch (err) {
         reject(err);
       }
@@ -7110,8 +6962,8 @@ function scheduleProps(callId, {
   });
 }
 
-const getCombinedResult = (target, results) => results.length == 1 ? results[0] : results.some(result => result.cancelled) ? getCancelledResult(target.get()) : results.every(result => result.noop) ? getNoopResult(target.get()) : getFinishedResult(target.get(), results.every(result => result.finished));
-const getNoopResult = value => ({
+const getCombinedResult = (target, results) => results.length == 1 ? results[0] : results.some((result) => result.cancelled) ? getCancelledResult(target.get()) : results.every((result) => result.noop) ? getNoopResult(target.get()) : getFinishedResult(target.get(), results.every((result) => result.finished));
+const getNoopResult = (value) => ({
   value,
   noop: true,
   finished: true,
@@ -7122,45 +6974,33 @@ const getFinishedResult = (value, finished, cancelled = false) => ({
   finished,
   cancelled
 });
-const getCancelledResult = value => ({
+const getCancelledResult = (value) => ({
   value,
   cancelled: true,
   finished: false
 });
 
 function runAsync(to, props, state, target) {
-  const {
-    callId,
-    parentId,
-    onRest
-  } = props;
-  const {
-    asyncTo: prevTo,
-    promise: prevPromise
-  } = state;
-
+  const {callId, parentId, onRest} = props;
+  const {asyncTo: prevTo, promise: prevPromise} = state;
   if (!parentId && to === prevTo && !props.reset) {
     return prevPromise;
   }
-
   return state.promise = (async () => {
     state.asyncId = callId;
     state.asyncTo = to;
-    const defaultProps = getDefaultProps(props, (value, key) => key === 'onRest' ? undefined : value);
+    const defaultProps = getDefaultProps(props, (value, key) => key === "onRest" ? void 0 : value);
     let preventBail;
     let bail;
     const bailPromise = new Promise((resolve, reject) => (preventBail = resolve, bail = reject));
-
-    const bailIfEnded = bailSignal => {
+    const bailIfEnded = (bailSignal) => {
       const bailResult = callId <= (state.cancelId || 0) && getCancelledResult(target) || callId !== state.asyncId && getFinishedResult(target, false);
-
       if (bailResult) {
         bailSignal.result = bailResult;
         bail(bailSignal);
         throw bailSignal;
       }
     };
-
     const animate = (arg1, arg2) => {
       const bailSignal = new BailSignal();
       const skipAnimationSignal = new SkipAniamtionSignal();
@@ -7171,50 +7011,40 @@ function runAsync(to, props, state, target) {
           bail(skipAnimationSignal);
           throw skipAnimationSignal;
         }
-
         bailIfEnded(bailSignal);
-        const props = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(arg1) ? _extends({}, arg1) : _extends({}, arg2, {
-          to: arg1
-        });
-        props.parentId = callId;
+        const props2 = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(arg1) ? {...arg1} : {...arg2, to: arg1};
+        props2.parentId = callId;
         (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.eachProp)(defaultProps, (value, key) => {
-          if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props[key])) {
-            props[key] = value;
+          if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props2[key])) {
+            props2[key] = value;
           }
         });
-        const result = await target.start(props);
+        const result2 = await target.start(props2);
         bailIfEnded(bailSignal);
-
         if (state.paused) {
-          await new Promise(resume => {
+          await new Promise((resume) => {
             state.resumeQueue.add(resume);
           });
         }
-
-        return result;
+        return result2;
       })();
     };
-
     let result;
-
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.Globals.skipAnimation) {
       stopAsync(state);
       return getFinishedResult(target, false);
     }
-
     try {
       let animating;
-
       if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(to)) {
-        animating = (async queue => {
-          for (const props of queue) {
-            await animate(props);
+        animating = (async (queue) => {
+          for (const props2 of queue) {
+            await animate(props2);
           }
         })(to);
       } else {
-          animating = Promise.resolve(to(animate, target.stop.bind(target)));
-        }
-
+        animating = Promise.resolve(to(animate, target.stop.bind(target)));
+      }
       await Promise.all([animating.then(preventBail), bailPromise]);
       result = getFinishedResult(target.get(), true, false);
     } catch (err) {
@@ -7228,121 +7058,107 @@ function runAsync(to, props, state, target) {
     } finally {
       if (callId == state.asyncId) {
         state.asyncId = parentId;
-        state.asyncTo = parentId ? prevTo : undefined;
-        state.promise = parentId ? prevPromise : undefined;
+        state.asyncTo = parentId ? prevTo : void 0;
+        state.promise = parentId ? prevPromise : void 0;
       }
     }
-
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(onRest)) {
       _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => {
         onRest(result, target, target.item);
       });
     }
-
     return result;
   })();
 }
 function stopAsync(state, cancelId) {
-  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(state.timeouts, t => t.cancel());
+  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(state.timeouts, (t) => t.cancel());
   state.pauseQueue.clear();
   state.resumeQueue.clear();
-  state.asyncId = state.asyncTo = state.promise = undefined;
-  if (cancelId) state.cancelId = cancelId;
+  state.asyncId = state.asyncTo = state.promise = void 0;
+  if (cancelId)
+    state.cancelId = cancelId;
 }
 class BailSignal extends Error {
   constructor() {
-    super('An async animation has been interrupted. You see this error because you ' + 'forgot to use `await` or `.catch(...)` on its returned promise.');
+    super("An async animation has been interrupted. You see this error because you forgot to use `await` or `.catch(...)` on its returned promise.");
   }
-
 }
 class SkipAniamtionSignal extends Error {
   constructor() {
-    super('SkipAnimationSignal');
+    super("SkipAnimationSignal");
   }
-
 }
 
-const isFrameValue = value => value instanceof FrameValue;
-let nextId$1 = 1;
+const isFrameValue = (value) => value instanceof FrameValue;
+let nextId = 1;
 class FrameValue extends _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.FluidValue {
-  constructor(...args) {
-    super(...args);
-    this.id = nextId$1++;
+  constructor() {
+    super(...arguments);
+    this.id = nextId++;
     this._priority = 0;
   }
-
   get priority() {
     return this._priority;
   }
-
   set priority(priority) {
     if (this._priority != priority) {
       this._priority = priority;
-
       this._onPriorityChange(priority);
     }
   }
-
   get() {
     const node = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this);
     return node && node.getValue();
   }
-
   to(...args) {
     return _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.Globals.to(this, args);
   }
-
   interpolate(...args) {
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.deprecateInterpolate)();
     return _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.Globals.to(this, args);
   }
-
   toJSON() {
     return this.get();
   }
-
   observerAdded(count) {
-    if (count == 1) this._attach();
+    if (count == 1)
+      this._attach();
   }
-
   observerRemoved(count) {
-    if (count == 0) this._detach();
+    if (count == 0)
+      this._detach();
   }
-
-  _attach() {}
-
-  _detach() {}
-
+  _attach() {
+  }
+  _detach() {
+  }
   _onChange(value, idle = false) {
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.callFluidObservers)(this, {
-      type: 'change',
+      type: "change",
       parent: this,
       value,
       idle
     });
   }
-
   _onPriorityChange(priority) {
     if (!this.idle) {
       _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.frameLoop.sort(this);
     }
-
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.callFluidObservers)(this, {
-      type: 'priority',
+      type: "priority",
       parent: this,
       priority
     });
   }
-
 }
 
-const $P = Symbol.for('SpringPhase');
+const $P = Symbol.for("SpringPhase");
 const HAS_ANIMATED = 1;
 const IS_ANIMATING = 2;
 const IS_PAUSED = 4;
-const hasAnimated = target => (target[$P] & HAS_ANIMATED) > 0;
-const isAnimating = target => (target[$P] & IS_ANIMATING) > 0;
-const isPaused = target => (target[$P] & IS_PAUSED) > 0;
+const hasAnimated = (target) => (target[$P] & HAS_ANIMATED) > 0;
+const isAnimating = (target) => (target[$P] & IS_ANIMATING) > 0;
+const isPaused = (target) => (target[$P] & IS_PAUSED) > 0;
 const setActiveBit = (target, active) => active ? target[$P] |= IS_ANIMATING | HAS_ANIMATED : target[$P] &= ~IS_ANIMATING;
 const setPausedBit = (target, paused) => paused ? target[$P] |= IS_PAUSED : target[$P] &= ~IS_PAUSED;
 
@@ -7361,331 +7177,236 @@ class SpringValue extends FrameValue {
     this._lastCallId = 0;
     this._lastToId = 0;
     this._memoizedDuration = 0;
-
     if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(arg1) || !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(arg2)) {
-      const props = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(arg1) ? _extends({}, arg1) : _extends({}, arg2, {
-        from: arg1
-      });
-
+      const props = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(arg1) ? {...arg1} : {...arg2, from: arg1};
       if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.default)) {
         props.default = true;
       }
-
       this.start(props);
     }
   }
-
   get idle() {
     return !(isAnimating(this) || this._state.asyncTo) || isPaused(this);
   }
-
   get goal() {
     return (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(this.animation.to);
   }
-
   get velocity() {
     const node = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this);
-    return node instanceof _react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.AnimatedValue ? node.lastVelocity || 0 : node.getPayload().map(node => node.lastVelocity || 0);
+    return node instanceof _react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.AnimatedValue ? node.lastVelocity || 0 : node.getPayload().map((node2) => node2.lastVelocity || 0);
   }
-
   get hasAnimated() {
     return hasAnimated(this);
   }
-
   get isAnimating() {
     return isAnimating(this);
   }
-
   get isPaused() {
     return isPaused(this);
   }
-
   advance(dt) {
     let idle = true;
     let changed = false;
     const anim = this.animation;
-    let {
-      config,
-      toValues
-    } = anim;
+    let {config, toValues} = anim;
     const payload = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getPayload)(anim.to);
-
     if (!payload && (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(anim.to)) {
       toValues = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(anim.to));
     }
-
-    anim.values.forEach((node, i) => {
-      if (node.done) return;
-      const to = node.constructor == _react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues[i];
+    anim.values.forEach((node2, i) => {
+      if (node2.done)
+        return;
+      const to = node2.constructor == _react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues[i];
       let finished = anim.immediate;
       let position = to;
-
       if (!finished) {
-        position = node.lastPosition;
-
+        position = node2.lastPosition;
         if (config.tension <= 0) {
-          node.done = true;
+          node2.done = true;
           return;
         }
-
-        let elapsed = node.elapsedTime += dt;
+        let elapsed = node2.elapsedTime += dt;
         const from = anim.fromValues[i];
-        const v0 = node.v0 != null ? node.v0 : node.v0 = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(config.velocity) ? config.velocity[i] : config.velocity;
+        const v0 = node2.v0 != null ? node2.v0 : node2.v0 = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(config.velocity) ? config.velocity[i] : config.velocity;
         let velocity;
-
         if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(config.duration)) {
           let p = 1;
-
           if (config.duration > 0) {
             if (this._memoizedDuration !== config.duration) {
               this._memoizedDuration = config.duration;
-
-              if (node.durationProgress > 0) {
-                node.elapsedTime = config.duration * node.durationProgress;
-                elapsed = node.elapsedTime += dt;
+              if (node2.durationProgress > 0) {
+                node2.elapsedTime = config.duration * node2.durationProgress;
+                elapsed = node2.elapsedTime += dt;
               }
             }
-
             p = (config.progress || 0) + elapsed / this._memoizedDuration;
             p = p > 1 ? 1 : p < 0 ? 0 : p;
-            node.durationProgress = p;
+            node2.durationProgress = p;
           }
-
           position = from + config.easing(p) * (to - from);
-          velocity = (position - node.lastPosition) / dt;
+          velocity = (position - node2.lastPosition) / dt;
           finished = p == 1;
         } else if (config.decay) {
-            const decay = config.decay === true ? 0.998 : config.decay;
-            const e = Math.exp(-(1 - decay) * elapsed);
-            position = from + v0 / (1 - decay) * (1 - e);
-            finished = Math.abs(node.lastPosition - position) < 0.1;
-            velocity = v0 * e;
-          } else {
-              velocity = node.lastVelocity == null ? v0 : node.lastVelocity;
-              const precision = config.precision || (from == to ? 0.005 : Math.min(1, Math.abs(to - from) * 0.001));
-              const restVelocity = config.restVelocity || precision / 10;
-              const bounceFactor = config.clamp ? 0 : config.bounce;
-              const canBounce = !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(bounceFactor);
-              const isGrowing = from == to ? node.v0 > 0 : from < to;
-              let isMoving;
-              let isBouncing = false;
-              const step = 1;
-              const numSteps = Math.ceil(dt / step);
-
-              for (let n = 0; n < numSteps; ++n) {
-                isMoving = Math.abs(velocity) > restVelocity;
-
-                if (!isMoving) {
-                  finished = Math.abs(to - position) <= precision;
-
-                  if (finished) {
-                    break;
-                  }
-                }
-
-                if (canBounce) {
-                  isBouncing = position == to || position > to == isGrowing;
-
-                  if (isBouncing) {
-                    velocity = -velocity * bounceFactor;
-                    position = to;
-                  }
-                }
-
-                const springForce = -config.tension * 0.000001 * (position - to);
-                const dampingForce = -config.friction * 0.001 * velocity;
-                const acceleration = (springForce + dampingForce) / config.mass;
-                velocity = velocity + acceleration * step;
-                position = position + velocity * step;
+          const decay = config.decay === true ? 0.998 : config.decay;
+          const e = Math.exp(-(1 - decay) * elapsed);
+          position = from + v0 / (1 - decay) * (1 - e);
+          finished = Math.abs(node2.lastPosition - position) < 0.1;
+          velocity = v0 * e;
+        } else {
+          velocity = node2.lastVelocity == null ? v0 : node2.lastVelocity;
+          const precision = config.precision || (from == to ? 5e-3 : Math.min(1, Math.abs(to - from) * 1e-3));
+          const restVelocity = config.restVelocity || precision / 10;
+          const bounceFactor = config.clamp ? 0 : config.bounce;
+          const canBounce = !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(bounceFactor);
+          const isGrowing = from == to ? node2.v0 > 0 : from < to;
+          let isMoving;
+          let isBouncing = false;
+          const step = 1;
+          const numSteps = Math.ceil(dt / step);
+          for (let n = 0; n < numSteps; ++n) {
+            isMoving = Math.abs(velocity) > restVelocity;
+            if (!isMoving) {
+              finished = Math.abs(to - position) <= precision;
+              if (finished) {
+                break;
               }
             }
-
-        node.lastVelocity = velocity;
-
+            if (canBounce) {
+              isBouncing = position == to || position > to == isGrowing;
+              if (isBouncing) {
+                velocity = -velocity * bounceFactor;
+                position = to;
+              }
+            }
+            const springForce = -config.tension * 1e-6 * (position - to);
+            const dampingForce = -config.friction * 1e-3 * velocity;
+            const acceleration = (springForce + dampingForce) / config.mass;
+            velocity = velocity + acceleration * step;
+            position = position + velocity * step;
+          }
+        }
+        node2.lastVelocity = velocity;
         if (Number.isNaN(position)) {
           console.warn(`Got NaN while animating:`, this);
           finished = true;
         }
       }
-
       if (payload && !payload[i].done) {
         finished = false;
       }
-
       if (finished) {
-        node.done = true;
+        node2.done = true;
       } else {
         idle = false;
       }
-
-      if (node.setValue(position, config.round)) {
+      if (node2.setValue(position, config.round)) {
         changed = true;
       }
     });
     const node = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this);
-    const currVal = node.getValue();
-
     if (idle) {
-      const finalVal = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(anim.to);
-
-      if ((currVal !== finalVal || changed) && !config.decay) {
-        node.setValue(finalVal);
-
-        this._onChange(finalVal);
-      } else if (changed && config.decay) {
-        this._onChange(currVal);
+      const value = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(anim.to);
+      if (node.setValue(value) || changed) {
+        this._onChange(value);
       }
-
       this._stop();
     } else if (changed) {
-      this._onChange(currVal);
+      this._onChange(node.getValue());
     }
   }
-
   set(value) {
     _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => {
       this._stop();
-
       this._focus(value);
-
       this._set(value);
     });
     return this;
   }
-
   pause() {
-    this._update({
-      pause: true
-    });
+    this._update({pause: true});
   }
-
   resume() {
-    this._update({
-      pause: false
-    });
+    this._update({pause: false});
   }
-
   finish() {
     if (isAnimating(this)) {
-      const {
-        to,
-        config
-      } = this.animation;
+      const {to, config} = this.animation;
       _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => {
         this._onStart();
-
         if (!config.decay) {
           this._set(to, false);
         }
-
         this._stop();
       });
     }
-
     return this;
   }
-
   update(props) {
     const queue = this.queue || (this.queue = []);
     queue.push(props);
     return this;
   }
-
   start(to, arg2) {
     let queue;
-
     if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(to)) {
-      queue = [_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to) ? to : _extends({}, arg2, {
-        to
-      })];
+      queue = [_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to) ? to : {...arg2, to}];
     } else {
       queue = this.queue || [];
       this.queue = [];
     }
-
-    return Promise.all(queue.map(props => this._update(props))).then(results => getCombinedResult(this, results));
+    return Promise.all(queue.map((props) => this._update(props))).then((results) => getCombinedResult(this, results));
   }
-
   stop(cancel) {
-    const {
-      to
-    } = this.animation;
-
+    const {to} = this.animation;
     this._focus(this.get());
-
     stopAsync(this._state, cancel && this._lastCallId);
     _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => this._stop(to, cancel));
     return this;
   }
-
   reset() {
-    this._update({
-      reset: true
-    });
+    this._update({reset: true});
   }
-
   eventObserved(event) {
-    if (event.type == 'change') {
+    if (event.type == "change") {
       this._start();
-    } else if (event.type == 'priority') {
+    } else if (event.type == "priority") {
       this.priority = event.priority + 1;
     }
   }
-
   _prepareNode(props) {
-    const key = this.key || '';
-    let {
-      to,
-      from
-    } = props;
+    const key = this.key || "";
+    let {to, from} = props;
     to = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to) ? to[key] : to;
-
     if (to == null || isAsyncTo(to)) {
-      to = undefined;
+      to = void 0;
     }
-
     from = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(from) ? from[key] : from;
-
     if (from == null) {
-      from = undefined;
+      from = void 0;
     }
-
-    const range = {
-      to,
-      from
-    };
-
+    const range = {to, from};
     if (!hasAnimated(this)) {
-      if (props.reverse) [to, from] = [from, to];
+      if (props.reverse)
+        [to, from] = [from, to];
       from = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(from);
-
       if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(from)) {
         this._set(from);
       } else if (!(0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this)) {
-          this._set(to);
-        }
+        this._set(to);
+      }
     }
-
     return range;
   }
-
-  _update(_ref, isLoop) {
-    let props = _extends({}, _ref);
-
-    const {
-      key,
-      defaultProps
-    } = this;
-    if (props.default) Object.assign(defaultProps, getDefaultProps(props, (value, prop) => /^on/.test(prop) ? resolveProp(value, key) : value));
-    mergeActiveFn(this, props, 'onProps');
-    sendEvent(this, 'onProps', props, this);
-
+  _update({...props}, isLoop) {
+    const {key, defaultProps} = this;
+    if (props.default)
+      Object.assign(defaultProps, getDefaultProps(props, (value, prop) => /^on/.test(prop) ? resolveProp(value, key) : value));
+    mergeActiveFn(this, props, "onProps");
+    sendEvent(this, "onProps", props, this);
     const range = this._prepareNode(props);
-
     if (Object.isFrozen(this)) {
-      throw Error('Cannot animate a `SpringValue` object that is frozen. ' + 'Did you forget to pass your component to `animated(...)` before animating its props?');
+      throw Error("Cannot animate a `SpringValue` object that is frozen. Did you forget to pass your component to `animated(...)` before animating its props?");
     }
-
     const state = this._state;
     return scheduleProps(++this._lastCallId, {
       key,
@@ -7697,45 +7418,38 @@ class SpringValue extends FrameValue {
           if (!isPaused(this)) {
             setPausedBit(this, true);
             (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flushCalls)(state.pauseQueue);
-            sendEvent(this, 'onPause', getFinishedResult(this, checkFinished(this, this.animation.to)), this);
+            sendEvent(this, "onPause", getFinishedResult(this, checkFinished(this, this.animation.to)), this);
           }
         },
         resume: () => {
           if (isPaused(this)) {
             setPausedBit(this, false);
-
             if (isAnimating(this)) {
               this._resume();
             }
-
             (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flushCalls)(state.resumeQueue);
-            sendEvent(this, 'onResume', getFinishedResult(this, checkFinished(this, this.animation.to)), this);
+            sendEvent(this, "onResume", getFinishedResult(this, checkFinished(this, this.animation.to)), this);
           }
         },
         start: this._merge.bind(this, range)
       }
-    }).then(result => {
+    }).then((result) => {
       if (props.loop && result.finished && !(isLoop && result.noop)) {
         const nextProps = createLoopUpdate(props);
-
         if (nextProps) {
           return this._update(nextProps, true);
         }
       }
-
       return result;
     });
   }
-
   _merge(range, props, resolve) {
     if (props.cancel) {
       this.stop(true);
       return resolve(getCancelledResult(this));
     }
-
     const hasToProp = !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(range.to);
     const hasFromProp = !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(range.from);
-
     if (hasToProp || hasFromProp) {
       if (props.callId > this._lastToId) {
         this._lastToId = props.callId;
@@ -7743,213 +7457,153 @@ class SpringValue extends FrameValue {
         return resolve(getCancelledResult(this));
       }
     }
-
-    const {
-      key,
-      defaultProps,
-      animation: anim
-    } = this;
-    const {
-      to: prevTo,
-      from: prevFrom
-    } = anim;
-    let {
-      to = prevTo,
-      from = prevFrom
-    } = range;
-
+    const {key, defaultProps, animation: anim} = this;
+    const {to: prevTo, from: prevFrom} = anim;
+    let {to = prevTo, from = prevFrom} = range;
     if (hasFromProp && !hasToProp && (!props.default || _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(to))) {
       to = from;
     }
-
-    if (props.reverse) [to, from] = [from, to];
+    if (props.reverse)
+      [to, from] = [from, to];
     const hasFromChanged = !(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(from, prevFrom);
-
     if (hasFromChanged) {
       anim.from = from;
     }
-
     from = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(from);
     const hasToChanged = !(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(to, prevTo);
-
     if (hasToChanged) {
       this._focus(to);
     }
-
     const hasAsyncTo = isAsyncTo(props.to);
-    const {
-      config
-    } = anim;
-    const {
-      decay,
-      velocity
-    } = config;
-
+    const {config} = anim;
+    const {decay, velocity} = config;
     if (hasToProp || hasFromProp) {
       config.velocity = 0;
     }
-
     if (props.config && !hasAsyncTo) {
       mergeConfig(config, callProp(props.config, key), props.config !== defaultProps.config ? callProp(defaultProps.config, key) : void 0);
     }
-
     let node = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this);
-
     if (!node || _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(to)) {
       return resolve(getFinishedResult(this, true));
     }
-
     const reset = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.reset) ? hasFromProp && !props.default : !_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(from) && matchProp(props.reset, key);
     const value = reset ? from : this.get();
     const goal = computeGoal(to);
     const isAnimatable = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.num(goal) || _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(goal) || (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isAnimatedString)(goal);
     const immediate = !hasAsyncTo && (!isAnimatable || matchProp(defaultProps.immediate || props.immediate, key));
-
     if (hasToChanged) {
       const nodeType = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimatedType)(to);
-
       if (nodeType !== node.constructor) {
         if (immediate) {
           node = this._set(goal);
-        } else throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
+        } else
+          throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
       }
     }
-
     const goalType = node.constructor;
     let started = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(to);
     let finished = false;
-
     if (!started) {
       const hasValueChanged = reset || !hasAnimated(this) && hasFromChanged;
-
       if (hasToChanged || hasValueChanged) {
         finished = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(computeGoal(value), goal);
         started = !finished;
       }
-
-      if (!(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(anim.immediate, immediate) && !immediate || !(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(config.decay, decay) || !(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(config.velocity, velocity)) {
+      if (!(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(config.decay, decay) || !(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(config.velocity, velocity)) {
         started = true;
       }
     }
-
     if (finished && isAnimating(this)) {
       if (anim.changed && !reset) {
         started = true;
       } else if (!started) {
-          this._stop(prevTo);
-        }
+        this._stop(prevTo);
+      }
     }
-
     if (!hasAsyncTo) {
       if (started || (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(prevTo)) {
         anim.values = node.getPayload();
         anim.toValues = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(to) ? null : goalType == _react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.AnimatedString ? [1] : (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(goal);
       }
-
       if (anim.immediate != immediate) {
         anim.immediate = immediate;
-
         if (!immediate && !reset) {
           this._set(prevTo);
         }
       }
-
       if (started) {
-        const {
-          onRest
-        } = anim;
-        (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(ACTIVE_EVENTS, type => mergeActiveFn(this, props, type));
+        const {onRest} = anim;
+        (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(ACTIVE_EVENTS, (type) => mergeActiveFn(this, props, type));
         const result = getFinishedResult(this, checkFinished(this, prevTo));
         (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flushCalls)(this._pendingCalls, result);
-
         this._pendingCalls.add(resolve);
-
-        if (anim.changed) _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => {
-          anim.changed = !reset;
-          onRest == null ? void 0 : onRest(result, this);
-
-          if (reset) {
-            callProp(defaultProps.onRest, result);
-          } else {
-              anim.onStart == null ? void 0 : anim.onStart(result, this);
+        if (anim.changed)
+          _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => {
+            var _a;
+            anim.changed = !reset;
+            onRest == null ? void 0 : onRest(result, this);
+            if (reset) {
+              callProp(defaultProps.onRest, result);
+            } else {
+              (_a = anim.onStart) == null ? void 0 : _a.call(anim, result, this);
             }
-        });
+          });
       }
     }
-
     if (reset) {
       this._set(value);
     }
-
     if (hasAsyncTo) {
       resolve(runAsync(props.to, props, this._state, this));
     } else if (started) {
-        this._start();
-      } else if (isAnimating(this) && !hasToChanged) {
-          this._pendingCalls.add(resolve);
-        } else {
-            resolve(getNoopResult(value));
-          }
+      this._start();
+    } else if (isAnimating(this) && !hasToChanged) {
+      this._pendingCalls.add(resolve);
+    } else {
+      resolve(getNoopResult(value));
+    }
   }
-
   _focus(value) {
     const anim = this.animation;
-
     if (value !== anim.to) {
       if ((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidObservers)(this)) {
         this._detach();
       }
-
       anim.to = value;
-
       if ((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidObservers)(this)) {
         this._attach();
       }
     }
   }
-
   _attach() {
     let priority = 0;
-    const {
-      to
-    } = this.animation;
-
+    const {to} = this.animation;
     if ((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(to)) {
       (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.addFluidObserver)(to, this);
-
       if (isFrameValue(to)) {
         priority = to.priority + 1;
       }
     }
-
     this.priority = priority;
   }
-
   _detach() {
-    const {
-      to
-    } = this.animation;
-
+    const {to} = this.animation;
     if ((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(to)) {
       (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.removeFluidObserver)(to, this);
     }
   }
-
   _set(arg, idle = true) {
     const value = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(arg);
-
     if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(value)) {
       const oldNode = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this);
-
       if (!oldNode || !(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(value, oldNode.getValue())) {
         const nodeType = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimatedType)(value);
-
         if (!oldNode || oldNode.constructor != nodeType) {
           (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.setAnimated)(this, nodeType.create(value));
         } else {
           oldNode.setValue(value);
         }
-
         if (oldNode) {
           _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => {
             this._onChange(value, idle);
@@ -7957,48 +7611,36 @@ class SpringValue extends FrameValue {
         }
       }
     }
-
     return (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this);
   }
-
   _onStart() {
     const anim = this.animation;
-
     if (!anim.changed) {
       anim.changed = true;
-      sendEvent(this, 'onStart', getFinishedResult(this, checkFinished(this, anim.to)), this);
+      sendEvent(this, "onStart", getFinishedResult(this, checkFinished(this, anim.to)), this);
     }
   }
-
   _onChange(value, idle) {
     if (!idle) {
       this._onStart();
-
       callProp(this.animation.onChange, value, this);
     }
-
     callProp(this.defaultProps.onChange, value, this);
-
     super._onChange(value, idle);
   }
-
   _start() {
     const anim = this.animation;
     (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this).reset((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(anim.to));
-
     if (!anim.immediate) {
-      anim.fromValues = anim.values.map(node => node.lastPosition);
+      anim.fromValues = anim.values.map((node) => node.lastPosition);
     }
-
     if (!isAnimating(this)) {
       setActiveBit(this, true);
-
       if (!isPaused(this)) {
         this._resume();
       }
     }
   }
-
   _resume() {
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.Globals.skipAnimation) {
       this.finish();
@@ -8006,101 +7648,93 @@ class SpringValue extends FrameValue {
       _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.frameLoop.start(this);
     }
   }
-
   _stop(goal, cancel) {
     if (isAnimating(this)) {
       setActiveBit(this, false);
       const anim = this.animation;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(anim.values, node => {
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(anim.values, (node) => {
         node.done = true;
       });
-
       if (anim.toValues) {
-        anim.onChange = anim.onPause = anim.onResume = undefined;
+        anim.onChange = anim.onPause = anim.onResume = void 0;
       }
-
       (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.callFluidObservers)(this, {
-        type: 'idle',
+        type: "idle",
         parent: this
       });
       const result = cancel ? getCancelledResult(this.get()) : getFinishedResult(this.get(), checkFinished(this, goal != null ? goal : anim.to));
       (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flushCalls)(this._pendingCalls, result);
-
       if (anim.changed) {
         anim.changed = false;
-        sendEvent(this, 'onRest', result, this);
+        sendEvent(this, "onRest", result, this);
       }
     }
   }
-
 }
-
 function checkFinished(target, to) {
   const goal = computeGoal(to);
   const value = computeGoal(target.get());
   return (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(value, goal);
 }
-
 function createLoopUpdate(props, loop = props.loop, to = props.to) {
   let loopRet = callProp(loop);
-
   if (loopRet) {
     const overrides = loopRet !== true && inferTo(loopRet);
     const reverse = (overrides || props).reverse;
     const reset = !overrides || overrides.reset;
-    return createUpdate(_extends({}, props, {
+    return createUpdate({
+      ...props,
       loop,
       default: false,
-      pause: undefined,
-      to: !reverse || isAsyncTo(to) ? to : undefined,
-      from: reset ? props.from : undefined,
-      reset
-    }, overrides));
+      pause: void 0,
+      to: !reverse || isAsyncTo(to) ? to : void 0,
+      from: reset ? props.from : void 0,
+      reset,
+      ...overrides
+    });
   }
 }
 function createUpdate(props) {
-  const {
-    to,
-    from
-  } = props = inferTo(props);
+  const {to, from} = props = inferTo(props);
   const keys = new Set();
-  if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to)) findDefined(to, keys);
-  if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(from)) findDefined(from, keys);
+  if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to))
+    findDefined(to, keys);
+  if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(from))
+    findDefined(from, keys);
   props.keys = keys.size ? Array.from(keys) : null;
   return props;
 }
 function declareUpdate(props) {
   const update = createUpdate(props);
-
   if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(update.default)) {
     update.default = getDefaultProps(update);
   }
-
   return update;
 }
-
 function findDefined(values, keys) {
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.eachProp)(values, (value, key) => value != null && keys.add(key));
 }
-
-const ACTIVE_EVENTS = ['onStart', 'onRest', 'onChange', 'onPause', 'onResume'];
-
+const ACTIVE_EVENTS = [
+  "onStart",
+  "onRest",
+  "onChange",
+  "onPause",
+  "onResume"
+];
 function mergeActiveFn(target, props, type) {
-  target.animation[type] = props[type] !== getDefaultProp(props, type) ? resolveProp(props[type], target.key) : undefined;
+  target.animation[type] = props[type] !== getDefaultProp(props, type) ? resolveProp(props[type], target.key) : void 0;
 }
-
 function sendEvent(target, type, ...args) {
-  var _target$animation$typ, _target$animation, _target$defaultProps$, _target$defaultProps;
-
-  (_target$animation$typ = (_target$animation = target.animation)[type]) == null ? void 0 : _target$animation$typ.call(_target$animation, ...args);
-  (_target$defaultProps$ = (_target$defaultProps = target.defaultProps)[type]) == null ? void 0 : _target$defaultProps$.call(_target$defaultProps, ...args);
+  var _a, _b, _c, _d;
+  (_b = (_a = target.animation)[type]) == null ? void 0 : _b.call(_a, ...args);
+  (_d = (_c = target.defaultProps)[type]) == null ? void 0 : _d.call(_c, ...args);
 }
 
-const BATCHED_EVENTS = ['onStart', 'onChange', 'onRest'];
-let nextId = 1;
+const BATCHED_EVENTS = ["onStart", "onChange", "onRest"];
+let nextId$1 = 1;
 class Controller {
-  constructor(props, flush) {
-    this.id = nextId++;
+  constructor(props, flush2) {
+    this.id = nextId$1++;
     this.springs = {};
     this.queue = [];
     this._lastAsyncId = 0;
@@ -8119,310 +7753,235 @@ class Controller {
       onRest: new Map()
     };
     this._onFrame = this._onFrame.bind(this);
-
-    if (flush) {
-      this._flush = flush;
+    if (flush2) {
+      this._flush = flush2;
     }
-
     if (props) {
-      this.start(_extends({
-        default: true
-      }, props));
+      this.start({default: true, ...props});
     }
   }
-
   get idle() {
-    return !this._state.asyncTo && Object.values(this.springs).every(spring => spring.idle);
+    return !this._state.asyncTo && Object.values(this.springs).every((spring) => spring.idle);
   }
-
   get item() {
     return this._item;
   }
-
   set item(item) {
     this._item = item;
   }
-
   get() {
     const values = {};
     this.each((spring, key) => values[key] = spring.get());
     return values;
   }
-
   set(values) {
     for (const key in values) {
       const value = values[key];
-
       if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(value)) {
         this.springs[key].set(value);
       }
     }
   }
-
   update(props) {
     if (props) {
       this.queue.push(createUpdate(props));
     }
-
     return this;
   }
-
   start(props) {
-    let {
-      queue
-    } = this;
-
+    let {queue} = this;
     if (props) {
       queue = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(props).map(createUpdate);
     } else {
       this.queue = [];
     }
-
     if (this._flush) {
       return this._flush(this, queue);
     }
-
     prepareKeys(this, queue);
     return flushUpdateQueue(this, queue);
   }
-
   stop(arg, keys) {
     if (arg !== !!arg) {
       keys = arg;
     }
-
     if (keys) {
       const springs = this.springs;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(keys), key => springs[key].stop(!!arg));
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(keys), (key) => springs[key].stop(!!arg));
     } else {
       stopAsync(this._state, this._lastAsyncId);
-      this.each(spring => spring.stop(!!arg));
+      this.each((spring) => spring.stop(!!arg));
     }
-
     return this;
   }
-
   pause(keys) {
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(keys)) {
-      this.start({
-        pause: true
-      });
+      this.start({pause: true});
     } else {
       const springs = this.springs;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(keys), key => springs[key].pause());
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(keys), (key) => springs[key].pause());
     }
-
     return this;
   }
-
   resume(keys) {
     if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(keys)) {
-      this.start({
-        pause: false
-      });
+      this.start({pause: false});
     } else {
       const springs = this.springs;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(keys), key => springs[key].resume());
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(keys), (key) => springs[key].resume());
     }
-
     return this;
   }
-
   each(iterator) {
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.eachProp)(this.springs, iterator);
   }
-
   _onFrame() {
-    const {
-      onStart,
-      onChange,
-      onRest
-    } = this._events;
+    const {onStart, onChange, onRest} = this._events;
     const active = this._active.size > 0;
     const changed = this._changed.size > 0;
-
     if (active && !this._started || changed && !this._started) {
       this._started = true;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(onStart, ([onStart, result]) => {
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(onStart, ([onStart2, result]) => {
         result.value = this.get();
-        onStart(result, this, this._item);
+        onStart2(result, this, this._item);
       });
     }
-
     const idle = !active && this._started;
     const values = changed || idle && onRest.size ? this.get() : null;
-
     if (changed && onChange.size) {
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(onChange, ([onChange, result]) => {
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(onChange, ([onChange2, result]) => {
         result.value = values;
-        onChange(result, this, this._item);
+        onChange2(result, this, this._item);
       });
     }
-
     if (idle) {
       this._started = false;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(onRest, ([onRest, result]) => {
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flush)(onRest, ([onRest2, result]) => {
         result.value = values;
-        onRest(result, this, this._item);
+        onRest2(result, this, this._item);
       });
     }
   }
-
   eventObserved(event) {
-    if (event.type == 'change') {
+    if (event.type == "change") {
       this._changed.add(event.parent);
-
       if (!event.idle) {
         this._active.add(event.parent);
       }
-    } else if (event.type == 'idle') {
+    } else if (event.type == "idle") {
       this._active.delete(event.parent);
-    } else return;
-
+    } else
+      return;
     _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.onFrame(this._onFrame);
   }
-
 }
 function flushUpdateQueue(ctrl, queue) {
-  return Promise.all(queue.map(props => flushUpdate(ctrl, props))).then(results => getCombinedResult(ctrl, results));
+  return Promise.all(queue.map((props) => flushUpdate(ctrl, props))).then((results) => getCombinedResult(ctrl, results));
 }
 async function flushUpdate(ctrl, props, isLoop) {
-  const {
-    keys,
-    to,
-    from,
-    loop,
-    onRest,
-    onResolve
-  } = props;
+  const {keys, to, from, loop, onRest, onResolve} = props;
   const defaults = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(props.default) && props.default;
-
   if (loop) {
     props.loop = false;
   }
-
-  if (to === false) props.to = null;
-  if (from === false) props.from = null;
-  const asyncTo = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(to) || _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(to) ? to : undefined;
-
+  if (to === false)
+    props.to = null;
+  if (from === false)
+    props.from = null;
+  const asyncTo = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(to) || _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(to) ? to : void 0;
   if (asyncTo) {
-    props.to = undefined;
-    props.onRest = undefined;
-
+    props.to = void 0;
+    props.onRest = void 0;
     if (defaults) {
-      defaults.onRest = undefined;
+      defaults.onRest = void 0;
     }
   } else {
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(BATCHED_EVENTS, key => {
-        const handler = props[key];
-
-        if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(handler)) {
-          const queue = ctrl['_events'][key];
-
-          props[key] = ({
-            finished,
-            cancelled
-          }) => {
-            const result = queue.get(handler);
-
-            if (result) {
-              if (!finished) result.finished = false;
-              if (cancelled) result.cancelled = true;
-            } else {
-              queue.set(handler, {
-                value: null,
-                finished: finished || false,
-                cancelled: cancelled || false
-              });
-            }
-          };
-
-          if (defaults) {
-            defaults[key] = props[key];
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(BATCHED_EVENTS, (key) => {
+      const handler = props[key];
+      if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(handler)) {
+        const queue = ctrl["_events"][key];
+        props[key] = ({finished, cancelled}) => {
+          const result2 = queue.get(handler);
+          if (result2) {
+            if (!finished)
+              result2.finished = false;
+            if (cancelled)
+              result2.cancelled = true;
+          } else {
+            queue.set(handler, {
+              value: null,
+              finished: finished || false,
+              cancelled: cancelled || false
+            });
           }
+        };
+        if (defaults) {
+          defaults[key] = props[key];
         }
-      });
-    }
-
-  const state = ctrl['_state'];
-
+      }
+    });
+  }
+  const state = ctrl["_state"];
   if (props.pause === !state.paused) {
     state.paused = props.pause;
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.flushCalls)(props.pause ? state.pauseQueue : state.resumeQueue);
   } else if (state.paused) {
-      props.pause = true;
-    }
-
-  const promises = (keys || Object.keys(ctrl.springs)).map(key => ctrl.springs[key].start(props));
-  const cancel = props.cancel === true || getDefaultProp(props, 'cancel') === true;
-
+    props.pause = true;
+  }
+  const promises = (keys || Object.keys(ctrl.springs)).map((key) => ctrl.springs[key].start(props));
+  const cancel = props.cancel === true || getDefaultProp(props, "cancel") === true;
   if (asyncTo || cancel && state.asyncId) {
-    promises.push(scheduleProps(++ctrl['_lastAsyncId'], {
+    promises.push(scheduleProps(++ctrl["_lastAsyncId"], {
       props,
       state,
       actions: {
         pause: _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.noop,
         resume: _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.noop,
-
-        start(props, resolve) {
+        start(props2, resolve) {
           if (cancel) {
-            stopAsync(state, ctrl['_lastAsyncId']);
+            stopAsync(state, ctrl["_lastAsyncId"]);
             resolve(getCancelledResult(ctrl));
           } else {
-            props.onRest = onRest;
-            resolve(runAsync(asyncTo, props, state, ctrl));
+            props2.onRest = onRest;
+            resolve(runAsync(asyncTo, props2, state, ctrl));
           }
         }
-
       }
     }));
   }
-
   if (state.paused) {
-    await new Promise(resume => {
+    await new Promise((resume) => {
       state.resumeQueue.add(resume);
     });
   }
-
   const result = getCombinedResult(ctrl, await Promise.all(promises));
-
   if (loop && result.finished && !(isLoop && result.noop)) {
     const nextProps = createLoopUpdate(props, loop, to);
-
     if (nextProps) {
       prepareKeys(ctrl, [nextProps]);
       return flushUpdate(ctrl, nextProps, true);
     }
   }
-
   if (onResolve) {
     _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => onResolve(result, ctrl, ctrl.item));
   }
-
   return result;
 }
 function getSprings(ctrl, props) {
-  const springs = _extends({}, ctrl.springs);
-
+  const springs = {...ctrl.springs};
   if (props) {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(props), props => {
-      if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.keys)) {
-        props = createUpdate(props);
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(props), (props2) => {
+      if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props2.keys)) {
+        props2 = createUpdate(props2);
       }
-
-      if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(props.to)) {
-        props = _extends({}, props, {
-          to: undefined
-        });
+      if (!_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(props2.to)) {
+        props2 = {...props2, to: void 0};
       }
-
-      prepareSprings(springs, props, key => {
+      prepareSprings(springs, props2, (key) => {
         return createSpring(key);
       });
     });
   }
-
-  setSprings(ctrl, springs);
   return springs;
 }
 function setSprings(ctrl, springs) {
@@ -8433,242 +7992,171 @@ function setSprings(ctrl, springs) {
     }
   });
 }
-
 function createSpring(key, observer) {
   const spring = new SpringValue();
   spring.key = key;
-
   if (observer) {
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.addFluidObserver)(spring, observer);
   }
-
   return spring;
 }
-
 function prepareSprings(springs, props, create) {
   if (props.keys) {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(props.keys, key => {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(props.keys, (key) => {
       const spring = springs[key] || (springs[key] = create(key));
-      spring['_prepareNode'](props);
+      spring["_prepareNode"](props);
     });
   }
 }
-
 function prepareKeys(ctrl, queue) {
-  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(queue, props => {
-    prepareSprings(ctrl.springs, props, key => {
+  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(queue, (props) => {
+    prepareSprings(ctrl.springs, props, (key) => {
       return createSpring(key, ctrl);
     });
   });
 }
 
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
-const SpringContext = (_ref) => {
-  let {
-    children
-  } = _ref,
-      props = _objectWithoutPropertiesLoose(_ref, ["children"]);
-
+const SpringContext = ({
+  children,
+  ...props
+}) => {
   const inherited = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(ctx);
-  const pause = props.pause || !!inherited.pause,
-        immediate = props.immediate || !!inherited.immediate;
-  props = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useMemoOne)(() => ({
-    pause,
-    immediate
-  }), [pause, immediate]);
-  const {
-    Provider
-  } = ctx;
-  return react__WEBPACK_IMPORTED_MODULE_1__.createElement(Provider, {
+  const pause = props.pause || !!inherited.pause, immediate = props.immediate || !!inherited.immediate;
+  props = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useMemoOne)(() => ({pause, immediate}), [pause, immediate]);
+  const {Provider} = ctx;
+  return /* @__PURE__ */ (0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(Provider, {
     value: props
   }, children);
 };
 const ctx = makeContext(SpringContext, {});
 SpringContext.Provider = ctx.Provider;
 SpringContext.Consumer = ctx.Consumer;
-
 function makeContext(target, init) {
-  Object.assign(target, react__WEBPACK_IMPORTED_MODULE_1__.createContext(init));
+  Object.assign(target, (0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(init));
   target.Provider._context = target;
   target.Consumer._context = target;
   return target;
 }
 
-const SpringRef = () => {
-  const current = [];
-
-  const SpringRef = function SpringRef(props) {
+class SpringRef extends Function {
+  constructor() {
+    super("return arguments.callee._call.apply(arguments.callee, arguments)");
+    this.current = [];
+  }
+  _call(props) {
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.deprecateDirectCall)();
+    this.start(props);
+  }
+  set(values) {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(this.current, (ctrl) => ctrl.set(values));
+  }
+  start(props) {
     const results = [];
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(current, (ctrl, i) => {
-      if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props)) {
-        results.push(ctrl.start());
-      } else {
-        const update = _getProps(props, ctrl, i);
-
-        if (update) {
-          results.push(ctrl.start(update));
-        }
-      }
-    });
-    return results;
-  };
-
-  SpringRef.current = current;
-
-  SpringRef.add = function (ctrl) {
-    if (!current.includes(ctrl)) {
-      current.push(ctrl);
-    }
-  };
-
-  SpringRef.delete = function (ctrl) {
-    const i = current.indexOf(ctrl);
-    if (~i) current.splice(i, 1);
-  };
-
-  SpringRef.pause = function () {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(current, ctrl => ctrl.pause(...arguments));
-    return this;
-  };
-
-  SpringRef.resume = function () {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(current, ctrl => ctrl.resume(...arguments));
-    return this;
-  };
-
-  SpringRef.set = function (values) {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(current, ctrl => ctrl.set(values));
-  };
-
-  SpringRef.start = function (props) {
-    const results = [];
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(current, (ctrl, i) => {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(this.current, (ctrl, i) => {
       if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props)) {
         results.push(ctrl.start());
       } else {
         const update = this._getProps(props, ctrl, i);
-
         if (update) {
           results.push(ctrl.start(update));
         }
       }
     });
     return results;
-  };
-
-  SpringRef.stop = function () {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(current, ctrl => ctrl.stop(...arguments));
+  }
+  update(props) {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(this.current, (ctrl, i) => ctrl.update(this._getProps(props, ctrl, i)));
     return this;
-  };
-
-  SpringRef.update = function (props) {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(current, (ctrl, i) => ctrl.update(this._getProps(props, ctrl, i)));
-    return this;
-  };
-
-  const _getProps = function _getProps(arg, ctrl, index) {
+  }
+  add(ctrl) {
+    if (!this.current.includes(ctrl)) {
+      this.current.push(ctrl);
+    }
+  }
+  delete(ctrl) {
+    const i = this.current.indexOf(ctrl);
+    if (~i)
+      this.current.splice(i, 1);
+  }
+  _getProps(arg, ctrl, index) {
     return _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(arg) ? arg(index, ctrl) : arg;
+  }
+}
+(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(["stop", "pause", "resume"], (key) => {
+  SpringRef.prototype[key] = function() {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(this.current, (ctrl) => ctrl[key](...arguments));
+    return this;
   };
-
-  SpringRef._getProps = _getProps;
-  return SpringRef;
-};
+});
 
 function useSprings(length, props, deps) {
   const propsFn = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(props) && props;
-  if (propsFn && !deps) deps = [];
-  const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => propsFn || arguments.length == 3 ? SpringRef() : void 0, []);
+  if (propsFn && !deps)
+    deps = [];
+  const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => propsFn || arguments.length == 3 ? new SpringRef() : void 0, []);
   const layoutId = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(0);
   const forceUpdate = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useForceUpdate)();
   const state = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => ({
     ctrls: [],
     queue: [],
-
-    flush(ctrl, updates) {
-      const springs = getSprings(ctrl, updates);
-      const canFlushSync = layoutId.current > 0 && !state.queue.length && !Object.keys(springs).some(key => !ctrl.springs[key]);
-      return canFlushSync ? flushUpdateQueue(ctrl, updates) : new Promise(resolve => {
-        setSprings(ctrl, springs);
+    flush(ctrl, updates2) {
+      const springs2 = getSprings(ctrl, updates2);
+      const canFlushSync = layoutId.current > 0 && !state.queue.length && !Object.keys(springs2).some((key) => !ctrl.springs[key]);
+      return canFlushSync ? flushUpdateQueue(ctrl, updates2) : new Promise((resolve) => {
+        setSprings(ctrl, springs2);
         state.queue.push(() => {
-          resolve(flushUpdateQueue(ctrl, updates));
+          resolve(flushUpdateQueue(ctrl, updates2));
         });
         forceUpdate();
       });
     }
-
   }), []);
-  const ctrls = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)([...state.ctrls]);
+  const ctrls = [...state.ctrls];
   const updates = [];
   const prevLength = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.usePrev)(length) || 0;
-  const oldCtrls = ctrls.current.slice(length, prevLength);
+  const oldCtrls = ctrls.slice(length, prevLength);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
-    ctrls.current.length = length;
+    ctrls.length = length;
     declareUpdates(prevLength, length);
   }, [length]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
     declareUpdates(0, Math.min(prevLength, length));
   }, deps);
-
   function declareUpdates(startIndex, endIndex) {
     for (let i = startIndex; i < endIndex; i++) {
-      const ctrl = ctrls.current[i] || (ctrls.current[i] = new Controller(null, state.flush));
+      const ctrl = ctrls[i] || (ctrls[i] = new Controller(null, state.flush));
       const update = propsFn ? propsFn(i, ctrl) : props[i];
-
       if (update) {
         updates[i] = declareUpdate(update);
       }
     }
   }
-
-  const springs = ctrls.current.map((ctrl, i) => getSprings(ctrl, updates[i]));
+  const springs = ctrls.map((ctrl, i) => getSprings(ctrl, updates[i]));
   const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(SpringContext);
   const prevContext = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.usePrev)(context);
   const hasContext = context !== prevContext && hasProps(context);
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
     layoutId.current++;
-    state.ctrls = ctrls.current;
-    const {
-      queue
-    } = state;
-
+    state.ctrls = ctrls;
+    const {queue} = state;
     if (queue.length) {
       state.queue = [];
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(queue, cb => cb());
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(queue, (cb) => cb());
     }
-
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(oldCtrls, ctrl => {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(oldCtrls, (ctrl) => {
       detachRefs(ctrl, ref);
       ctrl.stop(true);
     });
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(ctrls.current, (ctrl, i) => {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(ctrls, (ctrl, i) => {
+      const values2 = springs[i];
+      setSprings(ctrl, values2);
       ref == null ? void 0 : ref.add(ctrl);
-
       if (hasContext) {
-        ctrl.start({
-          default: context
-        });
+        ctrl.start({default: context});
       }
-
       const update = updates[i];
-
       if (update) {
         replaceRef(ctrl, update.ref);
-
         if (ctrl.ref) {
           ctrl.queue.push(update);
         } else {
@@ -8678,9 +8166,9 @@ function useSprings(length, props, deps) {
     });
   });
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useOnce)(() => () => {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(state.ctrls, ctrl => ctrl.stop(true));
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(state.ctrls, (ctrl) => ctrl.stop(true));
   });
-  const values = springs.map(x => _extends({}, x));
+  const values = springs.map((x) => ({...x}));
   return ref ? [values, ref] : values;
 }
 
@@ -8690,13 +8178,13 @@ function useSpring(props, deps) {
   return isFn || arguments.length == 2 ? [values, ref] : values;
 }
 
-const initSpringRef = () => SpringRef();
-
+const initSpringRef = () => new SpringRef();
 const useSpringRef = () => (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(initSpringRef)[0];
 
 function useTrail(length, propsArg, deps) {
   const propsFn = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(propsArg) && propsArg;
-  if (propsFn && !deps) deps = [];
+  if (propsFn && !deps)
+    deps = [];
   let reverse = true;
   const result = useSprings(length, (i, ctrl) => {
     const props = propsFn ? propsFn(i, ctrl) : propsArg;
@@ -8707,50 +8195,33 @@ function useTrail(length, propsArg, deps) {
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(ref.current, (ctrl, i) => {
       const parent = ref.current[i + (reverse ? 1 : -1)];
-      if (parent) ctrl.start({
-        to: parent.springs
-      });
+      if (parent)
+        ctrl.start({to: parent.springs});
     });
   }, deps);
-
   if (propsFn || arguments.length == 3) {
-    ref['_getProps'] = (propsArg, ctrl, i) => {
-      const props = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(propsArg) ? propsArg(i, ctrl) : propsArg;
-
+    ref["_getProps"] = (propsArg2, ctrl, i) => {
+      const props = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(propsArg2) ? propsArg2(i, ctrl) : propsArg2;
       if (props) {
         const parent = ref.current[i + (props.reverse ? 1 : -1)];
-        if (parent) props.to = parent.springs;
+        if (parent)
+          props.to = parent.springs;
         return props;
       }
     };
-
     return result;
   }
-
   return result[0];
 }
 
-let TransitionPhase;
-
-(function (TransitionPhase) {
-  TransitionPhase["MOUNT"] = "mount";
-  TransitionPhase["ENTER"] = "enter";
-  TransitionPhase["UPDATE"] = "update";
-  TransitionPhase["LEAVE"] = "leave";
-})(TransitionPhase || (TransitionPhase = {}));
+const MOUNT = "mount";
+const ENTER = "enter";
+const UPDATE = "update";
+const LEAVE = "leave";
 
 function useTransition(data, props, deps) {
-  const propsFn = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(props) && props;
-  const {
-    reset,
-    sort,
-    trail = 0,
-    expires = true,
-    onDestroyed,
-    ref: propsRef,
-    config: propsConfig
-  } = propsFn ? propsFn() : props;
-  const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => propsFn || arguments.length == 3 ? SpringRef() : void 0, []);
+  const {reset, sort, trail = 0, expires = true, onDestroyed} = props;
+  const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => arguments.length == 3 ? new SpringRef() : void 0, []);
   const items = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(data);
   const transitions = [];
   const usedTransitions = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
@@ -8758,69 +8229,57 @@ function useTransition(data, props, deps) {
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
     usedTransitions.current = transitions;
   });
-  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useOnce)(() => () => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(usedTransitions.current, t => {
+  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useOnce)(() => () => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(usedTransitions.current, (t) => {
     if (t.expired) {
       clearTimeout(t.expirationId);
     }
-
     detachRefs(t.ctrl, ref);
     t.ctrl.stop(true);
   }));
-  const keys = getKeys(items, propsFn ? propsFn() : props, prevTransitions);
+  const keys = getKeys(items, props, prevTransitions);
   const expired = reset && usedTransitions.current || [];
-  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(expired, ({
-    ctrl,
-    item,
-    key
-  }) => {
+  (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(expired, ({ctrl, item, key}) => {
     detachRefs(ctrl, ref);
     callProp(onDestroyed, item, key);
   }));
   const reused = [];
-  if (prevTransitions) (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(prevTransitions, (t, i) => {
-    if (t.expired) {
-      clearTimeout(t.expirationId);
-      expired.push(t);
-    } else {
-      i = reused[i] = keys.indexOf(t.key);
-      if (~i) transitions[i] = t;
-    }
-  });
+  if (prevTransitions)
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(prevTransitions, (t, i) => {
+      if (t.expired) {
+        clearTimeout(t.expirationId);
+        expired.push(t);
+      } else {
+        i = reused[i] = keys.indexOf(t.key);
+        if (~i)
+          transitions[i] = t;
+      }
+    });
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(items, (item, i) => {
     if (!transitions[i]) {
       transitions[i] = {
         key: keys[i],
         item,
-        phase: TransitionPhase.MOUNT,
+        phase: MOUNT,
         ctrl: new Controller()
       };
       transitions[i].ctrl.item = item;
     }
   });
-
   if (reused.length) {
     let i = -1;
-    const {
-      leave
-    } = propsFn ? propsFn() : props;
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(reused, (keyIndex, prevIndex) => {
       const t = prevTransitions[prevIndex];
-
       if (~keyIndex) {
         i = transitions.indexOf(t);
-        transitions[i] = _extends({}, t, {
-          item: items[keyIndex]
-        });
-      } else if (leave) {
+        transitions[i] = {...t, item: items[keyIndex]};
+      } else if (props.leave) {
         transitions.splice(++i, 0, t);
       }
     });
   }
-
   if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(sort)) {
     transitions.sort((a, b) => sort(a.item, b.item));
   }
-
   let delay = -trail;
   const forceUpdate = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useForceUpdate)();
   const defaultProps = getDefaultProps(props);
@@ -8828,190 +8287,133 @@ function useTransition(data, props, deps) {
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(transitions, (t, i) => {
     const key = t.key;
     const prevPhase = t.phase;
-    const p = propsFn ? propsFn() : props;
     let to;
     let phase;
-    let propsDelay = callProp(p.delay || 0, key);
-
-    if (prevPhase == TransitionPhase.MOUNT) {
-      to = p.enter;
-      phase = TransitionPhase.ENTER;
+    if (prevPhase == MOUNT) {
+      to = props.enter;
+      phase = ENTER;
     } else {
       const isLeave = keys.indexOf(key) < 0;
-
-      if (prevPhase != TransitionPhase.LEAVE) {
+      if (prevPhase != LEAVE) {
         if (isLeave) {
-          to = p.leave;
-          phase = TransitionPhase.LEAVE;
-        } else if (to = p.update) {
-          phase = TransitionPhase.UPDATE;
-        } else return;
+          to = props.leave;
+          phase = LEAVE;
+        } else if (to = props.update) {
+          phase = UPDATE;
+        } else
+          return;
       } else if (!isLeave) {
-        to = p.enter;
-        phase = TransitionPhase.ENTER;
-      } else return;
+        to = props.enter;
+        phase = ENTER;
+      } else
+        return;
     }
-
     to = callProp(to, t.item, i);
-    to = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to) ? inferTo(to) : {
-      to
-    };
-
+    to = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.obj(to) ? inferTo(to) : {to};
     if (!to.config) {
-      const config = propsConfig || defaultProps.config;
+      const config = props.config || defaultProps.config;
       to.config = callProp(config, t.item, i, phase);
     }
-
-    delay += trail;
-
-    const payload = _extends({}, defaultProps, {
-      delay: propsDelay + delay,
-      ref: propsRef,
-      reset: false
-    }, to);
-
-    if (phase == TransitionPhase.ENTER && _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(payload.from)) {
-      const _p = propsFn ? propsFn() : props;
-
-      const from = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(_p.initial) || prevTransitions ? _p.from : _p.initial;
+    const payload = {
+      ...defaultProps,
+      delay: delay += trail,
+      reset: false,
+      ...to
+    };
+    if (phase == ENTER && _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(payload.from)) {
+      const from = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(props.initial) || prevTransitions ? props.from : props.initial;
       payload.from = callProp(from, t.item, i);
     }
-
-    const {
-      onResolve
-    } = payload;
-
-    payload.onResolve = result => {
+    const {onResolve} = payload;
+    payload.onResolve = (result) => {
       callProp(onResolve, result);
-      const transitions = usedTransitions.current;
-      const t = transitions.find(t => t.key === key);
-      if (!t) return;
-
-      if (result.cancelled && t.phase != TransitionPhase.UPDATE) {
+      const transitions2 = usedTransitions.current;
+      const t2 = transitions2.find((t3) => t3.key === key);
+      if (!t2)
+        return;
+      if (result.cancelled && t2.phase != UPDATE) {
         return;
       }
-
-      if (t.ctrl.idle) {
-        const idle = transitions.every(t => t.ctrl.idle);
-
-        if (t.phase == TransitionPhase.LEAVE) {
-          const expiry = callProp(expires, t.item);
-
+      if (t2.ctrl.idle) {
+        const idle = transitions2.every((t3) => t3.ctrl.idle);
+        if (t2.phase == LEAVE) {
+          const expiry = callProp(expires, t2.item);
           if (expiry !== false) {
             const expiryMs = expiry === true ? 0 : expiry;
-            t.expired = true;
-
+            t2.expired = true;
             if (!idle && expiryMs > 0) {
-              if (expiryMs <= 0x7fffffff) t.expirationId = setTimeout(forceUpdate, expiryMs);
+              if (expiryMs <= 2147483647)
+                t2.expirationId = setTimeout(forceUpdate, expiryMs);
               return;
             }
           }
         }
-
-        if (idle && transitions.some(t => t.expired)) {
+        if (idle && transitions2.some((t3) => t3.expired)) {
           forceUpdate();
         }
       }
     };
-
     const springs = getSprings(t.ctrl, payload);
-    changes.set(t, {
-      phase,
-      springs,
-      payload
-    });
+    changes.set(t, {phase, springs, payload});
   });
   const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(SpringContext);
   const prevContext = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.usePrev)(context);
   const hasContext = context !== prevContext && hasProps(context);
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
-    if (hasContext) (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(transitions, t => {
-      t.ctrl.start({
-        default: context
+    if (hasContext)
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(transitions, (t) => {
+        t.ctrl.start({default: context});
       });
-    });
   }, [context]);
   (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(changes, ({
-      phase,
-      payload
-    }, t) => {
-      const {
-        ctrl
-      } = t;
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)(changes, ({phase, springs, payload}, t) => {
+      const {ctrl} = t;
       t.phase = phase;
       ref == null ? void 0 : ref.add(ctrl);
-
-      if (hasContext && phase == TransitionPhase.ENTER) {
-        ctrl.start({
-          default: context
-        });
+      replaceRef(ctrl, payload.ref);
+      setSprings(ctrl, springs);
+      if (hasContext && phase == ENTER) {
+        ctrl.start({default: context});
       }
-
-      if (payload) {
-        replaceRef(ctrl, payload.ref);
-
-        if (ctrl.ref) {
-          ctrl.update(payload);
-        } else {
-          ctrl.start(payload);
-        }
-      }
+      ctrl[ctrl.ref ? "update" : "start"](payload);
     });
   }, reset ? void 0 : deps);
-
-  const renderTransitions = render => react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, transitions.map((t, i) => {
-    const {
-      springs
-    } = changes.get(t) || t.ctrl;
-    const elem = render(_extends({}, springs), t.item, t, i);
-    return elem && elem.type ? react__WEBPACK_IMPORTED_MODULE_1__.createElement(elem.type, _extends({}, elem.props, {
+  const renderTransitions = (render) => /* @__PURE__ */ (0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, transitions.map((t, i) => {
+    const {springs} = changes.get(t) || t.ctrl;
+    const elem = render({...springs}, t.item, t, i);
+    return elem && elem.type ? /* @__PURE__ */ (0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(elem.type, {
+      ...elem.props,
       key: _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.str(t.key) || _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.num(t.key) ? t.key : t.ctrl.id,
       ref: elem.ref
-    })) : elem;
+    }) : elem;
   }));
-
   return ref ? [renderTransitions, ref] : renderTransitions;
 }
 let nextKey = 1;
-
-function getKeys(items, {
-  key,
-  keys = key
-}, prevTransitions) {
+function getKeys(items, {key, keys = key}, prevTransitions) {
   if (keys === null) {
     const reused = new Set();
-    return items.map(item => {
-      const t = prevTransitions && prevTransitions.find(t => t.item === item && t.phase !== TransitionPhase.LEAVE && !reused.has(t));
-
+    return items.map((item) => {
+      const t = prevTransitions && prevTransitions.find((t2) => t2.item === item && t2.phase !== LEAVE && !reused.has(t2));
       if (t) {
         reused.add(t);
         return t.key;
       }
-
       return nextKey++;
     });
   }
-
   return _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.und(keys) ? items : _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.fun(keys) ? items.map(keys) : (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(keys);
 }
 
-function Spring(_ref) {
-  let {
-    children
-  } = _ref,
-      props = _objectWithoutPropertiesLoose(_ref, ["children"]);
-
+function Spring({children, ...props}) {
   return children(useSpring(props));
 }
 
-function Trail(_ref) {
-  let {
-    items,
-    children
-  } = _ref,
-      props = _objectWithoutPropertiesLoose(_ref, ["items", "children"]);
-
+function Trail({
+  items,
+  children,
+  ...props
+}) {
   const trails = useTrail(items.length, props);
   return items.map((item, index) => {
     const result = children(item, index);
@@ -9019,58 +8421,46 @@ function Trail(_ref) {
   });
 }
 
-function Transition(_ref) {
-  let {
-    items,
-    children
-  } = _ref,
-      props = _objectWithoutPropertiesLoose(_ref, ["items", "children"]);
-
+function Transition({
+  items,
+  children,
+  ...props
+}) {
   return useTransition(items, props)(children);
 }
 
 class Interpolation extends FrameValue {
   constructor(source, args) {
     super();
+    this.source = source;
     this.idle = true;
     this._active = new Set();
-    this.source = source;
     this.calc = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.createInterpolator)(...args);
-
     const value = this._get();
-
     const nodeType = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimatedType)(value);
     (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.setAnimated)(this, nodeType.create(value));
   }
-
   advance(_dt) {
     const value = this._get();
-
     const oldValue = this.get();
-
     if (!(0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.isEqual)(value, oldValue)) {
       (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getAnimated)(this).setValue(value);
-
       this._onChange(value, this.idle);
     }
-
     if (!this.idle && checkIdle(this._active)) {
       becomeIdle(this);
     }
   }
-
   _get() {
     const inputs = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.is.arr(this.source) ? this.source.map(_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue) : (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.getFluidValue)(this.source));
     return this.calc(...inputs);
   }
-
   _start() {
     if (this.idle && !checkIdle(this._active)) {
       this.idle = false;
-      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getPayload)(this), node => {
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getPayload)(this), (node) => {
         node.done = false;
       });
-
       if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.Globals.skipAnimation) {
         _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates(() => this.advance());
         becomeIdle(this);
@@ -9079,73 +8469,60 @@ class Interpolation extends FrameValue {
       }
     }
   }
-
   _attach() {
     let priority = 1;
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(this.source), source => {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(this.source), (source) => {
       if ((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(source)) {
         (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.addFluidObserver)(source, this);
       }
-
       if (isFrameValue(source)) {
         if (!source.idle) {
           this._active.add(source);
         }
-
         priority = Math.max(priority, source.priority + 1);
       }
     });
     this.priority = priority;
-
     this._start();
   }
-
   _detach() {
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(this.source), source => {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(this.source), (source) => {
       if ((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.hasFluidValue)(source)) {
         (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.removeFluidObserver)(source, this);
       }
     });
-
     this._active.clear();
-
     becomeIdle(this);
   }
-
   eventObserved(event) {
-    if (event.type == 'change') {
+    if (event.type == "change") {
       if (event.idle) {
         this.advance();
       } else {
         this._active.add(event.parent);
-
         this._start();
       }
-    } else if (event.type == 'idle') {
-        this._active.delete(event.parent);
-      } else if (event.type == 'priority') {
-          this.priority = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(this.source).reduce((highest, parent) => Math.max(highest, (isFrameValue(parent) ? parent.priority : 0) + 1), 0);
-        }
+    } else if (event.type == "idle") {
+      this._active.delete(event.parent);
+    } else if (event.type == "priority") {
+      this.priority = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.toArray)(this.source).reduce((highest, parent) => Math.max(highest, (isFrameValue(parent) ? parent.priority : 0) + 1), 0);
+    }
   }
-
 }
-
 function isIdle(source) {
   return source.idle !== false;
 }
-
 function checkIdle(active) {
   return !active.size || Array.from(active).every(isIdle);
 }
-
 function becomeIdle(self) {
   if (!self.idle) {
     self.idle = true;
-    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getPayload)(self), node => {
+    (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.each)((0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_2__.getPayload)(self), (node) => {
       node.done = true;
     });
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.callFluidObservers)(self, {
-      type: 'idle',
+      type: "idle",
       parent: self
     });
   }
@@ -9161,14 +8538,15 @@ _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.Globals.assign({
 const update = _react_spring_shared__WEBPACK_IMPORTED_MODULE_0__.frameLoop.advance;
 
 
+//# sourceMappingURL=index.js.map
 
 
 /***/ }),
 
-/***/ "./node_modules/@react-spring/shared/dist/react-spring-shared.esm.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/@react-spring/shared/dist/react-spring-shared.esm.js ***!
-  \***************************************************************************/
+/***/ "./node_modules/@react-spring/shared/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@react-spring/shared/index.js ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9181,9 +8559,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "callFluidObserver": () => (/* binding */ callFluidObserver),
 /* harmony export */   "callFluidObservers": () => (/* binding */ callFluidObservers),
 /* harmony export */   "colorToRgba": () => (/* binding */ colorToRgba),
-/* harmony export */   "colors": () => (/* binding */ colors),
+/* harmony export */   "colors": () => (/* binding */ colors$1),
 /* harmony export */   "createInterpolator": () => (/* binding */ createInterpolator),
-/* harmony export */   "createStringInterpolator": () => (/* binding */ createStringInterpolator),
+/* harmony export */   "createStringInterpolator": () => (/* binding */ createStringInterpolator$1),
 /* harmony export */   "defineHidden": () => (/* binding */ defineHidden),
 /* harmony export */   "deprecateDirectCall": () => (/* binding */ deprecateDirectCall),
 /* harmony export */   "deprecateInterpolate": () => (/* binding */ deprecateInterpolate),
@@ -9222,32 +8600,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-function noop() {}
-const defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {
-  value,
-  writable: true,
-  configurable: true
-});
+function noop() {
+}
+const defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {value, writable: true, configurable: true});
 const is = {
   arr: Array.isArray,
-  obj: a => !!a && a.constructor.name === 'Object',
-  fun: a => typeof a === 'function',
-  str: a => typeof a === 'string',
-  num: a => typeof a === 'number',
-  und: a => a === undefined
+  obj: (a) => !!a && a.constructor.name === "Object",
+  fun: (a) => typeof a === "function",
+  str: (a) => typeof a === "string",
+  num: (a) => typeof a === "number",
+  und: (a) => a === void 0
 };
 function isEqual(a, b) {
   if (is.arr(a)) {
-    if (!is.arr(b) || a.length !== b.length) return false;
-
+    if (!is.arr(b) || a.length !== b.length)
+      return false;
     for (let i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) return false;
+      if (a[i] !== b[i])
+        return false;
     }
-
     return true;
   }
-
   return a === b;
 }
 const each = (obj, fn) => obj.forEach(fn);
@@ -9256,7 +8629,7 @@ function eachProp(obj, fn, ctx) {
     fn.call(ctx, obj[key], key);
   }
 }
-const toArray = a => is.und(a) ? [] : is.arr(a) ? a : [a];
+const toArray = (a) => is.und(a) ? [] : is.arr(a) ? a : [a];
 function flush(queue, iterator) {
   if (queue.size) {
     const items = Array.from(queue);
@@ -9264,29 +8637,37 @@ function flush(queue, iterator) {
     each(items, iterator);
   }
 }
-const flushCalls = (queue, ...args) => flush(queue, fn => fn(...args));
+const flushCalls = (queue, ...args) => flush(queue, (fn) => fn(...args));
 
-let createStringInterpolator$1;
+let createStringInterpolator;
 let to;
-let colors$1 = null;
+let colors = null;
 let skipAnimation = false;
 let willAdvance = noop;
-const assign = globals => {
-  if (globals.to) to = globals.to;
-  if (globals.now) rafz__WEBPACK_IMPORTED_MODULE_0__.raf.now = globals.now;
-  if (globals.colors !== undefined) colors$1 = globals.colors;
-  if (globals.skipAnimation != null) skipAnimation = globals.skipAnimation;
-  if (globals.createStringInterpolator) createStringInterpolator$1 = globals.createStringInterpolator;
-  if (globals.requestAnimationFrame) rafz__WEBPACK_IMPORTED_MODULE_0__.raf.use(globals.requestAnimationFrame);
-  if (globals.batchedUpdates) rafz__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates = globals.batchedUpdates;
-  if (globals.willAdvance) willAdvance = globals.willAdvance;
+const assign = (globals) => {
+  if (globals.to)
+    to = globals.to;
+  if (globals.now)
+    rafz__WEBPACK_IMPORTED_MODULE_0__.raf.now = globals.now;
+  if (globals.colors !== void 0)
+    colors = globals.colors;
+  if (globals.skipAnimation != null)
+    skipAnimation = globals.skipAnimation;
+  if (globals.createStringInterpolator)
+    createStringInterpolator = globals.createStringInterpolator;
+  if (globals.requestAnimationFrame)
+    rafz__WEBPACK_IMPORTED_MODULE_0__.raf.use(globals.requestAnimationFrame);
+  if (globals.batchedUpdates)
+    rafz__WEBPACK_IMPORTED_MODULE_0__.raf.batchedUpdates = globals.batchedUpdates;
+  if (globals.willAdvance)
+    willAdvance = globals.willAdvance;
 };
 
 var globals = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  get createStringInterpolator () { return createStringInterpolator$1; },
+  get createStringInterpolator () { return createStringInterpolator; },
   get to () { return to; },
-  get colors () { return colors$1; },
+  get colors () { return colors; },
   get skipAnimation () { return skipAnimation; },
   get willAdvance () { return willAdvance; },
   assign: assign
@@ -9300,7 +8681,6 @@ const frameLoop = {
   get idle() {
     return !startQueue.size && !currentFrame.length;
   },
-
   start(animation) {
     if (priority > animation.priority) {
       startQueue.add(animation);
@@ -9310,236 +8690,221 @@ const frameLoop = {
       (0,rafz__WEBPACK_IMPORTED_MODULE_0__.raf)(advance);
     }
   },
-
   advance,
-
   sort(animation) {
     if (priority) {
       rafz__WEBPACK_IMPORTED_MODULE_0__.raf.onFrame(() => frameLoop.sort(animation));
     } else {
       const prevIndex = currentFrame.indexOf(animation);
-
       if (~prevIndex) {
         currentFrame.splice(prevIndex, 1);
         startUnsafely(animation);
       }
     }
   },
-
   clear() {
     currentFrame = [];
     startQueue.clear();
   }
-
 };
-
 function flushStartQueue() {
   startQueue.forEach(startSafely);
   startQueue.clear();
   (0,rafz__WEBPACK_IMPORTED_MODULE_0__.raf)(advance);
 }
-
 function startSafely(animation) {
-  if (!currentFrame.includes(animation)) startUnsafely(animation);
+  if (!currentFrame.includes(animation))
+    startUnsafely(animation);
 }
-
 function startUnsafely(animation) {
-  currentFrame.splice(findIndex(currentFrame, other => other.priority > animation.priority), 0, animation);
+  currentFrame.splice(findIndex(currentFrame, (other) => other.priority > animation.priority), 0, animation);
 }
-
 function advance(dt) {
   const nextFrame = prevFrame;
-
   for (let i = 0; i < currentFrame.length; i++) {
     const animation = currentFrame[i];
     priority = animation.priority;
-
     if (!animation.idle) {
       willAdvance(animation);
       animation.advance(dt);
-
       if (!animation.idle) {
         nextFrame.push(animation);
       }
     }
   }
-
   priority = 0;
   prevFrame = currentFrame;
   prevFrame.length = 0;
   currentFrame = nextFrame;
   return currentFrame.length > 0;
 }
-
 function findIndex(arr, test) {
   const index = arr.findIndex(test);
   return index < 0 ? arr.length : index;
 }
 
-const colors = {
-  transparent: 0x00000000,
-  aliceblue: 0xf0f8ffff,
-  antiquewhite: 0xfaebd7ff,
-  aqua: 0x00ffffff,
-  aquamarine: 0x7fffd4ff,
-  azure: 0xf0ffffff,
-  beige: 0xf5f5dcff,
-  bisque: 0xffe4c4ff,
-  black: 0x000000ff,
-  blanchedalmond: 0xffebcdff,
-  blue: 0x0000ffff,
-  blueviolet: 0x8a2be2ff,
-  brown: 0xa52a2aff,
-  burlywood: 0xdeb887ff,
-  burntsienna: 0xea7e5dff,
-  cadetblue: 0x5f9ea0ff,
-  chartreuse: 0x7fff00ff,
-  chocolate: 0xd2691eff,
-  coral: 0xff7f50ff,
-  cornflowerblue: 0x6495edff,
-  cornsilk: 0xfff8dcff,
-  crimson: 0xdc143cff,
-  cyan: 0x00ffffff,
-  darkblue: 0x00008bff,
-  darkcyan: 0x008b8bff,
-  darkgoldenrod: 0xb8860bff,
-  darkgray: 0xa9a9a9ff,
-  darkgreen: 0x006400ff,
-  darkgrey: 0xa9a9a9ff,
-  darkkhaki: 0xbdb76bff,
-  darkmagenta: 0x8b008bff,
-  darkolivegreen: 0x556b2fff,
-  darkorange: 0xff8c00ff,
-  darkorchid: 0x9932ccff,
-  darkred: 0x8b0000ff,
-  darksalmon: 0xe9967aff,
-  darkseagreen: 0x8fbc8fff,
-  darkslateblue: 0x483d8bff,
-  darkslategray: 0x2f4f4fff,
-  darkslategrey: 0x2f4f4fff,
-  darkturquoise: 0x00ced1ff,
-  darkviolet: 0x9400d3ff,
-  deeppink: 0xff1493ff,
-  deepskyblue: 0x00bfffff,
-  dimgray: 0x696969ff,
-  dimgrey: 0x696969ff,
-  dodgerblue: 0x1e90ffff,
-  firebrick: 0xb22222ff,
-  floralwhite: 0xfffaf0ff,
-  forestgreen: 0x228b22ff,
-  fuchsia: 0xff00ffff,
-  gainsboro: 0xdcdcdcff,
-  ghostwhite: 0xf8f8ffff,
-  gold: 0xffd700ff,
-  goldenrod: 0xdaa520ff,
-  gray: 0x808080ff,
-  green: 0x008000ff,
-  greenyellow: 0xadff2fff,
-  grey: 0x808080ff,
-  honeydew: 0xf0fff0ff,
-  hotpink: 0xff69b4ff,
-  indianred: 0xcd5c5cff,
-  indigo: 0x4b0082ff,
-  ivory: 0xfffff0ff,
-  khaki: 0xf0e68cff,
-  lavender: 0xe6e6faff,
-  lavenderblush: 0xfff0f5ff,
-  lawngreen: 0x7cfc00ff,
-  lemonchiffon: 0xfffacdff,
-  lightblue: 0xadd8e6ff,
-  lightcoral: 0xf08080ff,
-  lightcyan: 0xe0ffffff,
-  lightgoldenrodyellow: 0xfafad2ff,
-  lightgray: 0xd3d3d3ff,
-  lightgreen: 0x90ee90ff,
-  lightgrey: 0xd3d3d3ff,
-  lightpink: 0xffb6c1ff,
-  lightsalmon: 0xffa07aff,
-  lightseagreen: 0x20b2aaff,
-  lightskyblue: 0x87cefaff,
-  lightslategray: 0x778899ff,
-  lightslategrey: 0x778899ff,
-  lightsteelblue: 0xb0c4deff,
-  lightyellow: 0xffffe0ff,
-  lime: 0x00ff00ff,
-  limegreen: 0x32cd32ff,
-  linen: 0xfaf0e6ff,
-  magenta: 0xff00ffff,
-  maroon: 0x800000ff,
-  mediumaquamarine: 0x66cdaaff,
-  mediumblue: 0x0000cdff,
-  mediumorchid: 0xba55d3ff,
-  mediumpurple: 0x9370dbff,
-  mediumseagreen: 0x3cb371ff,
-  mediumslateblue: 0x7b68eeff,
-  mediumspringgreen: 0x00fa9aff,
-  mediumturquoise: 0x48d1ccff,
-  mediumvioletred: 0xc71585ff,
-  midnightblue: 0x191970ff,
-  mintcream: 0xf5fffaff,
-  mistyrose: 0xffe4e1ff,
-  moccasin: 0xffe4b5ff,
-  navajowhite: 0xffdeadff,
-  navy: 0x000080ff,
-  oldlace: 0xfdf5e6ff,
-  olive: 0x808000ff,
-  olivedrab: 0x6b8e23ff,
-  orange: 0xffa500ff,
-  orangered: 0xff4500ff,
-  orchid: 0xda70d6ff,
-  palegoldenrod: 0xeee8aaff,
-  palegreen: 0x98fb98ff,
-  paleturquoise: 0xafeeeeff,
-  palevioletred: 0xdb7093ff,
-  papayawhip: 0xffefd5ff,
-  peachpuff: 0xffdab9ff,
-  peru: 0xcd853fff,
-  pink: 0xffc0cbff,
-  plum: 0xdda0ddff,
-  powderblue: 0xb0e0e6ff,
-  purple: 0x800080ff,
-  rebeccapurple: 0x663399ff,
-  red: 0xff0000ff,
-  rosybrown: 0xbc8f8fff,
-  royalblue: 0x4169e1ff,
-  saddlebrown: 0x8b4513ff,
-  salmon: 0xfa8072ff,
-  sandybrown: 0xf4a460ff,
-  seagreen: 0x2e8b57ff,
-  seashell: 0xfff5eeff,
-  sienna: 0xa0522dff,
-  silver: 0xc0c0c0ff,
-  skyblue: 0x87ceebff,
-  slateblue: 0x6a5acdff,
-  slategray: 0x708090ff,
-  slategrey: 0x708090ff,
-  snow: 0xfffafaff,
-  springgreen: 0x00ff7fff,
-  steelblue: 0x4682b4ff,
-  tan: 0xd2b48cff,
-  teal: 0x008080ff,
-  thistle: 0xd8bfd8ff,
-  tomato: 0xff6347ff,
-  turquoise: 0x40e0d0ff,
-  violet: 0xee82eeff,
-  wheat: 0xf5deb3ff,
-  white: 0xffffffff,
-  whitesmoke: 0xf5f5f5ff,
-  yellow: 0xffff00ff,
-  yellowgreen: 0x9acd32ff
+const colors$1 = {
+  transparent: 0,
+  aliceblue: 4042850303,
+  antiquewhite: 4209760255,
+  aqua: 16777215,
+  aquamarine: 2147472639,
+  azure: 4043309055,
+  beige: 4126530815,
+  bisque: 4293182719,
+  black: 255,
+  blanchedalmond: 4293643775,
+  blue: 65535,
+  blueviolet: 2318131967,
+  brown: 2771004159,
+  burlywood: 3736635391,
+  burntsienna: 3934150143,
+  cadetblue: 1604231423,
+  chartreuse: 2147418367,
+  chocolate: 3530104575,
+  coral: 4286533887,
+  cornflowerblue: 1687547391,
+  cornsilk: 4294499583,
+  crimson: 3692313855,
+  cyan: 16777215,
+  darkblue: 35839,
+  darkcyan: 9145343,
+  darkgoldenrod: 3095792639,
+  darkgray: 2846468607,
+  darkgreen: 6553855,
+  darkgrey: 2846468607,
+  darkkhaki: 3182914559,
+  darkmagenta: 2332068863,
+  darkolivegreen: 1433087999,
+  darkorange: 4287365375,
+  darkorchid: 2570243327,
+  darkred: 2332033279,
+  darksalmon: 3918953215,
+  darkseagreen: 2411499519,
+  darkslateblue: 1211993087,
+  darkslategray: 793726975,
+  darkslategrey: 793726975,
+  darkturquoise: 13554175,
+  darkviolet: 2483082239,
+  deeppink: 4279538687,
+  deepskyblue: 12582911,
+  dimgray: 1768516095,
+  dimgrey: 1768516095,
+  dodgerblue: 512819199,
+  firebrick: 2988581631,
+  floralwhite: 4294635775,
+  forestgreen: 579543807,
+  fuchsia: 4278255615,
+  gainsboro: 3705462015,
+  ghostwhite: 4177068031,
+  gold: 4292280575,
+  goldenrod: 3668254975,
+  gray: 2155905279,
+  green: 8388863,
+  greenyellow: 2919182335,
+  grey: 2155905279,
+  honeydew: 4043305215,
+  hotpink: 4285117695,
+  indianred: 3445382399,
+  indigo: 1258324735,
+  ivory: 4294963455,
+  khaki: 4041641215,
+  lavender: 3873897215,
+  lavenderblush: 4293981695,
+  lawngreen: 2096890111,
+  lemonchiffon: 4294626815,
+  lightblue: 2916673279,
+  lightcoral: 4034953471,
+  lightcyan: 3774873599,
+  lightgoldenrodyellow: 4210742015,
+  lightgray: 3553874943,
+  lightgreen: 2431553791,
+  lightgrey: 3553874943,
+  lightpink: 4290167295,
+  lightsalmon: 4288707327,
+  lightseagreen: 548580095,
+  lightskyblue: 2278488831,
+  lightslategray: 2005441023,
+  lightslategrey: 2005441023,
+  lightsteelblue: 2965692159,
+  lightyellow: 4294959359,
+  lime: 16711935,
+  limegreen: 852308735,
+  linen: 4210091775,
+  magenta: 4278255615,
+  maroon: 2147483903,
+  mediumaquamarine: 1724754687,
+  mediumblue: 52735,
+  mediumorchid: 3126187007,
+  mediumpurple: 2473647103,
+  mediumseagreen: 1018393087,
+  mediumslateblue: 2070474495,
+  mediumspringgreen: 16423679,
+  mediumturquoise: 1221709055,
+  mediumvioletred: 3340076543,
+  midnightblue: 421097727,
+  mintcream: 4127193855,
+  mistyrose: 4293190143,
+  moccasin: 4293178879,
+  navajowhite: 4292783615,
+  navy: 33023,
+  oldlace: 4260751103,
+  olive: 2155872511,
+  olivedrab: 1804477439,
+  orange: 4289003775,
+  orangered: 4282712319,
+  orchid: 3664828159,
+  palegoldenrod: 4008225535,
+  palegreen: 2566625535,
+  paleturquoise: 2951671551,
+  palevioletred: 3681588223,
+  papayawhip: 4293907967,
+  peachpuff: 4292524543,
+  peru: 3448061951,
+  pink: 4290825215,
+  plum: 3718307327,
+  powderblue: 2967529215,
+  purple: 2147516671,
+  rebeccapurple: 1714657791,
+  red: 4278190335,
+  rosybrown: 3163525119,
+  royalblue: 1097458175,
+  saddlebrown: 2336560127,
+  salmon: 4202722047,
+  sandybrown: 4104413439,
+  seagreen: 780883967,
+  seashell: 4294307583,
+  sienna: 2689740287,
+  silver: 3233857791,
+  skyblue: 2278484991,
+  slateblue: 1784335871,
+  slategray: 1887473919,
+  slategrey: 1887473919,
+  snow: 4294638335,
+  springgreen: 16744447,
+  steelblue: 1182971135,
+  tan: 3535047935,
+  teal: 8421631,
+  thistle: 3636451583,
+  tomato: 4284696575,
+  turquoise: 1088475391,
+  violet: 4001558271,
+  wheat: 4125012991,
+  white: 4294967295,
+  whitesmoke: 4126537215,
+  yellow: 4294902015,
+  yellowgreen: 2597139199
 };
 
-const NUMBER = '[-+]?\\d*\\.?\\d+';
-const PERCENTAGE = NUMBER + '%';
-
+const NUMBER = "[-+]?\\d*\\.?\\d+";
+const PERCENTAGE = NUMBER + "%";
 function call(...parts) {
-  return '\\(\\s*(' + parts.join(')\\s*,\\s*(') + ')\\s*\\)';
+  return "\\(\\s*(" + parts.join(")\\s*,\\s*(") + ")\\s*\\)";
 }
-
-const rgb = new RegExp('rgb' + call(NUMBER, NUMBER, NUMBER));
-const rgba = new RegExp('rgba' + call(NUMBER, NUMBER, NUMBER, NUMBER));
-const hsl = new RegExp('hsl' + call(NUMBER, PERCENTAGE, PERCENTAGE));
-const hsla = new RegExp('hsla' + call(NUMBER, PERCENTAGE, PERCENTAGE, NUMBER));
+const rgb = new RegExp("rgb" + call(NUMBER, NUMBER, NUMBER));
+const rgba = new RegExp("rgba" + call(NUMBER, NUMBER, NUMBER, NUMBER));
+const hsl = new RegExp("hsl" + call(NUMBER, PERCENTAGE, PERCENTAGE));
+const hsla = new RegExp("hsla" + call(NUMBER, PERCENTAGE, PERCENTAGE, NUMBER));
 const hex3 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
 const hex4 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
 const hex6 = /^#([0-9a-fA-F]{6})$/;
@@ -9547,55 +8912,49 @@ const hex8 = /^#([0-9a-fA-F]{8})$/;
 
 function normalizeColor(color) {
   let match;
-
-  if (typeof color === 'number') {
-    return color >>> 0 === color && color >= 0 && color <= 0xffffffff ? color : null;
+  if (typeof color === "number") {
+    return color >>> 0 === color && color >= 0 && color <= 4294967295 ? color : null;
   }
-
-  if (match = hex6.exec(color)) return parseInt(match[1] + 'ff', 16) >>> 0;
-
-  if (colors$1 && colors$1[color] !== undefined) {
-    return colors$1[color];
+  if (match = hex6.exec(color))
+    return parseInt(match[1] + "ff", 16) >>> 0;
+  if (colors && colors[color] !== void 0) {
+    return colors[color];
   }
-
   if (match = rgb.exec(color)) {
-    return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | 0x000000ff) >>> 0;
+    return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | 255) >>> 0;
   }
-
   if (match = rgba.exec(color)) {
     return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | parse1(match[4])) >>> 0;
   }
-
   if (match = hex3.exec(color)) {
-    return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + 'ff', 16) >>> 0;
+    return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + "ff", 16) >>> 0;
   }
-
-  if (match = hex8.exec(color)) return parseInt(match[1], 16) >>> 0;
-
+  if (match = hex8.exec(color))
+    return parseInt(match[1], 16) >>> 0;
   if (match = hex4.exec(color)) {
     return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + match[4] + match[4], 16) >>> 0;
   }
-
   if (match = hsl.exec(color)) {
-    return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | 0x000000ff) >>> 0;
+    return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | 255) >>> 0;
   }
-
   if (match = hsla.exec(color)) {
     return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | parse1(match[4])) >>> 0;
   }
-
   return null;
 }
-
 function hue2rgb(p, q, t) {
-  if (t < 0) t += 1;
-  if (t > 1) t -= 1;
-  if (t < 1 / 6) return p + (q - p) * 6 * t;
-  if (t < 1 / 2) return q;
-  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+  if (t < 0)
+    t += 1;
+  if (t > 1)
+    t -= 1;
+  if (t < 1 / 6)
+    return p + (q - p) * 6 * t;
+  if (t < 1 / 2)
+    return q;
+  if (t < 2 / 3)
+    return p + (q - p) * (2 / 3 - t) * 6;
   return p;
 }
-
 function hslToRgb(h, s, l) {
   const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
   const p = 2 * l - q;
@@ -9604,41 +8963,44 @@ function hslToRgb(h, s, l) {
   const b = hue2rgb(p, q, h - 1 / 3);
   return Math.round(r * 255) << 24 | Math.round(g * 255) << 16 | Math.round(b * 255) << 8;
 }
-
 function parse255(str) {
   const int = parseInt(str, 10);
-  if (int < 0) return 0;
-  if (int > 255) return 255;
+  if (int < 0)
+    return 0;
+  if (int > 255)
+    return 255;
   return int;
 }
-
 function parse360(str) {
   const int = parseFloat(str);
   return (int % 360 + 360) % 360 / 360;
 }
-
 function parse1(str) {
   const num = parseFloat(str);
-  if (num < 0) return 0;
-  if (num > 1) return 255;
+  if (num < 0)
+    return 0;
+  if (num > 1)
+    return 255;
   return Math.round(num * 255);
 }
-
 function parsePercentage(str) {
   const int = parseFloat(str);
-  if (int < 0) return 0;
-  if (int > 100) return 1;
+  if (int < 0)
+    return 0;
+  if (int > 100)
+    return 1;
   return int / 100;
 }
 
 function colorToRgba(input) {
   let int32Color = normalizeColor(input);
-  if (int32Color === null) return input;
+  if (int32Color === null)
+    return input;
   int32Color = int32Color || 0;
-  let r = (int32Color & 0xff000000) >>> 24;
-  let g = (int32Color & 0x00ff0000) >>> 16;
-  let b = (int32Color & 0x0000ff00) >>> 8;
-  let a = (int32Color & 0x000000ff) / 255;
+  let r = (int32Color & 4278190080) >>> 24;
+  let g = (int32Color & 16711680) >>> 16;
+  let b = (int32Color & 65280) >>> 8;
+  let a = (int32Color & 255) / 255;
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
@@ -9646,85 +9008,72 @@ const createInterpolator = (range, output, extrapolate) => {
   if (is.fun(range)) {
     return range;
   }
-
   if (is.arr(range)) {
     return createInterpolator({
       range,
-      output: output,
+      output,
       extrapolate
     });
   }
-
   if (is.str(range.output[0])) {
-    return createStringInterpolator$1(range);
+    return createStringInterpolator(range);
   }
-
   const config = range;
   const outputRange = config.output;
   const inputRange = config.range || [0, 1];
-  const extrapolateLeft = config.extrapolateLeft || config.extrapolate || 'extend';
-  const extrapolateRight = config.extrapolateRight || config.extrapolate || 'extend';
-
-  const easing = config.easing || (t => t);
-
-  return input => {
-    const range = findRange(input, inputRange);
-    return interpolate(input, inputRange[range], inputRange[range + 1], outputRange[range], outputRange[range + 1], easing, extrapolateLeft, extrapolateRight, config.map);
+  const extrapolateLeft = config.extrapolateLeft || config.extrapolate || "extend";
+  const extrapolateRight = config.extrapolateRight || config.extrapolate || "extend";
+  const easing = config.easing || ((t) => t);
+  return (input) => {
+    const range2 = findRange(input, inputRange);
+    return interpolate(input, inputRange[range2], inputRange[range2 + 1], outputRange[range2], outputRange[range2 + 1], easing, extrapolateLeft, extrapolateRight, config.map);
   };
 };
-
 function interpolate(input, inputMin, inputMax, outputMin, outputMax, easing, extrapolateLeft, extrapolateRight, map) {
   let result = map ? map(input) : input;
-
   if (result < inputMin) {
-    if (extrapolateLeft === 'identity') return result;else if (extrapolateLeft === 'clamp') result = inputMin;
+    if (extrapolateLeft === "identity")
+      return result;
+    else if (extrapolateLeft === "clamp")
+      result = inputMin;
   }
-
   if (result > inputMax) {
-    if (extrapolateRight === 'identity') return result;else if (extrapolateRight === 'clamp') result = inputMax;
+    if (extrapolateRight === "identity")
+      return result;
+    else if (extrapolateRight === "clamp")
+      result = inputMax;
   }
-
-  if (outputMin === outputMax) return outputMin;
-  if (inputMin === inputMax) return input <= inputMin ? outputMin : outputMax;
-  if (inputMin === -Infinity) result = -result;else if (inputMax === Infinity) result = result - inputMin;else result = (result - inputMin) / (inputMax - inputMin);
+  if (outputMin === outputMax)
+    return outputMin;
+  if (inputMin === inputMax)
+    return input <= inputMin ? outputMin : outputMax;
+  if (inputMin === -Infinity)
+    result = -result;
+  else if (inputMax === Infinity)
+    result = result - inputMin;
+  else
+    result = (result - inputMin) / (inputMax - inputMin);
   result = easing(result);
-  if (outputMin === -Infinity) result = -result;else if (outputMax === Infinity) result = result + outputMin;else result = result * (outputMax - outputMin) + outputMin;
+  if (outputMin === -Infinity)
+    result = -result;
+  else if (outputMax === Infinity)
+    result = result + outputMin;
+  else
+    result = result * (outputMax - outputMin) + outputMin;
   return result;
 }
-
 function findRange(input, inputRange) {
-  for (var i = 1; i < inputRange.length - 1; ++i) if (inputRange[i] >= input) break;
-
+  for (var i = 1; i < inputRange.length - 1; ++i)
+    if (inputRange[i] >= input)
+      break;
   return i - 1;
 }
 
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-const $get = Symbol.for('FluidValue.get');
-const $observers = Symbol.for('FluidValue.observers');
-
-const hasFluidValue = arg => Boolean(arg && arg[$get]);
-
-const getFluidValue = arg => arg && arg[$get] ? arg[$get]() : arg;
-
-const getFluidObservers = target => target[$observers] || null;
-
+const $get = Symbol.for("FluidValue.get");
+const $observers = Symbol.for("FluidValue.observers");
+const hasFluidValue = (arg) => Boolean(arg && arg[$get]);
+const getFluidValue = (arg) => arg && arg[$get] ? arg[$get]() : arg;
+const getFluidObservers = (target) => target[$observers] || null;
 function callFluidObserver(observer, event) {
   if (observer.eventObserved) {
     observer.eventObserved(event);
@@ -9732,68 +9081,52 @@ function callFluidObserver(observer, event) {
     observer(event);
   }
 }
-
 function callFluidObservers(target, event) {
   let observers = target[$observers];
-
   if (observers) {
-    observers.forEach(observer => {
+    observers.forEach((observer) => {
       callFluidObserver(observer, event);
     });
   }
 }
-
 class FluidValue {
   constructor(get) {
     if (!get && !(get = this.get)) {
-      throw Error('Unknown getter');
+      throw Error("Unknown getter");
     }
-
     setFluidGetter(this, get);
   }
-
 }
-
 const setFluidGetter = (target, get) => setHidden(target, $get, get);
-
 function addFluidObserver(target, observer) {
   if (target[$get]) {
     let observers = target[$observers];
-
     if (!observers) {
       setHidden(target, $observers, observers = new Set());
     }
-
     if (!observers.has(observer)) {
       observers.add(observer);
-
       if (target.observerAdded) {
         target.observerAdded(observers.size, observer);
       }
     }
   }
-
   return observer;
 }
-
 function removeFluidObserver(target, observer) {
   let observers = target[$observers];
-
   if (observers && observers.has(observer)) {
     const count = observers.size - 1;
-
     if (count) {
       observers.delete(observer);
     } else {
       target[$observers] = null;
     }
-
     if (target.observerRemoved) {
       target.observerRemoved(count, observer);
     }
   }
 }
-
 const setHidden = (target, key, value) => Object.defineProperty(target, key, {
   value,
   writable: true,
@@ -9804,39 +9137,32 @@ const numberRegex = /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
 const colorRegex = /(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))/gi;
 let namedColorRegex;
 const rgbaRegex = /rgba\(([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+)\)/gi;
-
 const rgbaRound = (_, p1, p2, p3, p4) => `rgba(${Math.round(p1)}, ${Math.round(p2)}, ${Math.round(p3)}, ${p4})`;
-
-const createStringInterpolator = config => {
-  if (!namedColorRegex) namedColorRegex = colors$1 ? new RegExp(`(${Object.keys(colors$1).join('|')})(?!\\w)`, 'g') : /^\b$/;
-  const output = config.output.map(value => getFluidValue(value).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba));
-  const keyframes = output.map(value => value.match(numberRegex).map(Number));
-  const outputRanges = keyframes[0].map((_, i) => keyframes.map(values => {
+const createStringInterpolator$1 = (config) => {
+  if (!namedColorRegex)
+    namedColorRegex = colors ? new RegExp(`(${Object.keys(colors).join("|")})`, "g") : /^\b$/;
+  const output = config.output.map((value) => getFluidValue(value).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba));
+  const keyframes = output.map((value) => value.match(numberRegex).map(Number));
+  const outputRanges = keyframes[0].map((_, i) => keyframes.map((values) => {
     if (!(i in values)) {
       throw Error('The arity of each "output" value must be equal');
     }
-
     return values[i];
   }));
-  const interpolators = outputRanges.map(output => createInterpolator(_extends({}, config, {
-    output
-  })));
-  return input => {
+  const interpolators = outputRanges.map((output2) => createInterpolator({...config, output: output2}));
+  return (input) => {
     let i = 0;
     return output[0].replace(numberRegex, () => String(interpolators[i++](input))).replace(rgbaRegex, rgbaRound);
   };
 };
 
-const prefix = 'react-spring: ';
-
-const once = fn => {
+const prefix = "react-spring: ";
+const once = (fn) => {
   const func = fn;
   let called = false;
-
-  if (typeof func != 'function') {
+  if (typeof func != "function") {
     throw new TypeError(`${prefix}once requires a function parameter`);
   }
-
   return (...args) => {
     if (!called) {
       func(...args);
@@ -9844,21 +9170,20 @@ const once = fn => {
     }
   };
 };
-
 const warnInterpolate = once(console.warn);
 function deprecateInterpolate() {
   warnInterpolate(`${prefix}The "interpolate" function is deprecated in v9 (use "to" instead)`);
 }
 const warnDirectCall = once(console.warn);
 function deprecateDirectCall() {
-  warnDirectCall(`${prefix}Directly calling start instead of using the api object is deprecated in v9 (use ".start" instead), this will be removed in later 0.X.0 versions`);
+  warnDirectCall(`${prefix}Directly calling start instead of using the api object is deprecated in v9 (use ".start" instead)`);
 }
 
 function isAnimatedString(value) {
-  return is.str(value) && (value[0] == '#' || /\d/.test(value) || value in (colors$1 || {}));
+  return is.str(value) && (value[0] == "#" || /\d/.test(value) || value in (colors || {}));
 }
 
-const useOnce = effect => (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(effect, emptyDeps);
+const useOnce = (effect) => (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(effect, emptyDeps);
 const emptyDeps = [];
 
 function useForceUpdate() {
@@ -9871,7 +9196,6 @@ function useForceUpdate() {
     }
   };
 }
-
 function makeMountedRef() {
   const mounted = {
     current: true,
@@ -9890,10 +9214,8 @@ function useMemoOne(getResult, inputs) {
   const committed = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
   const prevCache = committed.current;
   let cache = prevCache;
-
   if (cache) {
     const useCache = Boolean(inputs && cache.inputs && areInputsEqual(inputs, cache.inputs));
-
     if (!useCache) {
       cache = {
         inputs,
@@ -9903,28 +9225,23 @@ function useMemoOne(getResult, inputs) {
   } else {
     cache = initial;
   }
-
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     committed.current = cache;
-
     if (prevCache == initial) {
-      initial.inputs = initial.result = undefined;
+      initial.inputs = initial.result = void 0;
     }
   }, [cache]);
   return cache.result;
 }
-
 function areInputsEqual(next, prev) {
   if (next.length !== prev.length) {
     return false;
   }
-
   for (let i = 0; i < next.length; i++) {
     if (next[i] !== prev[i]) {
       return false;
     }
   }
-
   return true;
 }
 
@@ -9936,9 +9253,10 @@ function usePrev(value) {
   return prevRef.current;
 }
 
-const useLayoutEffect = typeof window !== 'undefined' && window.document && window.document.createElement ? react__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect : react__WEBPACK_IMPORTED_MODULE_1__.useEffect;
+const useLayoutEffect = typeof window !== "undefined" && window.document && window.document.createElement ? react__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect : react__WEBPACK_IMPORTED_MODULE_1__.useEffect;
 
 
+//# sourceMappingURL=index.js.map
 
 
 /***/ }),
@@ -9963,10 +9281,10 @@ const useLayoutEffect = typeof window !== 'undefined' && window.document && wind
 
 /***/ }),
 
-/***/ "./node_modules/@react-spring/web/dist/react-spring-web.esm.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@react-spring/web/dist/react-spring-web.esm.js ***!
-  \*********************************************************************/
+/***/ "./node_modules/@react-spring/web/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/@react-spring/web/index.js ***!
+  \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9975,85 +9293,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "a": () => (/* binding */ animated),
 /* harmony export */   "animated": () => (/* binding */ animated)
 /* harmony export */ });
-/* harmony import */ var _react_spring_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/core */ "./node_modules/@react-spring/core/dist/react-spring-core.esm.js");
+/* harmony import */ var _react_spring_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/core */ "./node_modules/@react-spring/core/index.js");
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _react_spring_core__WEBPACK_IMPORTED_MODULE_0__) if(["default","a","animated"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _react_spring_core__WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @react-spring/shared */ "./node_modules/@react-spring/shared/dist/react-spring-shared.esm.js");
-/* harmony import */ var _react_spring_animated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @react-spring/animated */ "./node_modules/@react-spring/animated/dist/react-spring-animated.esm.js");
+/* harmony import */ var _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @react-spring/shared */ "./node_modules/@react-spring/shared/index.js");
+/* harmony import */ var _react_spring_animated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @react-spring/animated */ "./node_modules/@react-spring/animated/index.js");
 
 
 
 
 
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
 
 const isCustomPropRE = /^--/;
-
 function dangerousStyleValue(name, value) {
-  if (value == null || typeof value === 'boolean' || value === '') return '';
-  if (typeof value === 'number' && value !== 0 && !isCustomPropRE.test(name) && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name])) return value + 'px';
-  return ('' + value).trim();
+  if (value == null || typeof value === "boolean" || value === "")
+    return "";
+  if (typeof value === "number" && value !== 0 && !isCustomPropRE.test(name) && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name]))
+    return value + "px";
+  return ("" + value).trim();
 }
-
 const attributeCache = {};
 function applyAnimatedValues(instance, props) {
   if (!instance.nodeType || !instance.setAttribute) {
     return false;
   }
-
-  const isFilterElement = instance.nodeName === 'filter' || instance.parentNode && instance.parentNode.nodeName === 'filter';
-
-  const _ref = props,
-        {
-    style,
-    children,
-    scrollTop,
-    scrollLeft
-  } = _ref,
-        attributes = _objectWithoutPropertiesLoose(_ref, ["style", "children", "scrollTop", "scrollLeft"]);
-
+  const isFilterElement = instance.nodeName === "filter" || instance.parentNode && instance.parentNode.nodeName === "filter";
+  const {style, children, scrollTop, scrollLeft, ...attributes} = props;
   const values = Object.values(attributes);
-  const names = Object.keys(attributes).map(name => isFilterElement || instance.hasAttribute(name) ? name : attributeCache[name] || (attributeCache[name] = name.replace(/([A-Z])/g, n => '-' + n.toLowerCase())));
-
+  const names = Object.keys(attributes).map((name) => isFilterElement || instance.hasAttribute(name) ? name : attributeCache[name] || (attributeCache[name] = name.replace(/([A-Z])/g, (n) => "-" + n.toLowerCase())));
   if (children !== void 0) {
     instance.textContent = children;
   }
-
   for (let name in style) {
     if (style.hasOwnProperty(name)) {
       const value = dangerousStyleValue(name, style[name]);
-      if (name === 'float') name = 'cssFloat';else if (isCustomPropRE.test(name)) {
+      if (name === "float")
+        name = "cssFloat";
+      else if (isCustomPropRE.test(name)) {
         instance.style.setProperty(name, value);
       } else {
         instance.style[name] = value;
       }
     }
   }
-
   names.forEach((name, i) => {
     instance.setAttribute(name, values[i]);
   });
-
   if (scrollTop !== void 0) {
     instance.scrollTop = scrollTop;
   }
-
   if (scrollLeft !== void 0) {
     instance.scrollLeft = scrollLeft;
   }
@@ -10101,105 +9391,226 @@ let isUnitlessNumber = {
   strokeOpacity: true,
   strokeWidth: true
 };
-
 const prefixKey = (prefix, key) => prefix + key.charAt(0).toUpperCase() + key.substring(1);
-
-const prefixes = ['Webkit', 'Ms', 'Moz', 'O'];
+const prefixes = ["Webkit", "Ms", "Moz", "O"];
 isUnitlessNumber = Object.keys(isUnitlessNumber).reduce((acc, prop) => {
-  prefixes.forEach(prefix => acc[prefixKey(prefix, prop)] = acc[prop]);
+  prefixes.forEach((prefix) => acc[prefixKey(prefix, prop)] = acc[prop]);
   return acc;
 }, isUnitlessNumber);
 
 const domTransforms = /^(matrix|translate|scale|rotate|skew)/;
 const pxTransforms = /^(translate)/;
 const degTransforms = /^(rotate|skew)/;
-
 const addUnit = (value, unit) => _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.num(value) && value !== 0 ? value + unit : value;
-
-const isValueIdentity = (value, id) => _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.arr(value) ? value.every(v => isValueIdentity(v, id)) : _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.num(value) ? value === id : parseFloat(value) === id;
-
+const isValueIdentity = (value, id) => _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.arr(value) ? value.every((v) => isValueIdentity(v, id)) : _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.num(value) ? value === id : parseFloat(value) === id;
 class AnimatedStyle extends _react_spring_animated__WEBPACK_IMPORTED_MODULE_3__.AnimatedObject {
-  constructor(_ref) {
-    let {
-      x,
-      y,
-      z
-    } = _ref,
-        style = _objectWithoutPropertiesLoose(_ref, ["x", "y", "z"]);
-
+  constructor({x, y, z, ...style}) {
     const inputs = [];
     const transforms = [];
-
     if (x || y || z) {
       inputs.push([x || 0, y || 0, z || 0]);
-      transforms.push(xyz => [`translate3d(${xyz.map(v => addUnit(v, 'px')).join(',')})`, isValueIdentity(xyz, 0)]);
+      transforms.push((xyz) => [
+        `translate3d(${xyz.map((v) => addUnit(v, "px")).join(",")})`,
+        isValueIdentity(xyz, 0)
+      ]);
     }
-
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.eachProp)(style, (value, key) => {
-      if (key === 'transform') {
-        inputs.push([value || '']);
-        transforms.push(transform => [transform, transform === '']);
+      if (key === "transform") {
+        inputs.push([value || ""]);
+        transforms.push((transform) => [transform, transform === ""]);
       } else if (domTransforms.test(key)) {
         delete style[key];
-        if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.und(value)) return;
-        const unit = pxTransforms.test(key) ? 'px' : degTransforms.test(key) ? 'deg' : '';
+        if (_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.und(value))
+          return;
+        const unit = pxTransforms.test(key) ? "px" : degTransforms.test(key) ? "deg" : "";
         inputs.push((0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.toArray)(value));
-        transforms.push(key === 'rotate3d' ? ([x, y, z, deg]) => [`rotate3d(${x},${y},${z},${addUnit(deg, unit)})`, isValueIdentity(deg, 0)] : input => [`${key}(${input.map(v => addUnit(v, unit)).join(',')})`, isValueIdentity(input, key.startsWith('scale') ? 1 : 0)]);
+        transforms.push(key === "rotate3d" ? ([x2, y2, z2, deg]) => [
+          `rotate3d(${x2},${y2},${z2},${addUnit(deg, unit)})`,
+          isValueIdentity(deg, 0)
+        ] : (input) => [
+          `${key}(${input.map((v) => addUnit(v, unit)).join(",")})`,
+          isValueIdentity(input, key.startsWith("scale") ? 1 : 0)
+        ]);
       }
     });
-
     if (inputs.length) {
       style.transform = new FluidTransform(inputs, transforms);
     }
-
     super(style);
   }
-
 }
-
 class FluidTransform extends _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.FluidValue {
   constructor(inputs, transforms) {
     super();
-    this._value = null;
     this.inputs = inputs;
     this.transforms = transforms;
+    this._value = null;
   }
-
   get() {
     return this._value || (this._value = this._get());
   }
-
   _get() {
-    let transform = '';
+    let transform = "";
     let identity = true;
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(this.inputs, (input, i) => {
       const arg1 = (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.getFluidValue)(input[0]);
       const [t, id] = this.transforms[i](_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.is.arr(arg1) ? arg1 : input.map(_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.getFluidValue));
-      transform += ' ' + t;
+      transform += " " + t;
       identity = identity && id;
     });
-    return identity ? 'none' : transform;
+    return identity ? "none" : transform;
   }
-
   observerAdded(count) {
-    if (count == 1) (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(this.inputs, input => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(input, value => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.hasFluidValue)(value) && (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.addFluidObserver)(value, this)));
+    if (count == 1)
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(this.inputs, (input) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(input, (value) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.hasFluidValue)(value) && (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.addFluidObserver)(value, this)));
   }
-
   observerRemoved(count) {
-    if (count == 0) (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(this.inputs, input => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(input, value => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.hasFluidValue)(value) && (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.removeFluidObserver)(value, this)));
+    if (count == 0)
+      (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(this.inputs, (input) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.each)(input, (value) => (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.hasFluidValue)(value) && (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.removeFluidObserver)(value, this)));
   }
-
   eventObserved(event) {
-    if (event.type == 'change') {
+    if (event.type == "change") {
       this._value = null;
     }
-
     (0,_react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.callFluidObservers)(this, event);
   }
-
 }
 
-const primitives = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', 'circle', 'clipPath', 'defs', 'ellipse', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
+const primitives = [
+  "a",
+  "abbr",
+  "address",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "base",
+  "bdi",
+  "bdo",
+  "big",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "data",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "head",
+  "header",
+  "hgroup",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "keygen",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "menu",
+  "menuitem",
+  "meta",
+  "meter",
+  "nav",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "p",
+  "param",
+  "picture",
+  "pre",
+  "progress",
+  "q",
+  "rp",
+  "rt",
+  "ruby",
+  "s",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "small",
+  "source",
+  "span",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "table",
+  "tbody",
+  "td",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "track",
+  "u",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+  "circle",
+  "clipPath",
+  "defs",
+  "ellipse",
+  "foreignObject",
+  "g",
+  "image",
+  "line",
+  "linearGradient",
+  "mask",
+  "path",
+  "pattern",
+  "polygon",
+  "polyline",
+  "radialGradient",
+  "rect",
+  "stop",
+  "svg",
+  "text",
+  "tspan"
+];
 
 _react_spring_core__WEBPACK_IMPORTED_MODULE_0__.Globals.assign({
   batchedUpdates: react_dom__WEBPACK_IMPORTED_MODULE_1__.unstable_batchedUpdates,
@@ -10207,17 +9618,14 @@ _react_spring_core__WEBPACK_IMPORTED_MODULE_0__.Globals.assign({
   colors: _react_spring_shared__WEBPACK_IMPORTED_MODULE_2__.colors
 });
 const host = (0,_react_spring_animated__WEBPACK_IMPORTED_MODULE_3__.createHost)(primitives, {
-  applyAnimatedValues,
-  createAnimatedStyle: style => new AnimatedStyle(style),
-  getComponentProps: (_ref) => {
-    let props = _objectWithoutPropertiesLoose(_ref, ["scrollTop", "scrollLeft"]);
-
-    return props;
-  }
+  applyAnimatedValues: applyAnimatedValues,
+  createAnimatedStyle: (style) => new AnimatedStyle(style),
+  getComponentProps: ({scrollTop, scrollLeft, ...props}) => props
 });
 const animated = host.animated;
 
 
+//# sourceMappingURL=index.js.map
 
 
 /***/ }),
@@ -12318,7 +11726,12 @@ var Main = function Main() {
       setUploadModalState = _c.setUploadModalState;
 
   var loadTravelPosts = function loadTravelPosts() {
-    axios_1["default"].get('http://127.0.0.1:8000/api/travelposts').then(function (response) {
+    //API connection to MAMP local server/////////////
+    // axios.get('http://127.0.0.1:8000/api/travelposts')
+    //////////////////////////////////////////////////
+    //API connection to CLEAR DB//////////////////////
+    axios_1["default"].get('http://eu-cdbr-west-01.cleardb.com:3306/api/travelposts') ///////////////////////////////////////////////////
+    .then(function (response) {
       return setTravelPosts(response.data);
     }) // .then(()=>console.log(travelPosts))
     ["catch"](function (error) {
@@ -12516,7 +11929,7 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 
 var react_dropzone_1 = __webpack_require__(/*! react-dropzone */ "./node_modules/react-dropzone/dist/es/index.js");
 
-var react_spring_1 = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/dist/react-spring.esm.js");
+var react_spring_1 = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
 
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
@@ -46462,15 +45875,15 @@ if (true) {
 
 /***/ }),
 
-/***/ "./node_modules/react-spring/dist/react-spring.esm.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-spring/dist/react-spring.esm.js ***!
-  \************************************************************/
+/***/ "./node_modules/react-spring/web.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-spring/web.js ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _react_spring_web__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/web */ "./node_modules/@react-spring/web/dist/react-spring-web.esm.js");
+/* harmony import */ var _react_spring_web__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/web */ "./node_modules/@react-spring/web/index.js");
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _react_spring_web__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _react_spring_web__WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);

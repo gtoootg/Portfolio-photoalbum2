@@ -14,7 +14,14 @@ const Main = ()=> {
     const {uploadModalState, setUploadModalState} = useContext(uploadModalStateContext);
 
     const loadTravelPosts = () => {
-        axios.get('http://127.0.0.1:8000/api/travelposts')
+        //API connection to MAMP local server/////////////
+        // axios.get('http://127.0.0.1:8000/api/travelposts')
+        //////////////////////////////////////////////////
+
+        //API connection to CLEAR DB//////////////////////
+        axios.get('http://eu-cdbr-west-01.cleardb.com:3306/api/travelposts')
+        ///////////////////////////////////////////////////
+
         .then(response=>setTravelPosts(response.data))
         // .then(()=>console.log(travelPosts))
         .catch(error=>console.log(error))
