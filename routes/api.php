@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // use App\Models\TravelPost;
-use APP\Http\Controllers\TravelpostController\TravelpostController;
+use APP\Http\Controllers\TravelpostController;
 
 /*
 |--------------------------------------------------------------------------
