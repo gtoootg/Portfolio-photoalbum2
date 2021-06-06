@@ -19,7 +19,9 @@ const Main = ()=> {
         //////////////////////////////////////////////////
 
         //API connection to CLEAR DB//////////////////////
+
         axios.get('api/travelposts')
+ 
         ///////////////////////////////////////////////////
 
         .then(response=>setTravelPosts(response.data))
