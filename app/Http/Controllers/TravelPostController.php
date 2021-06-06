@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Travelpost;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers;
 
 class TravelpostController extends Controller
 {
