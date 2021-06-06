@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// use App\Models\TravelPost;
+use App\Models\TravelPost;
 use APP\Http\Controllers\TravelpostController;
 
 /*
