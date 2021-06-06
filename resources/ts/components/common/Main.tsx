@@ -19,7 +19,7 @@ const Main = ()=> {
         //////////////////////////////////////////////////
 
         //API connection to CLEAR DB//////////////////////
-        axios.get('http://eu-cdbr-west-01.cleardb.com:3306/api/travelposts')
+        axios.get('api/travelposts')
         ///////////////////////////////////////////////////
 
         .then(response=>setTravelPosts(response.data))
