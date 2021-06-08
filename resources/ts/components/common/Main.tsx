@@ -23,7 +23,6 @@ const Main = ()=> {
         axios.get('api/posts')
  
         ///////////////////////////////////////////////////
-
         .then(response=>setTravelPosts(response.data))
         // .then(()=>console.log(travelPosts))
         .catch(error=>console.log(error))
