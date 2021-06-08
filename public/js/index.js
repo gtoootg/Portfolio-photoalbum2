@@ -11729,14 +11729,14 @@ var Main = function Main() {
     //API connection to MAMP local server/////////////
     // axios.get('http://127.0.0.1:8000/api/travelposts')
     //////////////////////////////////////////////////
-    //API connection to CLEAR DB//////////////////////
-    axios_1["default"].get('api/travelposts') ///////////////////////////////////////////////////
+    // API connection to CLEAR DB//////////////////////
+    axios_1["default"].get('api/posts') ///////////////////////////////////////////////////
     .then(function (response) {
       return setTravelPosts(response.data);
     }) // .then(()=>console.log(travelPosts))
     ["catch"](function (error) {
       return console.log(error);
-    });
+    }); // console.log("aaa")
   };
 
   react_1.useEffect(loadTravelPosts, []);
