@@ -18,15 +18,15 @@ const Main = ()=> {
         // axios.get('http://127.0.0.1:8000/api/travelposts')
         //////////////////////////////////////////////////
 
-        //API connection to CLEAR DB//////////////////////
+        // API connection to CLEAR DB//////////////////////
 
-        axios.get('api/travelposts')
+        axios.get('api/posts')
  
         ///////////////////////////////////////////////////
-
         .then(response=>setTravelPosts(response.data))
         // .then(()=>console.log(travelPosts))
         .catch(error=>console.log(error))
+        // console.log("aaa")
     }
 
     useEffect(loadTravelPosts,[]);
