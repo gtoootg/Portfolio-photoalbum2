@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Models\Travelpost;
-use APP\Http\Controllers\TravelpostController;
+use App\Models\Post;
+use APP\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('travelposts', 'TravelpostController@index');
+Route::get('posts', 'PostController@index');
 
 
-Route::post('upload', 'TravelpostController@upload');
+Route::post('upload', 'PostController@upload');
