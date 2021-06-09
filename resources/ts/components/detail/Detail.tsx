@@ -1,5 +1,5 @@
 import React, {useState, useContext}from 'react';
-
+import axios from 'axios';
 import Head from '../common/Head';
 
 import {TravelPostsContext, SelectedPostIdContext} from '../../index';
@@ -21,6 +21,36 @@ const Detail = () => {
             setSelectedPostId(selectedPostId-1)
         }
     }
+
+    // function updateTask(){
+    //     axios.put('http://127.0.0.1:8000/api/task/'+editTaskData.id, 
+    //     editTaskData
+    //  )
+    // .then(() =>{
+    //     setEditTaskModal(!editTaskModal);
+    //     setEditTaskData({name:"", description:""});
+    //     loadTasks();
+    // })
+    // .catch(error => {
+    //     console.log(error);
+    //   });
+
+    // }
+
+    const deleteHandler = ()=>{
+        // setEditTaskData({id,name,description})
+        axios.delete('api/detail/delete/'+ travelPosts[selectedPostId].id, 
+        travelPosts[travelPosts[selectedPostId].id]
+     )
+    .then(() =>{
+        alert('deleted!!')
+    })
+    .catch(error => {
+        console.log(error);
+      });
+
+    }
+
 
     let ids:[number,number,number,number,number] = [
         selectedPostId-2,
@@ -66,7 +96,7 @@ const Detail = () => {
                 </div>  
                  
             </div>
-                   
+            <button onClick={()=>deleteHandler()}>Delete</button>
                 
             
         </>
