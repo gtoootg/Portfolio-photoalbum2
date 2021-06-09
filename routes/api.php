@@ -26,5 +26,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('posts', 'PostController@index');
 
-
 Route::post('upload', 'PostController@upload');
+
+Route::delete('detail/delete/{id}', 'PostController@delete');
