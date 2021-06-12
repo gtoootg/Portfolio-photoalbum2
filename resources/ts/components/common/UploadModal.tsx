@@ -333,7 +333,7 @@ const UploadModal: React.FC<{}> = ()=> {
           {/* <button onClick={()=>console.log(uploadModalState)}>preview</button> */}
           {/* <button onClick={()=>console.log(mapGeoCode)}>GeoCode</button> */}
           {/* <button onClick={()=>console.log(countries["Asia"])}>countries</button> */}
-            <button onClick={uploadHandler}>Upload</button>
+            {/* <button onClick={uploadHandler}>Upload</button> */}
             <button onClick={cancelHandler}>Cancel</button>
           </div>
         </div>
