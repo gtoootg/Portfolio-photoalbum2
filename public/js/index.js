@@ -11778,6 +11778,22 @@ exports.default = Main;
 "use strict";
 
 
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
   Object.defineProperty(o, k2, {
@@ -11848,19 +11864,20 @@ var SortModal = function SortModal() {
     Oceania: false,
     SouthAmerica: false
   };
-  var initialSortedRegions = [null]; // const dummyTravelPosts = travelPosts.slice()
+  var initialSorterRegionsObject = [];
+  var initialDisplayedCountries = [];
 
   var _c = react_1.useState(initialRegionsCheckBox),
       regionsCheckBox = _c[0],
       setRegionsCheckBox = _c[1];
 
-  var _d = react_1.useState(initialSortedRegions),
+  var _d = react_1.useState(initialSorterRegionsObject),
       sortedRegions = _d[0],
       setSortedRegions = _d[1];
 
-  var _e = react_1.useState([]),
-      CountriesInSortedRegions = _e[0],
-      setCountriesInSortedRegions = _e[1];
+  var _e = react_1.useState(initialDisplayedCountries),
+      displayedCountries = _e[0],
+      setDisplayedCountries = _e[1];
 
   var _f = react_1.useState({
     "Afghanistan": false,
@@ -12130,40 +12147,46 @@ var SortModal = function SortModal() {
 
     return a;
   }, []);
-  var regions = Object.keys(regionsCheckBox); // const regionMap = regions.map((region)=>{
-  //   const setSelectedRegionsHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const dummyArray = sortedRegions.slice()
-  //   if(!regionsCheckBox.region){
-  //       dummyArray.push(e.target.value)
-  //       setSortedRegions(dummyArray)
-  //       setRegionsCheckBox({...regionsCheckBox,region:true})
-  //   }else{
-  //       const regionFilter = dummyArray.filter(n => n !== e.target.value)
-  //       setSortedRegions(regionFilter)
-  //       setRegionsCheckBox({...regionsCheckBox,[region]:false})
-  //     }
-  //   }
-  //   return(
-  //     <div >
-  //       <input 
-  //         type="checkbox" 
-  //         id="checkbox"
-  //         // name={region} 
-  //         // value={region} 
-  //         // onChange={setSelectedRegionsHandler}
-  //       /> 
-  //       {/* {region}  */}
-  //     </div>
-  //   )     
-  // })
+
+  var setSortedRegionsHandler = function setSortedRegionsHandler(e) {
+    var _a, _b;
+
+    var dummyArray = sortedRegions.slice();
+
+    if (!regionsCheckBox[e.currentTarget.value]) {
+      dummyArray.push(e.currentTarget.value);
+      setSortedRegions(dummyArray);
+      setRegionsCheckBox(__assign(__assign({}, regionsCheckBox), (_a = {}, _a[e.currentTarget.value] = true, _a)));
+    } else {
+      var regionFilter = dummyArray.filter(function (n) {
+        return n !== e.target.value;
+      });
+      setSortedRegions(regionFilter);
+      setRegionsCheckBox(__assign(__assign({}, regionsCheckBox), (_b = {}, _b[e.currentTarget.value] = false, _b)));
+    }
+  };
+
+  var regions = Object.keys(regionsCheckBox);
+  var regionMap = regions.map(function (region) {
+    return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
+      type: "checkbox",
+      id: "checkbox",
+      name: region,
+      value: region,
+      onChange: setSortedRegionsHandler
+    }), region);
+  });
 
   var toggle = function toggle() {
     return setSortModalState(!sortModalState);
-  }; // const showCountriesHandler = () => {
-  //   const filterByRegion =countriesInPosts.filter((x:TravelPostObject)=>sortedRegions.includes(x.region))
-  //   setShowCountries(filterByRegion)
-  // }
-  // const setSortedStateHandler = () =>{
+  };
+
+  var DisplayCountriesHandler = function DisplayCountriesHandler() {
+    var filterByRegion = countriesInPosts.filter(function (x) {
+      return sortedRegions.includes(x.region);
+    });
+    setDisplayedCountries(filterByRegion);
+  }; // const setSortedStateHandler = () =>{
   //   setSortedState({
   //     ...sortedState,
   //     region:sortedRegions,
@@ -12173,21 +12196,61 @@ var SortModal = function SortModal() {
   // }
 
 
+  var countryMap = displayedCountries.map(function (displayedCountry) {// const setSelectedCountriesHandler = (e) => {
+    //   const array = selectedCountries.slice()
+    //   const country = showCountry.country
+    //   if(!countryChecked[country]){
+    //     array.push(e.target.value)
+    //     setSelectedCountries(array)
+    //     setCountryChecked({...countryChecked, [country]:true})
+    //   }else{
+    //     const countryFilter = array.filter(n => n !== e.target.value)
+    //     setSelectedCountries(countryFilter)
+    //     setCountryChecked({...countryChecked, [country]:false})
+    //   }
+    // }
+    // return(
+    //   <div>
+    //       <input 
+    //       id="checkbox"
+    //       type="checkbox" 
+    //       name={showCountry.country} 
+    //       value={showCountry.country} 
+    //       onChange={setSelectedCountriesHandler}
+    //       // checked={countryChecked[showCountry.country]}
+    //     /> {displayedCountry.country}
+    //   </div>
+    // )     
+  });
   return react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal,
     style: {
       "opacity": sortModalState ? 1 : 0,
       "pointerEvents": sortModalState ? "auto" : "none"
     }
-  }, react_1["default"].createElement("div", null, "Sort pictures by your preference"), react_1["default"].createElement("div", null, "check selectedRegion"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", null, "show country"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", null, "show country"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("div", null, "Sort pictures by your preference"), react_1["default"].createElement("div", null, "check selectedRegion"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", null, "show country"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", null, "show countryyyy"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].regionListContainer
-  }), react_1["default"].createElement("div", {
+  }, regionMap, react_1["default"].createElement("button", {
+    onClick: DisplayCountriesHandler
+  }, "Sort Region")), react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].countryListContainer
-  }), react_1["default"].createElement("div", null, react_1["default"].createElement("button", null, "Sort"), react_1["default"].createElement("button", null, "Cancel"), react_1["default"].createElement("button", {
+  }, countryMap), react_1["default"].createElement("div", null, react_1["default"].createElement("button", null, "Sort"), react_1["default"].createElement("button", {
     onClick: function onClick() {
-      return console.log(regions);
+      toggle;
     }
-  }, "console log"))); ////
+  }, "Cancel"), react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return console.log(regionsCheckBox);
+    }
+  }, "regionsCheckBox"), react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return console.log(sortedRegions);
+    }
+  }, "sortedRegions"), react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return console.log(displayedCountries);
+    }
+  }, "displayedCountries"))); ////
 };
 
 exports.default = SortModal; // console.log(file);
