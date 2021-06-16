@@ -4,12 +4,13 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 import styles from '../../../styles/main.module.scss';
-import {TravelPostsContext, SelectedPostIdContext, uploadModalStateContext } from '../../index';
+import {TravelPostsContext, DummyTravelPostsContext, SelectedPostIdContext, uploadModalStateContext } from '../../index';
 
 
 const Main = ()=> {
     
     const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;
+    const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);
     const {selectedPostId, setSelectedPostId} = useContext(SelectedPostIdContext);
     const {uploadModalState, setUploadModalState} = useContext(uploadModalStateContext);
 
@@ -19,14 +20,13 @@ const Main = ()=> {
         //////////////////////////////////////////////////
 
         // API connection to CLEAR DB//////////////////////
-
         axios.get('api/posts')
- 
         ///////////////////////////////////////////////////
-        .then(response=>setTravelPosts(response.data))
-        // .then(()=>console.log(travelPosts))
+        .then(response=>{
+            setTravelPosts(response.data)
+            setDummyTravelPosts(response.data)
+        })
         .catch(error=>console.log(error))
-        // console.log("aaa")
     }
 
     useEffect(loadTravelPosts,[]);

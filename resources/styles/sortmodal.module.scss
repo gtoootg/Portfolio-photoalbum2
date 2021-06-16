@@ -3,7 +3,7 @@
     z-index: 1;
     transition:1s;
 
-    height:100vh;
+    height:auto;
     width:70vw;
     transform:translateX(15vw);
     margin-top: 12vh;
@@ -12,6 +12,37 @@
 
     border-radius: 5px;
     background-color: whitesmoke;
+
+    &__label{
+        display: flex;
+        justify-content: space-between;
+
+        padding-top:1vh;
+        // padding-bottom:1vh;
+        padding-left:1vh;
+        padding-right:1vh;
+        border-bottom:solid 0.5px gray;
+    }
+
+    &__mainContainer{
+        display:flex;
+        justify-content: space-between;
+        margin-top:5vh;
+        margin-right:5vw;
+        margin-left:5vw;
+        margin-bottom:5vh;
+
+        &__left{
+            width:50%;
+
+            &__checkBox{
+                margin-bottom:2vh;
+            }
+        }
+        &__right{
+            width:50%;
+        }
+    }
   
 
 }

@@ -7,6 +7,7 @@ import Detail from './components/detail/Detail';
 
 //createContext to controll State on global level
 export const TravelPostsContext = createContext<any>({});
+export const DummyTravelPostsContext = createContext<any>({});
 export const uploadModalStateContext = createContext<any>({});
 export const SelectedPostIdContext = createContext<any>({});
 /////////////////////////////////////////////////
@@ -31,18 +32,21 @@ export type SelectedPostIdObject = {
 const App = () => {
 
     const [travelPosts, setTravelPosts] = useState<TravelPostObject[]>([]);
+    const [dummyTravelPosts, setDummyTravelPosts] = useState<TravelPostObject[]>([]);
     const [selectedPostId, setSelectedPostId] = useState<SelectedPostIdObject>({})
 
     return (
         <div>
             <BrowserRouter>
             <TravelPostsContext.Provider value={{travelPosts, setTravelPosts}}>
+            <DummyTravelPostsContext.Provider value={{dummyTravelPosts, setDummyTravelPosts}}>
             <SelectedPostIdContext.Provider value={{selectedPostId,setSelectedPostId}}>
                 <Route exact path="/" component={Home}/> 
                 <Switch>
                 <Route path="/detail" children={<Detail/>}/>
                 </Switch> 
-                </SelectedPostIdContext.Provider>
+            </SelectedPostIdContext.Provider>
+            </DummyTravelPostsContext.Provider>
             </TravelPostsContext.Provider>
             </BrowserRouter>
         </div>

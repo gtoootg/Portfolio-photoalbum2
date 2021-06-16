@@ -1,14 +1,17 @@
 import React, {useState, useContext, useEffect, ReactNode} from 'react';
 import axios from "axios";
+import { useSpring, animated, config } from 'react-spring'
+
 
 import styles from '../../../styles/sortmodal.module.scss';
-import {TravelPostsContext, TravelPostObject} from '../../index';
+import {TravelPostsContext, DummyTravelPostsContext, TravelPostObject} from '../../index';
 import {sortModalStateContext} from '../home/Home';
 
 const SortModal: React.FC<{}> = ()=> {
 
     //useContext//////////////////////
     const{travelPosts, setTravelPosts} = useContext(TravelPostsContext);
+    const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);
     const{sortModalState, setSortModalState} = useContext(sortModalStateContext);
     //////////////////////////////////
 
@@ -41,8 +44,6 @@ const SortModal: React.FC<{}> = ()=> {
 
     const initalSortedCountries:string[] = []
 
-    const initialSortedPosts:{}[] =[]
-
     const [regionsCheckBox, setRegionsCheckBox] = useState<RegionsCheckBoxObject>(initialRegionsCheckBox);
   
     const [sortedRegions, setSortedRegions] = useState<SortedRegionsObject>(initialSortedRegions);
@@ -53,19 +54,25 @@ const SortModal: React.FC<{}> = ()=> {
       
     const [sortedCountries, setSortedCountries] = useState<SortedCountriesObject>(initalSortedCountries);
   
-    const [sortedPosts,setSortedPosts] = useState<SortedPostsObject[]>([]);
 
     //////////////////////////////////
 
-
-
-
-
     
+
+    //handler///////////////////////////
+    
+    const cancelHandler = ()=>{
+      setSortModalState(false);
+      setRegionsCheckBox(initialRegionsCheckBox);
+      setSortedRegions(initialSortedRegions);
+      setDisplayedCountries(initialDisplayedCountries);
+      setCountriesCheckBox(initialCountriesCheckBox);
+      setSortedCountries(initalSortedCountries);
+    }
+
     const setSortedRegionsHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
       const dummyArray :string[]|null[] = sortedRegions.slice()
      
-   
       if(!regionsCheckBox[e.currentTarget.value]){
           dummyArray.push(e.currentTarget.value)
           setSortedRegions(dummyArray)
@@ -81,7 +88,7 @@ const SortModal: React.FC<{}> = ()=> {
     const regions = Object.keys(regionsCheckBox)
     const regionMap = regions.map(region=>{
         return(
-            <div >
+            <div>
               <input 
                 type="checkbox" 
                 id="checkbox"
@@ -98,7 +105,7 @@ const SortModal: React.FC<{}> = ()=> {
    
     const toggle = () => setSortModalState(!sortModalState);
     const DisplayCountriesHandler = () => {
-      const countriesInPosts = travelPosts.reduce((accu:any,curr:any)=>{
+      const countriesInPosts = dummyTravelPosts.reduce((accu:any,curr:any)=>{
         if(!accu.some((e:TravelPostObject)=>e.country === curr.country)){
           accu.push(curr)
         }
@@ -109,25 +116,22 @@ const SortModal: React.FC<{}> = ()=> {
       
       const createCountriesCheckBox = filterByRegion.reduce((accu:any,curr:TravelPostObject)=>{
         accu[curr.country]=false
-        
         return accu
       },{})
 
       setCountriesCheckBox(createCountriesCheckBox)
       setDisplayedCountries(filterByRegion)
     }
-  
-
-   
+     
     const setSortedPostsHandler = () =>{
         axios.get('api/posts')
         .then((response)=>{
           if(!sortedCountries.length){
-            const filter =response.data.filter((x:TravelPostObject)=>sortedRegions.includes(x.region))
-            setTravelPosts(filter)
+            const filterByRegion =response.data.filter((x:TravelPostObject)=>sortedRegions.includes(x.region))
+            setTravelPosts(filterByRegion)
         }else{
-            const filter =response.data.filter((x:TravelPostObject)=>sortedCountries.includes(x.country))
-            setTravelPosts(filter)
+            const filterByCountry =response.data.filter((x:TravelPostObject)=>sortedCountries.includes(x.country))
+            setTravelPosts(filterByCountry)
         }
       }).then(()=>{
         setSortModalState(false);
@@ -159,6 +163,16 @@ const SortModal: React.FC<{}> = ()=> {
       }
     }
  
+    //Animation///////////////////////
+    const spring = useSpring({ 
+      height: displayedCountries.length? "auto": "0px",
+      opacity: displayedCountries.length? "1": "0",
+      // delay:200,
+      config: {duration: 500}
+    })
+    //////////////////////////////////
+
+
     const countryMap = displayedCountries.map((displayedCountry)=>{
       return(
         <div>
@@ -183,69 +197,33 @@ const SortModal: React.FC<{}> = ()=> {
             "pointerEvents":sortModalState?  "auto": "none"
           }}
         >
-          <div>Sort pictures by your preference</div>
-          <div 
-            // onClick={()=>console.log(SortedCountries)}
-            >check selectedRegion</div><br></br>
-          <div >show country</div><br></br>
-          <div 
-            // onClick={()=>console.log(showCountries)}
-            >show countryyyy</div><br></br>
-          <div className={styles.regionListContainer}>
-            {regionMap}
-            <button onClick={DisplayCountriesHandler}>Sort Region</button>
+          <div className={styles.sortModal__label}>
+              <p>Sort pictures by your preference</p>
+              <p onClick={cancelHandler}>✕</p>
           </div>
-          <div className={styles.countryListContainer}>
-            {countryMap}
+          <div className={styles.sortModal__mainContainer}>
+              <div className={styles.sortModal__mainContainer__left}>
+                  <p>Which Regions is your interest?</p>
+                  <div className={styles.sortModal__mainContainer__left__checkBox}>
+                    {regionMap}
+                  </div>
+                  <button onClick={DisplayCountriesHandler}>Sort Region</button>
+              </div>
+              <animated.div 
+                className={styles.sortModal__mainContainer__right}
+                style={spring}
+              >
+                  <span>Which Country is your interest?</span>
+                  {countryMap}
+              </animated.div>
+            </div>
+          <div className={styles.sortModal__buttonContainer}>
+              <button onClick={setSortedPostsHandler}>Sort</button>
+              <button onClick= {()=>{toggle}}>Cancel</button>
           </div>
-          <div>
-            <button 
-              
-              onClick={setSortedPostsHandler}
-            >Sort</button>
-            <button 
-              onClick= {()=>{toggle}}
-            >Cancel
-            </button>
-            <button 
-                onClick={
-                  ()=>console.log(regionsCheckBox)
-                }
-            >
-              regionsCheckBox
-            </button>
-            <button 
-                onClick={
-                  ()=>console.log(sortedRegions)
-                }
-            >
-              sortedRegions
-            </button>
-            <button 
-                onClick={
-                  ()=>console.log(displayedCountries)
-                }
-            >
-              displayedCountries
-            </button>
-
-            <button 
-                onClick={
-                  ()=>console.log(countriesCheckBox)
-                }
-            >
-              CountriesCheckBox
-            </button>
-            <button 
-                onClick={
-                  ()=>console.log(sortedCountries)
-                }
-            >
-              SortedCountries
-            </button>
-          </div>
-
         </div>
+
+       
       )
 ////
 }
