@@ -11717,13 +11717,17 @@ var Main = function Main() {
       travelPosts = _a.travelPosts,
       setTravelPosts = _a.setTravelPosts;
 
-  var _b = react_1.useContext(index_1.SelectedPostIdContext),
-      selectedPostId = _b.selectedPostId,
-      setSelectedPostId = _b.setSelectedPostId;
+  var _b = react_1.useContext(index_1.DummyTravelPostsContext),
+      dummyTravelPosts = _b.dummyTravelPosts,
+      setDummyTravelPosts = _b.setDummyTravelPosts;
 
-  var _c = react_1.useContext(index_1.uploadModalStateContext),
-      uploadModalState = _c.uploadModalState,
-      setUploadModalState = _c.setUploadModalState;
+  var _c = react_1.useContext(index_1.SelectedPostIdContext),
+      selectedPostId = _c.selectedPostId,
+      setSelectedPostId = _c.setSelectedPostId;
+
+  var _d = react_1.useContext(index_1.uploadModalStateContext),
+      uploadModalState = _d.uploadModalState,
+      setUploadModalState = _d.setUploadModalState;
 
   var loadTravelPosts = function loadTravelPosts() {
     //API connection to MAMP local server/////////////
@@ -11732,11 +11736,11 @@ var Main = function Main() {
     // API connection to CLEAR DB//////////////////////
     axios_1["default"].get('api/posts') ///////////////////////////////////////////////////
     .then(function (response) {
-      return setTravelPosts(response.data);
-    }) // .then(()=>console.log(travelPosts))
-    ["catch"](function (error) {
+      setTravelPosts(response.data);
+      setDummyTravelPosts(response.data);
+    })["catch"](function (error) {
       return console.log(error);
-    }); // console.log("aaa")
+    });
   };
 
   react_1.useEffect(loadTravelPosts, []);
@@ -11842,6 +11846,8 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
+var react_spring_1 = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
+
 var sortmodal_module_scss_1 = __importDefault(__webpack_require__(/*! ../../../styles/sortmodal.module.scss */ "./resources/styles/sortmodal.module.scss"));
 
 var index_1 = __webpack_require__(/*! ../../index */ "./resources/ts/index.tsx");
@@ -11854,9 +11860,13 @@ var SortModal = function SortModal() {
       travelPosts = _a.travelPosts,
       setTravelPosts = _a.setTravelPosts;
 
-  var _b = react_1.useContext(Home_1.sortModalStateContext),
-      sortModalState = _b.sortModalState,
-      setSortModalState = _b.setSortModalState;
+  var _b = react_1.useContext(index_1.DummyTravelPostsContext),
+      dummyTravelPosts = _b.dummyTravelPosts,
+      setDummyTravelPosts = _b.setDummyTravelPosts;
+
+  var _c = react_1.useContext(Home_1.sortModalStateContext),
+      sortModalState = _c.sortModalState,
+      setSortModalState = _c.setSortModalState;
 
   var initialRegionsCheckBox = {
     Africa: false,
@@ -11870,32 +11880,37 @@ var SortModal = function SortModal() {
   var initialDisplayedCountries = [];
   var initialCountriesCheckBox = {};
   var initalSortedCountries = [];
-  var initialSortedPosts = [];
 
-  var _c = react_1.useState(initialRegionsCheckBox),
-      regionsCheckBox = _c[0],
-      setRegionsCheckBox = _c[1];
+  var _d = react_1.useState(initialRegionsCheckBox),
+      regionsCheckBox = _d[0],
+      setRegionsCheckBox = _d[1];
 
-  var _d = react_1.useState(initialSortedRegions),
-      sortedRegions = _d[0],
-      setSortedRegions = _d[1];
+  var _e = react_1.useState(initialSortedRegions),
+      sortedRegions = _e[0],
+      setSortedRegions = _e[1];
 
-  var _e = react_1.useState(initialDisplayedCountries),
-      displayedCountries = _e[0],
-      setDisplayedCountries = _e[1];
+  var _f = react_1.useState(initialDisplayedCountries),
+      displayedCountries = _f[0],
+      setDisplayedCountries = _f[1];
 
-  var _f = react_1.useState(initialCountriesCheckBox),
-      countriesCheckBox = _f[0],
-      setCountriesCheckBox = _f[1];
+  var _g = react_1.useState(initialCountriesCheckBox),
+      countriesCheckBox = _g[0],
+      setCountriesCheckBox = _g[1];
 
-  var _g = react_1.useState(initalSortedCountries),
-      sortedCountries = _g[0],
-      setSortedCountries = _g[1];
+  var _h = react_1.useState(initalSortedCountries),
+      sortedCountries = _h[0],
+      setSortedCountries = _h[1]; //////////////////////////////////
+  //handler///////////////////////////
 
-  var _h = react_1.useState([]),
-      sortedPosts = _h[0],
-      setSortedPosts = _h[1]; //////////////////////////////////
 
+  var cancelHandler = function cancelHandler() {
+    setSortModalState(false);
+    setRegionsCheckBox(initialRegionsCheckBox);
+    setSortedRegions(initialSortedRegions);
+    setDisplayedCountries(initialDisplayedCountries);
+    setCountriesCheckBox(initialCountriesCheckBox);
+    setSortedCountries(initalSortedCountries);
+  };
 
   var setSortedRegionsHandler = function setSortedRegionsHandler(e) {
     var _a, _b;
@@ -11932,7 +11947,7 @@ var SortModal = function SortModal() {
   };
 
   var DisplayCountriesHandler = function DisplayCountriesHandler() {
-    var countriesInPosts = travelPosts.reduce(function (accu, curr) {
+    var countriesInPosts = dummyTravelPosts.reduce(function (accu, curr) {
       if (!accu.some(function (e) {
         return e.country === curr.country;
       })) {
@@ -11955,15 +11970,15 @@ var SortModal = function SortModal() {
   var setSortedPostsHandler = function setSortedPostsHandler() {
     axios_1["default"].get('api/posts').then(function (response) {
       if (!sortedCountries.length) {
-        var filter = response.data.filter(function (x) {
+        var filterByRegion = response.data.filter(function (x) {
           return sortedRegions.includes(x.region);
         });
-        setTravelPosts(filter);
+        setTravelPosts(filterByRegion);
       } else {
-        var filter = response.data.filter(function (x) {
+        var filterByCountry = response.data.filter(function (x) {
           return sortedCountries.includes(x.country);
         });
-        setTravelPosts(filter);
+        setTravelPosts(filterByCountry);
       }
     }).then(function () {
       setSortModalState(false);
@@ -11994,7 +12009,17 @@ var SortModal = function SortModal() {
       setSortedCountries(countryFilter);
       setCountriesCheckBox(__assign(__assign({}, countriesCheckBox), (_b = {}, _b[e.currentTarget.value] = false, _b)));
     }
-  };
+  }; //Animation///////////////////////
+
+
+  var spring = react_spring_1.useSpring({
+    height: displayedCountries.length ? "auto" : "0px",
+    opacity: displayedCountries.length ? "1" : "0",
+    // delay:200,
+    config: {
+      duration: 500
+    }
+  }); //////////////////////////////////
 
   var countryMap = displayedCountries.map(function (displayedCountry) {
     return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
@@ -12011,39 +12036,30 @@ var SortModal = function SortModal() {
       "opacity": sortModalState ? 1 : 0,
       "pointerEvents": sortModalState ? "auto" : "none"
     }
-  }, react_1["default"].createElement("div", null, "Sort pictures by your preference"), react_1["default"].createElement("div", null, "check selectedRegion"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", null, "show country"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", null, "show countryyyy"), react_1["default"].createElement("br", null), react_1["default"].createElement("div", {
-    className: sortmodal_module_scss_1["default"].regionListContainer
-  }, regionMap, react_1["default"].createElement("button", {
+  }, react_1["default"].createElement("div", {
+    className: sortmodal_module_scss_1["default"].sortModal__label
+  }, react_1["default"].createElement("p", null, "Sort pictures by your preference"), react_1["default"].createElement("p", {
+    onClick: cancelHandler
+  }, "\u2715")), react_1["default"].createElement("div", {
+    className: sortmodal_module_scss_1["default"].sortModal__mainContainer
+  }, react_1["default"].createElement("div", {
+    className: sortmodal_module_scss_1["default"].sortModal__mainContainer__left
+  }, react_1["default"].createElement("p", null, "Which Regions is your interest?"), react_1["default"].createElement("div", {
+    className: sortmodal_module_scss_1["default"].sortModal__mainContainer__left__checkBox
+  }, regionMap), react_1["default"].createElement("button", {
     onClick: DisplayCountriesHandler
-  }, "Sort Region")), react_1["default"].createElement("div", {
-    className: sortmodal_module_scss_1["default"].countryListContainer
-  }, countryMap), react_1["default"].createElement("div", null, react_1["default"].createElement("button", {
+  }, "Sort Region")), react_1["default"].createElement(react_spring_1.animated.div, {
+    className: sortmodal_module_scss_1["default"].sortModal__mainContainer__right,
+    style: spring
+  }, react_1["default"].createElement("span", null, "Which Country is your interest?"), countryMap)), react_1["default"].createElement("div", {
+    className: sortmodal_module_scss_1["default"].sortModal__buttonContainer
+  }, react_1["default"].createElement("button", {
     onClick: setSortedPostsHandler
   }, "Sort"), react_1["default"].createElement("button", {
     onClick: function onClick() {
       toggle;
     }
-  }, "Cancel"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(regionsCheckBox);
-    }
-  }, "regionsCheckBox"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(sortedRegions);
-    }
-  }, "sortedRegions"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(displayedCountries);
-    }
-  }, "displayedCountries"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(countriesCheckBox);
-    }
-  }, "CountriesCheckBox"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(sortedCountries);
-    }
-  }, "SortedCountries"))); ////
+  }, "Cancel"))); ////
 };
 
 exports.default = SortModal; // console.log(file);
@@ -13767,7 +13783,7 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.SelectedPostIdContext = exports.uploadModalStateContext = exports.TravelPostsContext = void 0;
+exports.SelectedPostIdContext = exports.uploadModalStateContext = exports.DummyTravelPostsContext = exports.TravelPostsContext = void 0;
 
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
@@ -13781,6 +13797,7 @@ var Detail_1 = __importDefault(__webpack_require__(/*! ./components/detail/Detai
 
 
 exports.TravelPostsContext = react_1.createContext({});
+exports.DummyTravelPostsContext = react_1.createContext({});
 exports.uploadModalStateContext = react_1.createContext({});
 exports.SelectedPostIdContext = react_1.createContext({});
 
@@ -13789,14 +13806,23 @@ var App = function App() {
       travelPosts = _a[0],
       setTravelPosts = _a[1];
 
-  var _b = react_1.useState({}),
-      selectedPostId = _b[0],
-      setSelectedPostId = _b[1];
+  var _b = react_1.useState([]),
+      dummyTravelPosts = _b[0],
+      setDummyTravelPosts = _b[1];
+
+  var _c = react_1.useState({}),
+      selectedPostId = _c[0],
+      setSelectedPostId = _c[1];
 
   return react_1["default"].createElement("div", null, react_1["default"].createElement(react_router_dom_1.BrowserRouter, null, react_1["default"].createElement(exports.TravelPostsContext.Provider, {
     value: {
       travelPosts: travelPosts,
       setTravelPosts: setTravelPosts
+    }
+  }, react_1["default"].createElement(exports.DummyTravelPostsContext.Provider, {
+    value: {
+      dummyTravelPosts: dummyTravelPosts,
+      setDummyTravelPosts: setDummyTravelPosts
     }
   }, react_1["default"].createElement(exports.SelectedPostIdContext.Provider, {
     value: {
@@ -13810,7 +13836,7 @@ var App = function App() {
   }), react_1["default"].createElement(react_router_dom_1.Switch, null, react_1["default"].createElement(react_router_dom_1.Route, {
     path: "/detail",
     children: react_1["default"].createElement(Detail_1["default"], null)
-  }))))));
+  })))))));
 };
 
 react_dom_1["default"].render(react_1["default"].createElement(App, null), document.getElementById('app'));
@@ -13952,10 +13978,15 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._25RaaNS-e_-tozxnFnM6W3 {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: 100vh;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._25RaaNS-e_-tozxnFnM6W3 {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: auto;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}\n._2CnzsdRQBNNuuSo7ITe0M6 {\n  display: flex;\n  justify-content: space-between;\n  padding-top: 1vh;\n  padding-left: 1vh;\n  padding-right: 1vh;\n  border-bottom: solid 0.5px gray;\n}\n._1ewtDMhXhaMOM7EM_0EPYF {\n  display: flex;\n  justify-content: space-between;\n  margin-top: 5vh;\n  margin-right: 5vw;\n  margin-left: 5vw;\n  margin-bottom: 5vh;\n}\n._3qQWlg-PSAApKjsW8sy24S {\n  width: 50%;\n}\n._14Uos3ysEkF6tjTpbLCGhj {\n  margin-bottom: 2vh;\n}\n._1sos_spgelQTlVfbfh0iwo {\n  width: 50%;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"sortModal": "_25RaaNS-e_-tozxnFnM6W3"
+	"sortModal": "_25RaaNS-e_-tozxnFnM6W3",
+	"sortModal__label": "_2CnzsdRQBNNuuSo7ITe0M6",
+	"sortModal__mainContainer": "_1ewtDMhXhaMOM7EM_0EPYF",
+	"sortModal__mainContainer__left": "_3qQWlg-PSAApKjsW8sy24S",
+	"sortModal__mainContainer__left__checkBox": "_14Uos3ysEkF6tjTpbLCGhj",
+	"sortModal__mainContainer__right": "_1sos_spgelQTlVfbfh0iwo"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
