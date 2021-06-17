@@ -18,8 +18,8 @@ export type TravelPostObject = {
     country: string;
     title: string;
     image: any;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     created_at: any;
     updated_at: any;
 }
