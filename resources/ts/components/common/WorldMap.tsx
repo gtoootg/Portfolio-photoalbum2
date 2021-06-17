@@ -4,7 +4,7 @@ import {GoogleMap,LoadScript, Marker,InfoWindow } from "@react-google-maps/api";
 type Props = {
   lat:number| undefined
   lng:number |undefined
-  onClick:(e:number)=>void
+  onClick?:(e:number)=>void
 }
 
 const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキーをここに入力
