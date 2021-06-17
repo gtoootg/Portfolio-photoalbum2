@@ -85,25 +85,8 @@ const SortModal: React.FC<{}> = ()=> {
 
     }
 
-    const regions = Object.keys(regionsCheckBox)
-    const regionMap = regions.map(region=>{
-        return(
-            <div>
-              <input 
-                type="checkbox" 
-                id="checkbox"
-                name={region} 
-                value={region}
-                checked={regionsCheckBox[region]}
-                onChange={setSortedRegionsHandler}
-              />
-              {region}
-            </div>
-          )
-         })
-    
-   
     const toggle = () => setSortModalState(!sortModalState);
+
     const DisplayCountriesHandler = () => {
       const countriesInPosts = dummyTravelPosts.reduce((accu:any,curr:any)=>{
         if(!accu.some((e:TravelPostObject)=>e.country === curr.country)){
@@ -122,32 +105,6 @@ const SortModal: React.FC<{}> = ()=> {
       setCountriesCheckBox(createCountriesCheckBox)
       setDisplayedCountries(filterByRegion)
     }
-     
-    const setSortedPostsHandler = () =>{
-        axios.get('api/posts')
-        .then((response)=>{
-          if(!sortedCountries.length){
-            const filterByRegion =response.data.filter((x:TravelPostObject)=>sortedRegions.includes(x.region))
-            setTravelPosts(filterByRegion)
-        }else{
-            const filterByCountry =response.data.filter((x:TravelPostObject)=>sortedCountries.includes(x.country))
-            setTravelPosts(filterByCountry)
-        }
-      }).then(()=>{
-        setSortModalState(false);
-        setRegionsCheckBox(initialRegionsCheckBox);
-        setSortedRegions(initialSortedRegions);
-        setDisplayedCountries(initialDisplayedCountries);
-        setCountriesCheckBox(initialCountriesCheckBox);
-        setSortedCountries(initalSortedCountries);
-      })
-        // .then(()=>console.log(travelPosts))
-        .catch(error=>console.log(error))
-        // console.log("aaa")
-       
-
-     
-    }
 
     const setSelectedCountriesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
       const dummySortedCountries:string[] = sortedCountries.slice()
@@ -162,6 +119,61 @@ const SortModal: React.FC<{}> = ()=> {
         setCountriesCheckBox({...countriesCheckBox, [e.currentTarget.value]:false})
       }
     }
+
+    const setSortedPostsHandler = () =>{
+      axios.get('api/posts')
+      .then((response)=>{
+        if(!sortedCountries.length){
+          const filterByRegion =response.data.filter((x:TravelPostObject)=>sortedRegions.includes(x.region))
+          setTravelPosts(filterByRegion)
+      }else{
+          const filterByCountry =response.data.filter((x:TravelPostObject)=>sortedCountries.includes(x.country))
+          setTravelPosts(filterByCountry)
+      }
+    }).then(()=>{
+      setSortModalState(false);
+      setRegionsCheckBox(initialRegionsCheckBox);
+      setSortedRegions(initialSortedRegions);
+      setDisplayedCountries(initialDisplayedCountries);
+      setCountriesCheckBox(initialCountriesCheckBox);
+      setSortedCountries(initalSortedCountries);
+    })
+      .catch(error=>console.log(error))
+  }
+
+
+  //JSX component/////////////////////////////////
+    const regions = Object.keys(regionsCheckBox)
+    const regionMap = regions.map(region=>{
+        return(
+            <div>
+              <input 
+                type="checkbox" 
+                id="checkbox"
+                name={region} 
+                value={region}
+                checked={regionsCheckBox[region]}
+                onChange={setSortedRegionsHandler}
+              />
+              {region}
+            </div>
+          )
+         })
+    
+    const countryMap = displayedCountries.map((displayedCountry)=>{
+    return(
+      <div>
+          <input 
+          id="checkbox"
+          type="checkbox" 
+          name={displayedCountry.country} 
+          value={displayedCountry.country} 
+          onChange={setSelectedCountriesHandler}
+        /> {displayedCountry.country}
+      </div>
+    )     
+  })
+  ///////////////////////////////////////////////
  
     //Animation///////////////////////
     const spring = useSpring({ 
@@ -173,22 +185,6 @@ const SortModal: React.FC<{}> = ()=> {
     //////////////////////////////////
 
 
-    const countryMap = displayedCountries.map((displayedCountry)=>{
-      return(
-        <div>
-            <input 
-            id="checkbox"
-            type="checkbox" 
-            name={displayedCountry.country} 
-            value={displayedCountry.country} 
-            onChange={setSelectedCountriesHandler}
-          /> {displayedCountry.country}
-        </div>
-      )     
-    })
-
-
-
     return(
         <div
         className={styles.sortModal}
@@ -198,38 +194,34 @@ const SortModal: React.FC<{}> = ()=> {
           }}
         >
           <div className={styles.sortModal__label}>
-              <p>Sort pictures by your preference</p>
+              <h3>Sort pictures by your preference</h3>
               <p onClick={cancelHandler}>✕</p>
           </div>
           <div className={styles.sortModal__mainContainer}>
               <div className={styles.sortModal__mainContainer__left}>
-                  <p>Which Regions is your interest?</p>
+                  <h6>Which Regions is your interest?</h6>
                   <div className={styles.sortModal__mainContainer__left__checkBox}>
                     {regionMap}
                   </div>
-                  <button onClick={DisplayCountriesHandler}>Sort Region</button>
+                  <button type="button" className="btn btn-success" onClick={DisplayCountriesHandler}>Click to see countries</button>
               </div>
               <animated.div 
                 className={styles.sortModal__mainContainer__right}
                 style={spring}
               >
-                  <span>Which Country is your interest?</span>
-                  {countryMap}
+                  <h6>Which Country is your interest?</h6>
+                  <div className={styles.sortModal__mainContainer__right__checkBox}>
+                      {countryMap}
+                  </div>
               </animated.div>
             </div>
           <div className={styles.sortModal__buttonContainer}>
-              <button onClick={setSortedPostsHandler}>Sort</button>
-              <button onClick= {()=>{toggle}}>Cancel</button>
+              <button type="button" className="btn btn-primary" onClick={setSortedPostsHandler}>Sort</button>
+              <button type="button" className="btn btn-secondary" onClick= {cancelHandler}>Cancel</button>
           </div>
         </div>
-
-       
       )
-////
 }
 
 export default SortModal; 
 
-// console.log(file);
-//     setUploadData({...uploadData, image:`/img/${file.name}`});
-    ///////////////////////
