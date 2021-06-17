@@ -41,9 +41,9 @@ const Main = ()=> {
                 onClick={()=>setSelectedPostId(index)}
             >
                 <div className={styles.main__imageContainer__title}>
-                    <p>
+                    <h6>
                         {travelPost.title}
-                    </p>
+                    </h6>
                 </div>
             </Link>
                 
@@ -62,13 +62,10 @@ const Main = ()=> {
             // }}
         >
             <main 
-                className ={styles.main}
-               
+                className ={styles.main}  
             >
                 {Posts}
-            </main>
-            <button onClick={()=>console.log(travelPosts)}>check travelPosts</button>
-            
+            </main>            
         </div>
     );
 }
