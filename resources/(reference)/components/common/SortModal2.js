@@ -44,16 +44,16 @@ const SortModal2 = (props) => {
 
   const regionMap = regions.map((region)=>{
     const setSelectedRegionsHandler = (e) => {
-    const array = selectedRegions.slice()
-    if(!regionChecked[region]){
-        array.push(e.target.value)
-        setSelectedRegions(array)
-        setRegionChecked({...regionChecked,[region]:true})
-    }else{
-        const regionFilter = array.filter(n => n !== e.target.value)
-        setSelectedRegions(regionFilter)
-        setRegionChecked({...regionChecked,[region]:false})
-      }
+        const array = selectedRegions.slice()
+        if(!regionChecked[region]){
+            array.push(e.target.value)
+            setSelectedRegions(array)
+            setRegionChecked({...regionChecked,[region]:true})
+        }else{
+            const regionFilter = array.filter(n => n !== e.target.value)
+            setSelectedRegions(regionFilter)
+            setRegionChecked({...regionChecked,[region]:false})
+          }
     }
 
     return(
