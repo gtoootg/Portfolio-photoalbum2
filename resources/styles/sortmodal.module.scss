@@ -41,6 +41,21 @@
         }
         &__right{
             width:50%;
+
+            &__checkBox{
+                margin-bottom:2vh;
+            }
+        }
+    }
+
+    &__buttonContainer{
+        display:flex;
+        justify-content: flex-end;
+        margin-right:5vw;
+        margin-bottom:5vh;
+        
+        button{
+            margin-left:1vw;
         }
     }
   
