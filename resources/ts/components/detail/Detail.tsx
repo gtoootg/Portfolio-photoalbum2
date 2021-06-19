@@ -2,16 +2,19 @@ import React, {useState, useContext}from 'react';
 import axios from 'axios';
 import Head from '../common/Head';
 
-import {TravelPostsContext, SelectedPostIdContext} from '../../index';
-
+import {TravelPostsContext, DummyTravelPostsContext, SelectedPostIdContext} from '../../index';
+import WorldMap from "../common/WorldMap";
 import styles from '../../../styles/detail.module.scss';
 
+import {GoogleMap,LoadScript, Marker,InfoWindow } from "@react-google-maps/api";
+
 const Detail = () => {
-    const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;       
+    const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;    
+    const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);   
     const {selectedPostId, setSelectedPostId} = useContext(SelectedPostIdContext);
 
     const IncrementPostIdHandler = (e: React.MouseEvent<HTMLElement>)=>{
-        if(selectedPostId !== travelPosts.length-1){
+        if(selectedPostId !== dummyTravelPosts.length-1){
             setSelectedPostId(selectedPostId+1)
         }
     }
@@ -21,21 +24,6 @@ const Detail = () => {
             setSelectedPostId(selectedPostId-1)
         }
     }
-
-    // function updateTask(){
-    //     axios.put('http://127.0.0.1:8000/api/task/'+editTaskData.id, 
-    //     editTaskData
-    //  )
-    // .then(() =>{
-    //     setEditTaskModal(!editTaskModal);
-    //     setEditTaskData({name:"", description:""});
-    //     loadTasks();
-    // })
-    // .catch(error => {
-    //     console.log(error);
-    //   });
-
-    // }
 
     const deleteHandler = ()=>{
         // setEditTaskData({id,name,description})
@@ -59,12 +47,12 @@ const Detail = () => {
         selectedPostId+1, 
         selectedPostId+2
     ]
-    
+
     const photos = ids.map(id=>{
-        if(id>=0 && id<travelPosts.length){
+        if(id>=0 && id<dummyTravelPosts.length){
             return(
                 <img 
-                    src={travelPosts[id].image}
+                    src={dummyTravelPosts[id].image}
                     className={styles.bottomImageList__images}
                     style={{
                         "opacity": id===selectedPostId? "1":"0.5"
@@ -73,7 +61,36 @@ const Detail = () => {
             )
         }
     })        
-      
+
+    // const googleMap = ()=>{
+
+    //     const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: Input API keys of myself
+
+    //     return(
+    //         <LoadScript googleMapsApiKey={API_KEY}>
+    //             <GoogleMap
+    //             mapContainerStyle={ {width: "100%", height: "100%" }}
+    //             center={{
+    //                 lat: 10,
+    //                 // dummyTravelPosts[selectedPostId].lattitude,
+    //                 lng: 10,
+    //                 // dummyTravelPosts[selectedPostId].longitude,
+    //             }}
+    //             zoom={3}
+    //             >
+    //            
+    //             {/* <Marker position={{
+    //                 lat: dummyTravelPosts[selectedPostId].lattitude,
+    //                 lng: dummyTravelPosts[selectedPostId].longitude,
+    //                 icon: dummyTravelPosts[selectedPostId].image
+    //                 }}/> */}
+    //             </GoogleMap>
+    //         </LoadScript>
+    //     )
+    // }
+
+    
+    
 
     return (
         <>
@@ -83,20 +100,28 @@ const Detail = () => {
                     <p onClick={DecrementPostIdHandler}>
                         &lt;
                     </p>
-                    <img src={travelPosts[selectedPostId].image} style={{"width":"50%"}}/>
+                    <img src={dummyTravelPosts[selectedPostId].image} style={{"width":"50%"}}/>
                     <p onClick={IncrementPostIdHandler}>
                         &gt;
                     </p>
                 </div><br/>
                 <div 
                     className={styles.bottomImageList}
-                    style={{"justifyContent": selectedPostId >= travelPosts.length-2? "flex-end":""}}    
+                    style={{"justifyContent": selectedPostId >= dummyTravelPosts.length-2? "flex-end":""}}    
                 >
                     {photos}
                 </div>  
                  
             </div>
+            <div className={styles.map}>
+            <WorldMap 
+                lat={Number(dummyTravelPosts[selectedPostId].latitude)}
+                lng={Number(dummyTravelPosts[selectedPostId].longitude)} 
+                icon={dummyTravelPosts[selectedPostId].image} 
+            />    
+            </div>
             <button onClick={()=>deleteHandler()}>Delete</button>
+            <button onClick={()=>console.log(typeof(dummyTravelPosts[selectedPostId].latitude))}>type</button>
                 
             
         </>

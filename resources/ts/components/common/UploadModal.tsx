@@ -24,8 +24,8 @@ const UploadModal: React.FC<{}> = ()=> {
         country:string|undefined;
         title?:string|null;
         image:any;
-        latitude: any;
-        longitude: any;
+        latitude: number|undefined,
+        longitude: number|undefined,
     };
 
     type mapGeoCodeObject = {
@@ -324,17 +324,18 @@ const UploadModal: React.FC<{}> = ()=> {
                   <WorldMap 
                     lat={mapGeoCode.latitude} 
                     lng={mapGeoCode.longitude}
+                    icon={uploadData.image}
                     onClick={setLocationHandler}
                   />
                 
               </div>
           </animated.div>
         <div className={styles.uploadModal__lowerContainer}> 
-          {/* <button onClick={()=>console.log(uploadModalState)}>preview</button> */}
+          <button onClick={()=>console.log(uploadData)}>preview</button>
           {/* <button onClick={()=>console.log(mapGeoCode)}>GeoCode</button> */}
           {/* <button onClick={()=>console.log(countries["Asia"])}>countries</button> */}
-            {/* <button onClick={uploadHandler}>Upload</button> */}
-            <button onClick={cancelHandler}>Cancel</button>
+            <button type="button" className="btn btn-primary" onClick={uploadHandler}>Upload</button>
+            <button type="button" className="btn btn-success" onClick={cancelHandler}>Cancel</button>
           </div>
         </div>
     )

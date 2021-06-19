@@ -68,7 +68,7 @@ const Head: React.FC<HeadProps> = (props)=> {
                     to={"/"}
                     className={styles.header__logo}
                 >
-                    <h5>Travel merge triallllll </h5>
+                    <h3>GoTo Travels </h3>
                 </Link>
                 <div className={styles.header__menu}>
                     <MenuIcon name={"Home"} link={"/"} fileName={"home.jpg"}/>   

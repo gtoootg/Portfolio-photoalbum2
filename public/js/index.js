@@ -11616,7 +11616,7 @@ var Head = function Head(props) {
   }, react_1["default"].createElement(react_router_dom_1.Link, {
     to: "/",
     className: head_module_scss_1["default"].header__logo
-  }, react_1["default"].createElement("h5", null, "Travel merge triallllll ")), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("h3", null, "GoTo Travels ")), react_1["default"].createElement("div", {
     className: head_module_scss_1["default"].header__menu
   }, react_1["default"].createElement(MenuIcon, {
     name: "Home",
@@ -11756,17 +11756,13 @@ var Main = function Main() {
       }
     }, react_1["default"].createElement("div", {
       className: main_module_scss_1["default"].main__imageContainer__title
-    }, react_1["default"].createElement("p", null, travelPost.title)));
+    }, react_1["default"].createElement("h6", null, travelPost.title)));
   });
   return react_1["default"].createElement("div", {
     className: "container"
   }, react_1["default"].createElement("main", {
     className: main_module_scss_1["default"].main
-  }, Posts), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(travelPosts);
-    }
-  }, "check travelPosts"));
+  }, Posts));
 };
 
 exports.default = Main;
@@ -11930,18 +11926,6 @@ var SortModal = function SortModal() {
     }
   };
 
-  var regions = Object.keys(regionsCheckBox);
-  var regionMap = regions.map(function (region) {
-    return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
-      type: "checkbox",
-      id: "checkbox",
-      name: region,
-      value: region,
-      checked: regionsCheckBox[region],
-      onChange: setSortedRegionsHandler
-    }), region);
-  });
-
   var toggle = function toggle() {
     return setSortModalState(!sortModalState);
   };
@@ -11967,6 +11951,24 @@ var SortModal = function SortModal() {
     setDisplayedCountries(filterByRegion);
   };
 
+  var setSelectedCountriesHandler = function setSelectedCountriesHandler(e) {
+    var _a, _b;
+
+    var dummySortedCountries = sortedCountries.slice();
+
+    if (!countriesCheckBox[e.currentTarget.value]) {
+      dummySortedCountries.push(e.currentTarget.value);
+      setSortedCountries(dummySortedCountries);
+      setCountriesCheckBox(__assign(__assign({}, countriesCheckBox), (_a = {}, _a[e.currentTarget.value] = true, _a)));
+    } else {
+      var countryFilter = dummySortedCountries.filter(function (n) {
+        return n !== e.currentTarget.value;
+      });
+      setSortedCountries(countryFilter);
+      setCountriesCheckBox(__assign(__assign({}, countriesCheckBox), (_b = {}, _b[e.currentTarget.value] = false, _b)));
+    }
+  };
+
   var setSortedPostsHandler = function setSortedPostsHandler() {
     axios_1["default"].get('api/posts').then(function (response) {
       if (!sortedCountries.length) {
@@ -11987,30 +11989,33 @@ var SortModal = function SortModal() {
       setDisplayedCountries(initialDisplayedCountries);
       setCountriesCheckBox(initialCountriesCheckBox);
       setSortedCountries(initalSortedCountries);
-    }) // .then(()=>console.log(travelPosts))
-    ["catch"](function (error) {
+    })["catch"](function (error) {
       return console.log(error);
-    }); // console.log("aaa")
-  };
+    });
+  }; //JSX component/////////////////////////////////
 
-  var setSelectedCountriesHandler = function setSelectedCountriesHandler(e) {
-    var _a, _b;
 
-    var dummySortedCountries = sortedCountries.slice();
-
-    if (!countriesCheckBox[e.currentTarget.value]) {
-      dummySortedCountries.push(e.currentTarget.value);
-      setSortedCountries(dummySortedCountries);
-      setCountriesCheckBox(__assign(__assign({}, countriesCheckBox), (_a = {}, _a[e.currentTarget.value] = true, _a)));
-    } else {
-      var countryFilter = dummySortedCountries.filter(function (n) {
-        return n !== e.currentTarget.value;
-      });
-      setSortedCountries(countryFilter);
-      setCountriesCheckBox(__assign(__assign({}, countriesCheckBox), (_b = {}, _b[e.currentTarget.value] = false, _b)));
-    }
-  }; //Animation///////////////////////
-
+  var regions = Object.keys(regionsCheckBox);
+  var regionMap = regions.map(function (region) {
+    return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
+      type: "checkbox",
+      id: "checkbox",
+      name: region,
+      value: region,
+      checked: regionsCheckBox[region],
+      onChange: setSortedRegionsHandler
+    }), region);
+  });
+  var countryMap = displayedCountries.map(function (displayedCountry) {
+    return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
+      id: "checkbox",
+      type: "checkbox",
+      name: displayedCountry.country,
+      value: displayedCountry.country,
+      onChange: setSelectedCountriesHandler
+    }), " ", displayedCountry.country);
+  }); ///////////////////////////////////////////////
+  //Animation///////////////////////
 
   var spring = react_spring_1.useSpring({
     height: displayedCountries.length ? "auto" : "0px",
@@ -12021,15 +12026,6 @@ var SortModal = function SortModal() {
     }
   }); //////////////////////////////////
 
-  var countryMap = displayedCountries.map(function (displayedCountry) {
-    return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
-      id: "checkbox",
-      type: "checkbox",
-      name: displayedCountry.country,
-      value: displayedCountry.country,
-      onChange: setSelectedCountriesHandler
-    }), " ", displayedCountry.country);
-  });
   return react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal,
     style: {
@@ -12038,33 +12034,37 @@ var SortModal = function SortModal() {
     }
   }, react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal__label
-  }, react_1["default"].createElement("p", null, "Sort pictures by your preference"), react_1["default"].createElement("p", {
+  }, react_1["default"].createElement("h3", null, "Sort pictures by your preference"), react_1["default"].createElement("p", {
     onClick: cancelHandler
   }, "\u2715")), react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal__mainContainer
   }, react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal__mainContainer__left
-  }, react_1["default"].createElement("p", null, "Which Regions is your interest?"), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("h6", null, "Which Regions is your interest?"), react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal__mainContainer__left__checkBox
   }, regionMap), react_1["default"].createElement("button", {
+    type: "button",
+    className: "btn btn-success",
     onClick: DisplayCountriesHandler
-  }, "Sort Region")), react_1["default"].createElement(react_spring_1.animated.div, {
+  }, "Click to see countries")), react_1["default"].createElement(react_spring_1.animated.div, {
     className: sortmodal_module_scss_1["default"].sortModal__mainContainer__right,
     style: spring
-  }, react_1["default"].createElement("span", null, "Which Country is your interest?"), countryMap)), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("h6", null, "Which Country is your interest?"), react_1["default"].createElement("div", {
+    className: sortmodal_module_scss_1["default"].sortModal__mainContainer__right__checkBox
+  }, countryMap))), react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal__buttonContainer
   }, react_1["default"].createElement("button", {
+    type: "button",
+    className: "btn btn-primary",
     onClick: setSortedPostsHandler
   }, "Sort"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      toggle;
-    }
-  }, "Cancel"))); ////
+    type: "button",
+    className: "btn btn-secondary",
+    onClick: cancelHandler
+  }, "Cancel")));
 };
 
-exports.default = SortModal; // console.log(file);
-//     setUploadData({...uploadData, image:`/img/${file.name}`});
-///////////////////////
+exports.default = SortModal;
 
 /***/ }),
 
@@ -13407,10 +13407,21 @@ var UploadModal = function UploadModal() {
   }, react_1["default"].createElement(WorldMap_1["default"], {
     lat: mapGeoCode.latitude,
     lng: mapGeoCode.longitude,
+    icon: uploadData.image,
     onClick: setLocationHandler
   }))), react_1["default"].createElement("div", {
     className: uploadmodal_module_scss_1["default"].uploadModal__lowerContainer
   }, react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return console.log(uploadData);
+    }
+  }, "preview"), react_1["default"].createElement("button", {
+    type: "button",
+    className: "btn btn-primary",
+    onClick: uploadHandler
+  }, "Upload"), react_1["default"].createElement("button", {
+    type: "button",
+    className: "btn btn-success",
     onClick: cancelHandler
   }, "Cancel")));
 };
@@ -13447,6 +13458,7 @@ var API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキ�
 var WorldMap = function WorldMap(_a) {
   var lat = _a.lat,
       lng = _a.lng,
+      icon = _a.icon,
       onClick = _a.onClick;
 
   if (lat === undefined && lng === undefined) {
@@ -13471,6 +13483,10 @@ var WorldMap = function WorldMap(_a) {
       position: {
         lat: lat,
         lng: lng
+      },
+      icon: {
+        url: icon,
+        scaledSize: 20
       }
     })));
   }
@@ -13488,6 +13504,8 @@ exports.default = WorldMap;
 
 "use strict";
 
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -13541,6 +13559,8 @@ var Head_1 = __importDefault(__webpack_require__(/*! ../common/Head */ "./resour
 
 var index_1 = __webpack_require__(/*! ../../index */ "./resources/ts/index.tsx");
 
+var WorldMap_1 = __importDefault(__webpack_require__(/*! ../common/WorldMap */ "./resources/ts/components/common/WorldMap.tsx"));
+
 var detail_module_scss_1 = __importDefault(__webpack_require__(/*! ../../../styles/detail.module.scss */ "./resources/styles/detail.module.scss"));
 
 var Detail = function Detail() {
@@ -13548,12 +13568,16 @@ var Detail = function Detail() {
       travelPosts = _a.travelPosts,
       setTravelPosts = _a.setTravelPosts;
 
-  var _b = react_1.useContext(index_1.SelectedPostIdContext),
-      selectedPostId = _b.selectedPostId,
-      setSelectedPostId = _b.setSelectedPostId;
+  var _b = react_1.useContext(index_1.DummyTravelPostsContext),
+      dummyTravelPosts = _b.dummyTravelPosts,
+      setDummyTravelPosts = _b.setDummyTravelPosts;
+
+  var _c = react_1.useContext(index_1.SelectedPostIdContext),
+      selectedPostId = _c.selectedPostId,
+      setSelectedPostId = _c.setSelectedPostId;
 
   var IncrementPostIdHandler = function IncrementPostIdHandler(e) {
-    if (selectedPostId !== travelPosts.length - 1) {
+    if (selectedPostId !== dummyTravelPosts.length - 1) {
       setSelectedPostId(selectedPostId + 1);
     }
   };
@@ -13562,20 +13586,7 @@ var Detail = function Detail() {
     if (selectedPostId !== 0) {
       setSelectedPostId(selectedPostId - 1);
     }
-  }; // function updateTask(){
-  //     axios.put('http://127.0.0.1:8000/api/task/'+editTaskData.id, 
-  //     editTaskData
-  //  )
-  // .then(() =>{
-  //     setEditTaskModal(!editTaskModal);
-  //     setEditTaskData({name:"", description:""});
-  //     loadTasks();
-  // })
-  // .catch(error => {
-  //     console.log(error);
-  //   });
-  // }
-
+  };
 
   var deleteHandler = function deleteHandler() {
     // setEditTaskData({id,name,description})
@@ -13588,16 +13599,40 @@ var Detail = function Detail() {
 
   var ids = [selectedPostId - 2, selectedPostId - 1, selectedPostId, selectedPostId + 1, selectedPostId + 2];
   var photos = ids.map(function (id) {
-    if (id >= 0 && id < travelPosts.length) {
+    if (id >= 0 && id < dummyTravelPosts.length) {
       return react_1["default"].createElement("img", {
-        src: travelPosts[id].image,
+        src: dummyTravelPosts[id].image,
         className: detail_module_scss_1["default"].bottomImageList__images,
         style: {
           "opacity": id === selectedPostId ? "1" : "0.5"
         }
       });
     }
-  });
+  }); // const googleMap = ()=>{
+  //     const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: Input API keys of myself
+  //     return(
+  //         <LoadScript googleMapsApiKey={API_KEY}>
+  //             <GoogleMap
+  //             mapContainerStyle={ {width: "100%", height: "100%" }}
+  //             center={{
+  //                 lat: 10,
+  //                 // dummyTravelPosts[selectedPostId].lattitude,
+  //                 lng: 10,
+  //                 // dummyTravelPosts[selectedPostId].longitude,
+  //             }}
+  //             zoom={3}
+  //             >
+  //            
+  //             {/* <Marker position={{
+  //                 lat: dummyTravelPosts[selectedPostId].lattitude,
+  //                 lng: dummyTravelPosts[selectedPostId].longitude,
+  //                 icon: dummyTravelPosts[selectedPostId].image
+  //                 }}/> */}
+  //             </GoogleMap>
+  //         </LoadScript>
+  //     )
+  // }
+
   return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(Head_1["default"], {
     unusedIconOpacity: "0.5",
     unusedIconSelect: "none"
@@ -13608,7 +13643,7 @@ var Detail = function Detail() {
   }, react_1["default"].createElement("p", {
     onClick: DecrementPostIdHandler
   }, "<"), react_1["default"].createElement("img", {
-    src: travelPosts[selectedPostId].image,
+    src: dummyTravelPosts[selectedPostId].image,
     style: {
       "width": "50%"
     }
@@ -13617,13 +13652,23 @@ var Detail = function Detail() {
   }, ">")), react_1["default"].createElement("br", null), react_1["default"].createElement("div", {
     className: detail_module_scss_1["default"].bottomImageList,
     style: {
-      "justifyContent": selectedPostId >= travelPosts.length - 2 ? "flex-end" : ""
+      "justifyContent": selectedPostId >= dummyTravelPosts.length - 2 ? "flex-end" : ""
     }
-  }, photos)), react_1["default"].createElement("button", {
+  }, photos)), react_1["default"].createElement("div", {
+    className: detail_module_scss_1["default"].map
+  }, react_1["default"].createElement(WorldMap_1["default"], {
+    lat: Number(dummyTravelPosts[selectedPostId].latitude),
+    lng: Number(dummyTravelPosts[selectedPostId].longitude),
+    icon: dummyTravelPosts[selectedPostId].image
+  })), react_1["default"].createElement("button", {
     onClick: function onClick() {
       return deleteHandler();
     }
-  }, "Delete"));
+  }, "Delete"), react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return console.log(_typeof(dummyTravelPosts[selectedPostId].latitude));
+    }
+  }, "type"));
 };
 
 exports.default = Detail;
@@ -13860,12 +13905,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ctePdS1wI5wqOc81do0Y {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.ctePdS1wI5wqOc81do0Y p {\n  font-size: 10vh;\n  margin: 5vh;\n}\n\n._1TTmsLSAJ_vg_keLv4ZdBM {\n  display: flex;\n  margin: 0 auto;\n  width: 35%;\n}\n._3ofIYn_V7wj4wjAFOpWXg2 {\n  width: 18%;\n  margin: 1%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".ctePdS1wI5wqOc81do0Y {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.ctePdS1wI5wqOc81do0Y p {\n  font-size: 10vh;\n  margin: 5vh;\n}\n\n._1TTmsLSAJ_vg_keLv4ZdBM {\n  display: flex;\n  margin: 0 auto;\n  width: 35%;\n}\n._3ofIYn_V7wj4wjAFOpWXg2 {\n  width: 18%;\n  margin: 1%;\n}\n\n._34PGteRpnzggsLRmL3Cw1k {\n  height: 50vh;\n  border: solid 1px black;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"SelectedPhotoContainer": "ctePdS1wI5wqOc81do0Y",
 	"bottomImageList": "_1TTmsLSAJ_vg_keLv4ZdBM",
-	"bottomImageList__images": "_3ofIYn_V7wj4wjAFOpWXg2"
+	"bottomImageList__images": "_3ofIYn_V7wj4wjAFOpWXg2",
+	"map": "_34PGteRpnzggsLRmL3Cw1k"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13949,7 +13995,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  background-size: cover;\n  aspect-ratio: 3/2;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 30%;\n  text-decoration: none;\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 20%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ p {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover p {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  background-size: cover;\n  aspect-ratio: 3/2;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 30%;\n  text-decoration: none;\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 20%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ h6 {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover h6 {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"main": "_3_RSgvGBn9xtKkPa-PQs2u",
@@ -13978,7 +14024,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._25RaaNS-e_-tozxnFnM6W3 {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: auto;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}\n._2CnzsdRQBNNuuSo7ITe0M6 {\n  display: flex;\n  justify-content: space-between;\n  padding-top: 1vh;\n  padding-left: 1vh;\n  padding-right: 1vh;\n  border-bottom: solid 0.5px gray;\n}\n._1ewtDMhXhaMOM7EM_0EPYF {\n  display: flex;\n  justify-content: space-between;\n  margin-top: 5vh;\n  margin-right: 5vw;\n  margin-left: 5vw;\n  margin-bottom: 5vh;\n}\n._3qQWlg-PSAApKjsW8sy24S {\n  width: 50%;\n}\n._14Uos3ysEkF6tjTpbLCGhj {\n  margin-bottom: 2vh;\n}\n._1sos_spgelQTlVfbfh0iwo {\n  width: 50%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._25RaaNS-e_-tozxnFnM6W3 {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: auto;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}\n._2CnzsdRQBNNuuSo7ITe0M6 {\n  display: flex;\n  justify-content: space-between;\n  padding-top: 1vh;\n  padding-left: 1vh;\n  padding-right: 1vh;\n  border-bottom: solid 0.5px gray;\n}\n._1ewtDMhXhaMOM7EM_0EPYF {\n  display: flex;\n  justify-content: space-between;\n  margin-top: 5vh;\n  margin-right: 5vw;\n  margin-left: 5vw;\n  margin-bottom: 5vh;\n}\n._3qQWlg-PSAApKjsW8sy24S {\n  width: 50%;\n}\n._14Uos3ysEkF6tjTpbLCGhj {\n  margin-bottom: 2vh;\n}\n._1sos_spgelQTlVfbfh0iwo {\n  width: 50%;\n}\n._3Oayyq4CELtfsMtOb8KeT_ {\n  margin-bottom: 2vh;\n}\n._3xSAOvS1zd7CG8WE4bHytW {\n  display: flex;\n  justify-content: flex-end;\n  margin-right: 5vw;\n  margin-bottom: 5vh;\n}\n._3xSAOvS1zd7CG8WE4bHytW button {\n  margin-left: 1vw;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"sortModal": "_25RaaNS-e_-tozxnFnM6W3",
@@ -13986,7 +14032,9 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"sortModal__mainContainer": "_1ewtDMhXhaMOM7EM_0EPYF",
 	"sortModal__mainContainer__left": "_3qQWlg-PSAApKjsW8sy24S",
 	"sortModal__mainContainer__left__checkBox": "_14Uos3ysEkF6tjTpbLCGhj",
-	"sortModal__mainContainer__right": "_1sos_spgelQTlVfbfh0iwo"
+	"sortModal__mainContainer__right": "_1sos_spgelQTlVfbfh0iwo",
+	"sortModal__mainContainer__right__checkBox": "_3Oayyq4CELtfsMtOb8KeT_",
+	"sortModal__buttonContainer": "_3xSAOvS1zd7CG8WE4bHytW"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
