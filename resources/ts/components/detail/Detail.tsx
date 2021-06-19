@@ -101,8 +101,6 @@ const Detail = () => {
                         &lt;
                     </p>
                     <img src={dummyTravelPosts[selectedPostId].image} style={{"width":"50%"}}/>
-                    {dummyTravelPosts[selectedPostId].latitude}<br/>
-                    {dummyTravelPosts[selectedPostId].longitude}
                     <p onClick={IncrementPostIdHandler}>
                         &gt;
                     </p>
@@ -117,12 +115,9 @@ const Detail = () => {
             </div>
             <div className={styles.map}>
             <WorldMap 
-                lat=
-                // {50.086258688711304}
-                {parseInt(dummyTravelPosts[selectedPostId].latitude)}
-                lng=
-                    // {14.413325536552293}
-                {parseInt(dummyTravelPosts[selectedPostId].longitude)}  
+                lat={Number(dummyTravelPosts[selectedPostId].latitude)}
+                lng={Number(dummyTravelPosts[selectedPostId].longitude)} 
+                icon={dummyTravelPosts[selectedPostId].image} 
             />    
             </div>
             <button onClick={()=>deleteHandler()}>Delete</button>

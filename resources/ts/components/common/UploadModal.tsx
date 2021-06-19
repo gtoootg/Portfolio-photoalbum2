@@ -324,13 +324,14 @@ const UploadModal: React.FC<{}> = ()=> {
                   <WorldMap 
                     lat={mapGeoCode.latitude} 
                     lng={mapGeoCode.longitude}
+                    icon={uploadData.image}
                     onClick={setLocationHandler}
                   />
                 
               </div>
           </animated.div>
         <div className={styles.uploadModal__lowerContainer}> 
-          {/* <button onClick={()=>console.log(uploadModalState)}>preview</button> */}
+          <button onClick={()=>console.log(uploadData)}>preview</button>
           {/* <button onClick={()=>console.log(mapGeoCode)}>GeoCode</button> */}
           {/* <button onClick={()=>console.log(countries["Asia"])}>countries</button> */}
             <button type="button" className="btn btn-primary" onClick={uploadHandler}>Upload</button>
