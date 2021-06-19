@@ -13407,10 +13407,15 @@ var UploadModal = function UploadModal() {
   }, react_1["default"].createElement(WorldMap_1["default"], {
     lat: mapGeoCode.latitude,
     lng: mapGeoCode.longitude,
+    icon: uploadData.image,
     onClick: setLocationHandler
   }))), react_1["default"].createElement("div", {
     className: uploadmodal_module_scss_1["default"].uploadModal__lowerContainer
   }, react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      return console.log(uploadData);
+    }
+  }, "preview"), react_1["default"].createElement("button", {
     type: "button",
     className: "btn btn-primary",
     onClick: uploadHandler
@@ -13453,6 +13458,7 @@ var API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキ�
 var WorldMap = function WorldMap(_a) {
   var lat = _a.lat,
       lng = _a.lng,
+      icon = _a.icon,
       onClick = _a.onClick;
 
   if (lat === undefined && lng === undefined) {
@@ -13477,6 +13483,10 @@ var WorldMap = function WorldMap(_a) {
       position: {
         lat: lat,
         lng: lng
+      },
+      icon: {
+        url: icon,
+        scaledSize: 20
       }
     })));
   }
@@ -13637,7 +13647,7 @@ var Detail = function Detail() {
     style: {
       "width": "50%"
     }
-  }), dummyTravelPosts[selectedPostId].latitude, react_1["default"].createElement("br", null), dummyTravelPosts[selectedPostId].longitude, react_1["default"].createElement("p", {
+  }), react_1["default"].createElement("p", {
     onClick: IncrementPostIdHandler
   }, ">")), react_1["default"].createElement("br", null), react_1["default"].createElement("div", {
     className: detail_module_scss_1["default"].bottomImageList,
@@ -13647,8 +13657,9 @@ var Detail = function Detail() {
   }, photos)), react_1["default"].createElement("div", {
     className: detail_module_scss_1["default"].map
   }, react_1["default"].createElement(WorldMap_1["default"], {
-    lat: parseInt(dummyTravelPosts[selectedPostId].latitude),
-    lng: parseInt(dummyTravelPosts[selectedPostId].longitude)
+    lat: Number(dummyTravelPosts[selectedPostId].latitude),
+    lng: Number(dummyTravelPosts[selectedPostId].longitude),
+    icon: dummyTravelPosts[selectedPostId].image
   })), react_1["default"].createElement("button", {
     onClick: function onClick() {
       return deleteHandler();
