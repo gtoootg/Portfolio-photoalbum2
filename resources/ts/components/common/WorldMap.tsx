@@ -4,14 +4,14 @@ import {GoogleMap,LoadScript, Marker,InfoWindow } from "@react-google-maps/api";
 type Props = {
   lat:number| undefined
   lng:number |undefined
-  icon:any
+  // icon:any
   zoom:number
   onClick?:(e:number)=>void
 }
 
 const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキーをここに入力
 
-const WorldMap: React.FC<Props> = ({lat,lng, icon,zoom, onClick}) => {
+const WorldMap: React.FC<Props> = ({lat,lng,zoom, onClick}) => {
 
   if(lat === undefined && lng ===undefined){
     return(
@@ -40,10 +40,10 @@ const WorldMap: React.FC<Props> = ({lat,lng, icon,zoom, onClick}) => {
             position={{
               lat: lat,
               lng: lng}}
-            icon={{
-              url:icon,
-              scaledSize: {width: 60, height: 40},
-            }}
+            // icon={{
+            //   url:icon,
+            //   scaledSize: {width: 60, height: 40},
+            // }}
             opacity= {0.9}
             
             // options={{border=solid 1px white}}
