@@ -12,6 +12,7 @@
 .bottomImageList{
     display:flex;
     margin:0 auto;
+    margin-bottom:5vh;
     // justify-content: ;
     width:35%;
     &__images{
@@ -21,7 +22,17 @@
     }
 }
 
-.map{
+.discription{
+    display:flex;
+    justify-content: space-between;
     height:50vh;
+    width:90%;
+    margin:0 auto;
+    
     border:solid 1px black;
+    
+    &__map{
+        width:40%;
+        height:100%;
+    }
 }

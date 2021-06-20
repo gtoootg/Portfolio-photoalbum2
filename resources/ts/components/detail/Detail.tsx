@@ -6,8 +6,6 @@ import {TravelPostsContext, DummyTravelPostsContext, SelectedPostIdContext} from
 import WorldMap from "../common/WorldMap";
 import styles from '../../../styles/detail.module.scss';
 
-import {GoogleMap,LoadScript, Marker,InfoWindow } from "@react-google-maps/api";
-
 const Detail = () => {
     const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;    
     const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);   
@@ -39,7 +37,6 @@ const Detail = () => {
 
     }
 
-
     let ids:[number,number,number,number,number] = [
         selectedPostId-2,
         selectedPostId-1,
@@ -62,36 +59,6 @@ const Detail = () => {
         }
     })        
 
-    // const googleMap = ()=>{
-
-    //     const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: Input API keys of myself
-
-    //     return(
-    //         <LoadScript googleMapsApiKey={API_KEY}>
-    //             <GoogleMap
-    //             mapContainerStyle={ {width: "100%", height: "100%" }}
-    //             center={{
-    //                 lat: 10,
-    //                 // dummyTravelPosts[selectedPostId].lattitude,
-    //                 lng: 10,
-    //                 // dummyTravelPosts[selectedPostId].longitude,
-    //             }}
-    //             zoom={3}
-    //             >
-    //            
-    //             {/* <Marker position={{
-    //                 lat: dummyTravelPosts[selectedPostId].lattitude,
-    //                 lng: dummyTravelPosts[selectedPostId].longitude,
-    //                 icon: dummyTravelPosts[selectedPostId].image
-    //                 }}/> */}
-    //             </GoogleMap>
-    //         </LoadScript>
-    //     )
-    // }
-
-    
-    
-
     return (
         <>
             <Head unusedIconOpacity={"0.5"} unusedIconSelect={"none"}/>
@@ -111,21 +78,23 @@ const Detail = () => {
                 >
                     {photos}
                 </div>  
-                 
+                <div className={styles.discription}>
+                    <div>
+
+                    </div>
+                    <div className={styles.discription__map}>
+                        <WorldMap
+                            lat={Number(dummyTravelPosts[selectedPostId].latitude)}
+                            lng={Number(dummyTravelPosts[selectedPostId].longitude)}
+                            zoom={6} 
+                            icon={dummyTravelPosts[selectedPostId].image} 
+                        />    
+                    </div>
+                </div>
+                <button onClick={()=>deleteHandler()}>Delete</button>
+                <button onClick={()=>console.log(typeof(dummyTravelPosts[selectedPostId].latitude))}>type</button>
             </div>
-            <div className={styles.map}>
-            <WorldMap 
-                lat={Number(dummyTravelPosts[selectedPostId].latitude)}
-                lng={Number(dummyTravelPosts[selectedPostId].longitude)} 
-                icon={dummyTravelPosts[selectedPostId].image} 
-            />    
-            </div>
-            <button onClick={()=>deleteHandler()}>Delete</button>
-            <button onClick={()=>console.log(typeof(dummyTravelPosts[selectedPostId].latitude))}>type</button>
-                
-            
         </>
-       
     );
 }
 
