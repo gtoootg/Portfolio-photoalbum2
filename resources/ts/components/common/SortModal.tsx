@@ -6,6 +6,7 @@ import { useSpring, animated, config } from 'react-spring'
 import styles from '../../../styles/sortmodal.module.scss';
 import {TravelPostsContext, DummyTravelPostsContext, TravelPostObject} from '../../index';
 import {sortModalStateContext} from '../home/Home';
+import { fitBounds } from 'google-map-react';
 
 const SortModal: React.FC<{}> = ()=> {
 
@@ -85,8 +86,6 @@ const SortModal: React.FC<{}> = ()=> {
 
     }
 
-    const toggle = () => setSortModalState(!sortModalState);
-
     const DisplayCountriesHandler = () => {
       const countriesInPosts = dummyTravelPosts.reduce((accu:any,curr:any)=>{
         if(!accu.some((e:TravelPostObject)=>e.country === curr.country)){
@@ -120,25 +119,32 @@ const SortModal: React.FC<{}> = ()=> {
       }
     }
 
-    const setSortedPostsHandler = () =>{
-      axios.get('api/posts')
-      .then((response)=>{
+    const setSortedPostsHandler =async() =>{
+      function filterPosts(){
         if(!sortedCountries.length){
-          const filterByRegion =response.data.filter((x:TravelPostObject)=>sortedRegions.includes(x.region))
-          setTravelPosts(filterByRegion)
-      }else{
-          const filterByCountry =response.data.filter((x:TravelPostObject)=>sortedCountries.includes(x.country))
-          setTravelPosts(filterByCountry)
+                const filterByRegion =dummyTravelPosts.filter((x:TravelPostObject)=>sortedRegions.includes(x.region))
+                setTravelPosts(filterByRegion)
+                console.log("b")
+            }else{
+                const filterByCountry =dummyTravelPosts.filter((x:TravelPostObject)=>sortedCountries.includes(x.country))
+                setTravelPosts(filterByCountry)
+                console.log("b")
+            }
       }
-    }).then(()=>{
-      setSortModalState(false);
-      setRegionsCheckBox(initialRegionsCheckBox);
-      setSortedRegions(initialSortedRegions);
-      setDisplayedCountries(initialDisplayedCountries);
-      setCountriesCheckBox(initialCountriesCheckBox);
-      setSortedCountries(initalSortedCountries);
-    })
-      .catch(error=>console.log(error))
+
+      function reset(){
+          setSortModalState(false);
+          setRegionsCheckBox(initialRegionsCheckBox);
+          setSortedRegions(initialSortedRegions);
+          setDisplayedCountries(initialDisplayedCountries);
+          setCountriesCheckBox(initialCountriesCheckBox);
+          setSortedCountries(initalSortedCountries);       
+      }
+
+      new Promise((resolve:(value:string)=>void)=>{
+        filterPosts()
+        resolve("sort complete")
+      }).then(()=>reset())
   }
 
 
@@ -218,6 +224,7 @@ const SortModal: React.FC<{}> = ()=> {
           <div className={styles.sortModal__buttonContainer}>
               <button type="button" className="btn btn-primary" onClick={setSortedPostsHandler}>Sort</button>
               <button type="button" className="btn btn-secondary" onClick= {cancelHandler}>Cancel</button>
+              <button onClick={()=>{setTravelPosts(dummyTravelPosts)}}>aaa</button>
           </div>
         </div>
       )
