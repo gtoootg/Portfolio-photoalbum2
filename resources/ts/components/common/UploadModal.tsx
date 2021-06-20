@@ -325,6 +325,7 @@ const UploadModal: React.FC<{}> = ()=> {
                     lat={mapGeoCode.latitude} 
                     lng={mapGeoCode.longitude}
                     icon={uploadData.image}
+                    zoom={3}
                     onClick={setLocationHandler}
                   />
                 
