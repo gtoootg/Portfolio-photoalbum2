@@ -11828,6 +11828,149 @@ var __importStar = this && this.__importStar || function (mod) {
   return result;
 };
 
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function sent() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+
+          case 7:
+            op = _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+
+              _.ops.push(op);
+
+              break;
+            }
+
+            if (t[2]) _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+        }
+
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -11839,8 +11982,6 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
 var react_spring_1 = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
 
@@ -11926,10 +12067,6 @@ var SortModal = function SortModal() {
     }
   };
 
-  var toggle = function toggle() {
-    return setSortModalState(!sortModalState);
-  };
-
   var DisplayCountriesHandler = function DisplayCountriesHandler() {
     var countriesInPosts = dummyTravelPosts.reduce(function (accu, curr) {
       if (!accu.some(function (e) {
@@ -11970,27 +12107,43 @@ var SortModal = function SortModal() {
   };
 
   var setSortedPostsHandler = function setSortedPostsHandler() {
-    axios_1["default"].get('api/posts').then(function (response) {
-      if (!sortedCountries.length) {
-        var filterByRegion = response.data.filter(function (x) {
-          return sortedRegions.includes(x.region);
-        });
-        setTravelPosts(filterByRegion);
-      } else {
-        var filterByCountry = response.data.filter(function (x) {
-          return sortedCountries.includes(x.country);
-        });
-        setTravelPosts(filterByCountry);
+    return __awaiter(void 0, void 0, void 0, function () {
+      function filterPosts() {
+        if (!sortedCountries.length) {
+          var filterByRegion = dummyTravelPosts.filter(function (x) {
+            return sortedRegions.includes(x.region);
+          });
+          setTravelPosts(filterByRegion);
+          console.log("b");
+        } else {
+          var filterByCountry = dummyTravelPosts.filter(function (x) {
+            return sortedCountries.includes(x.country);
+          });
+          setTravelPosts(filterByCountry);
+          console.log("b");
+        }
       }
-    }).then(function () {
-      setSortModalState(false);
-      setRegionsCheckBox(initialRegionsCheckBox);
-      setSortedRegions(initialSortedRegions);
-      setDisplayedCountries(initialDisplayedCountries);
-      setCountriesCheckBox(initialCountriesCheckBox);
-      setSortedCountries(initalSortedCountries);
-    })["catch"](function (error) {
-      return console.log(error);
+
+      function reset() {
+        setSortModalState(false);
+        setRegionsCheckBox(initialRegionsCheckBox);
+        setSortedRegions(initialSortedRegions);
+        setDisplayedCountries(initialDisplayedCountries);
+        setCountriesCheckBox(initialCountriesCheckBox);
+        setSortedCountries(initalSortedCountries);
+      }
+
+      return __generator(this, function (_a) {
+        new Promise(function (resolve) {
+          filterPosts();
+          resolve("sort complete");
+        }).then(function () {
+          return reset();
+        });
+        return [2
+        /*return*/
+        ];
+      });
     });
   }; //JSX component/////////////////////////////////
 
@@ -12061,7 +12214,11 @@ var SortModal = function SortModal() {
     type: "button",
     className: "btn btn-secondary",
     onClick: cancelHandler
-  }, "Cancel")));
+  }, "Cancel"), react_1["default"].createElement("button", {
+    onClick: function onClick() {
+      setTravelPosts(dummyTravelPosts);
+    }
+  }, "aaa")));
 };
 
 exports.default = SortModal;
@@ -13408,6 +13565,7 @@ var UploadModal = function UploadModal() {
     lat: mapGeoCode.latitude,
     lng: mapGeoCode.longitude,
     icon: uploadData.image,
+    zoom: 3,
     onClick: setLocationHandler
   }))), react_1["default"].createElement("div", {
     className: uploadmodal_module_scss_1["default"].uploadModal__lowerContainer
@@ -13459,6 +13617,7 @@ var WorldMap = function WorldMap(_a) {
   var lat = _a.lat,
       lng = _a.lng,
       icon = _a.icon,
+      zoom = _a.zoom,
       onClick = _a.onClick;
 
   if (lat === undefined && lng === undefined) {
@@ -13467,7 +13626,8 @@ var WorldMap = function WorldMap(_a) {
     }, react_1["default"].createElement("div", null, "Select Country, then google map is shown here"));
   } else {
     return react_1["default"].createElement(api_1.LoadScript, {
-      googleMapsApiKey: API_KEY
+      googleMapsApiKey: API_KEY,
+      language: "en"
     }, react_1["default"].createElement(api_1.GoogleMap, {
       mapContainerStyle: {
         width: "100%",
@@ -13477,7 +13637,7 @@ var WorldMap = function WorldMap(_a) {
         lat: lat,
         lng: lng
       },
-      zoom: 3,
+      zoom: zoom,
       onClick: onClick
     }, react_1["default"].createElement(api_1.Marker, {
       position: {
@@ -13486,8 +13646,12 @@ var WorldMap = function WorldMap(_a) {
       },
       icon: {
         url: icon,
-        scaledSize: 20
-      }
+        scaledSize: {
+          width: 60,
+          height: 40
+        }
+      },
+      opacity: 0.9
     })));
   }
 };
@@ -13608,31 +13772,7 @@ var Detail = function Detail() {
         }
       });
     }
-  }); // const googleMap = ()=>{
-  //     const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: Input API keys of myself
-  //     return(
-  //         <LoadScript googleMapsApiKey={API_KEY}>
-  //             <GoogleMap
-  //             mapContainerStyle={ {width: "100%", height: "100%" }}
-  //             center={{
-  //                 lat: 10,
-  //                 // dummyTravelPosts[selectedPostId].lattitude,
-  //                 lng: 10,
-  //                 // dummyTravelPosts[selectedPostId].longitude,
-  //             }}
-  //             zoom={3}
-  //             >
-  //            
-  //             {/* <Marker position={{
-  //                 lat: dummyTravelPosts[selectedPostId].lattitude,
-  //                 lng: dummyTravelPosts[selectedPostId].longitude,
-  //                 icon: dummyTravelPosts[selectedPostId].image
-  //                 }}/> */}
-  //             </GoogleMap>
-  //         </LoadScript>
-  //     )
-  // }
-
+  });
   return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(Head_1["default"], {
     unusedIconOpacity: "0.5",
     unusedIconSelect: "none"
@@ -13654,13 +13794,16 @@ var Detail = function Detail() {
     style: {
       "justifyContent": selectedPostId >= dummyTravelPosts.length - 2 ? "flex-end" : ""
     }
-  }, photos)), react_1["default"].createElement("div", {
-    className: detail_module_scss_1["default"].map
+  }, photos), react_1["default"].createElement("div", {
+    className: detail_module_scss_1["default"].discription
+  }, react_1["default"].createElement("div", null), react_1["default"].createElement("div", {
+    className: detail_module_scss_1["default"].discription__map
   }, react_1["default"].createElement(WorldMap_1["default"], {
     lat: Number(dummyTravelPosts[selectedPostId].latitude),
     lng: Number(dummyTravelPosts[selectedPostId].longitude),
+    zoom: 6,
     icon: dummyTravelPosts[selectedPostId].image
-  })), react_1["default"].createElement("button", {
+  }))), react_1["default"].createElement("button", {
     onClick: function onClick() {
       return deleteHandler();
     }
@@ -13668,7 +13811,7 @@ var Detail = function Detail() {
     onClick: function onClick() {
       return console.log(_typeof(dummyTravelPosts[selectedPostId].latitude));
     }
-  }, "type"));
+  }, "type")));
 };
 
 exports.default = Detail;
@@ -13905,13 +14048,14 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ctePdS1wI5wqOc81do0Y {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.ctePdS1wI5wqOc81do0Y p {\n  font-size: 10vh;\n  margin: 5vh;\n}\n\n._1TTmsLSAJ_vg_keLv4ZdBM {\n  display: flex;\n  margin: 0 auto;\n  width: 35%;\n}\n._3ofIYn_V7wj4wjAFOpWXg2 {\n  width: 18%;\n  margin: 1%;\n}\n\n._34PGteRpnzggsLRmL3Cw1k {\n  height: 50vh;\n  border: solid 1px black;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".ctePdS1wI5wqOc81do0Y {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.ctePdS1wI5wqOc81do0Y p {\n  font-size: 10vh;\n  margin: 5vh;\n}\n\n._1TTmsLSAJ_vg_keLv4ZdBM {\n  display: flex;\n  margin: 0 auto;\n  margin-bottom: 5vh;\n  width: 35%;\n}\n._3ofIYn_V7wj4wjAFOpWXg2 {\n  width: 18%;\n  margin: 1%;\n}\n\n._3lASKXBJI8xeXvQjiv2G9e {\n  display: flex;\n  justify-content: space-between;\n  height: 50vh;\n  width: 90%;\n  margin: 0 auto;\n  border: solid 1px black;\n}\n._17z4H3zMYBiAyB0X9nLCtw {\n  width: 40%;\n  height: 100%;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"SelectedPhotoContainer": "ctePdS1wI5wqOc81do0Y",
 	"bottomImageList": "_1TTmsLSAJ_vg_keLv4ZdBM",
 	"bottomImageList__images": "_3ofIYn_V7wj4wjAFOpWXg2",
-	"map": "_34PGteRpnzggsLRmL3Cw1k"
+	"discription": "_3lASKXBJI8xeXvQjiv2G9e",
+	"discription__map": "_17z4H3zMYBiAyB0X9nLCtw"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
