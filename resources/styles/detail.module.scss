@@ -1,38 +1,55 @@
-.SelectedPhotoContainer{
-    display:flex;
-    justify-content: center;
-    align-items: center;
 
-    p{
-        font-size: 10vh;
-        margin:5vh;
+
+
+.upperContainer{
+    
+    
+    background-color: rgb(35,35,35);
+
+
+    &__selectedPhotoContainer{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        
+        p{
+            font-size: 10vh;
+            margin:5vh;
+            color:aliceblue;
+        }
     }
+
+    &__bottomImageList{
+        display:flex;
+        margin:0 auto;
+        margin-bottom:5vh;
+        width:35%;
+        &__images{
+            width:18%; 
+            // height:10%;
+            margin:1%;
+        }
+    }
+
 }
 
-.bottomImageList{
-    display:flex;
-    margin:0 auto;
-    margin-bottom:5vh;
-    // justify-content: ;
-    width:35%;
-    &__images{
-        width:18%; 
-        // height:10%;
-        margin:1%;
-    }
-}
 
-.discription{
+
+.lowerContainer{
     display:flex;
     justify-content: space-between;
-    height:50vh;
-    width:90%;
+    height:250px;
+    width:60%;
     margin:0 auto;
     
-    border:solid 1px black;
+    // border:solid 1px black;
     
-    &__map{
+    &__left{
         width:40%;
+    }
+
+    &__right{
+        width:60%;
         height:100%;
     }
 }
