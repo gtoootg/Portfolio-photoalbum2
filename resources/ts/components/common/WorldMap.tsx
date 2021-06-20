@@ -5,15 +5,13 @@ type Props = {
   lat:number| undefined
   lng:number |undefined
   icon:any
+  zoom:number
   onClick?:(e:number)=>void
 }
 
 const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキーをここに入力
 
-const WorldMap: React.FC<Props> = ({lat,lng, icon, onClick}) => {
-
-
-
+const WorldMap: React.FC<Props> = ({lat,lng, icon,zoom, onClick}) => {
 
   if(lat === undefined && lng ===undefined){
     return(
@@ -26,13 +24,16 @@ const WorldMap: React.FC<Props> = ({lat,lng, icon, onClick}) => {
     )
   }else{
     return (
-      <LoadScript googleMapsApiKey={API_KEY}>
-        <GoogleMap
+      <LoadScript 
+        googleMapsApiKey={API_KEY}
+        language={"en"}
+        >
+        <GoogleMap       
           mapContainerStyle={ {width: "100%", height: "100%" }}
           center={{
             lat: lat,
             lng: lng}}
-          zoom={3}
+          zoom={zoom}
           onClick={onClick}
         >
         <Marker 
@@ -41,9 +42,11 @@ const WorldMap: React.FC<Props> = ({lat,lng, icon, onClick}) => {
               lng: lng}}
             icon={{
               url:icon,
-              scaledSize: 20
+              scaledSize: {width: 60, height: 40},
             }}
+            opacity= {0.9}
             
+            // options={{border=solid 1px white}}
         />
         </GoogleMap>
         </LoadScript>
