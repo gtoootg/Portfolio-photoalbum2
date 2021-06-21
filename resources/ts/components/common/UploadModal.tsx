@@ -58,7 +58,7 @@ const UploadModal: React.FC<{}> = ()=> {
     
         
     //Handler///////////////////////////////
-    const setRegionHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const setRegionHandler:(e: React.ChangeEvent<HTMLSelectElement>)=>void = (e) => {
         // setSelectedRegion(e.currentTarget.value);
         setUploadData({
           ...uploadData, 
@@ -67,7 +67,7 @@ const UploadModal: React.FC<{}> = ()=> {
         setMapGeoCode(initialMapGeoCode)
       }
 
-    const setCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const setCountryHandler:(e: React.ChangeEvent<HTMLSelectElement>) =>void = (e) => {
       if(uploadData.region){
       // setSelectedRegion(e.currentTarget.value);
       setUploadData({...uploadData, country:e.currentTarget.value});
@@ -84,14 +84,13 @@ const UploadModal: React.FC<{}> = ()=> {
     }
 
     const setLocationHandler:(e:any)=>void = (e)=>{
-      // console.log(e.latLng.lat(),e.latLng.lng())
       const lat = e.latLng.lat()
       const lng =e.latLng.lng()
       setUploadData({...uploadData, latitude:lat, longitude: lng})
       setMapGeoCode({...mapGeoCode, latitude:lat, longitude: lng})
     }
 
-    const cancelHandler = ()=>{
+    const cancelHandler:()=>void = ()=>{
       setUploadModalState(!uploadModalState)
       setUploadData(initialUploadData)
     }
@@ -108,9 +107,7 @@ const UploadModal: React.FC<{}> = ()=> {
     //////////////////////////////////////////
     
     //Api/////////////////////////////////////
-    const uploadHandler = (
-      event: React.MouseEvent<HTMLButtonElement>
-    ):void=>{
+    const uploadHandler:()=> void = ()=>{
       axios.post('api/upload', uploadData)
       .then(()=>{
         const slice = travelPosts.slice();
@@ -120,7 +117,7 @@ const UploadModal: React.FC<{}> = ()=> {
       .then(()=>{
         setUploadData(initialUploadData);
         setMapGeoCode(initialMapGeoCode)
-        // setUploadModalState(false);
+        setUploadModalState(false);
       }).then(()=>{setUploadModalState(false)})
       .catch(error => console.log(error));
     
@@ -130,21 +127,7 @@ const UploadModal: React.FC<{}> = ()=> {
 
 
     //jsx component///////////////////////////
-    // const countries: {[key:string]:string[]} ={
-    //     "Initial":['Select Region'],
-    //     "Africa":['Algeria' , 'Angola' , 'Benin' , 'Botswana' , 'British Indian Ocean Territory' , 'Burkina Faso' , 'Burundi' , 'Cabo Verde' , 'Cameroon' , 'Central African Republic' , 'Chad' , 'Comoros' , 'Congo' , 'Côte d’Ivoire' , 'Democratic Republic of the Congo' , 'Djibouti' , 'Egypt' , 'Equatorial Guinea' , 'Eritrea' , 'Eswatini' , 'Ethiopia' , 'French Southern Territories' , 'Gabon' , 'Gambia' , 'Ghana' , 'Guinea' , 'Guinea-Bissau' , 'Kenya' , 'Lesotho' , 'Liberia' , 'Libya' , 'Madagascar' , 'Malawi' , 'Mali' , 'Mauritania' , 'Mauritius' , 'Mayotte' , 'Morocco' , 'Mozambique' , 'Namibia' , 'Niger' , 'Nigeria' , 'Réunion' , 'Rwanda' , 'Saint Helena' , 'Sao Tome and Principe' , 'Senegal' , 'Seychelles' , 'Sierra Leone' , 'Somalia' , 'South Africa' , 'South Sudan' , 'Sudan' , 'Togo' , 'Tunisia' , 'Uganda' , 'United Republic of Tanzania' , 'Western Sahara' , 'Zambia' , 'Zimbabwe'
-    //   ],
-    //     "Asia":['Afghanistan' , 'Armenia' , 'Azerbaijan' , 'Bahrain' , 'Bangladesh' , 'Bhutan' , 'Brunei Darussalam' , 'Cambodia' , 'China' , 'China, Hong Kong Special Administrative Region' , 'China, Macao Special Administrative Region' , 'Cyprus' , 'North Korea' , 'Georgia' , 'India' , 'Indonesia' , 'Iran' , 'Iraq' , 'Israel' , 'Japan' , 'Jordan' , 'Kazakhstan' , 'Kuwait' , 'Kyrgyzstan' , 'Laos' , 'Lebanon' , 'Malaysia' , 'Maldives' , 'Mongolia' , 'Myanmar' , 'Nepal' , 'Oman' , 'Pakistan' , 'Philippines' , 'Qatar' , 'Republic of Korea' , 'Saudi Arabia' , 'Singapore' , 'Sri Lanka' , 'State of Palestine' , 'Syrian Arab Republic' , 'Tajikistan' , 'Thailand' , 'Timor-Leste' , 'Turkey' , 'Turkmenistan' , 'United Arab Emirates' , 'Uzbekistan' , 'Viet Nam' , 'Yemen'
-    //   ],
-    //     "Europe":['Åland Islands' , 'Albania' , 'Andorra' , 'Austria' , 'Belarus' , 'Belgium' , 'Bosnia and Herzegovina' , 'Bulgaria' , 'Croatia' , 'Czechia' , 'Denmark' , 'Estonia' , 'Faroe Islands' , 'Finland' , 'France' , 'Germany' , 'Gibraltar' , 'Greece' , 'Guernsey' , 'Holy See' , 'Hungary' , 'Iceland' , 'Ireland' , 'Isle of Man' , 'Italy' , 'Jersey' , 'Latvia' , 'Liechtenstein' , 'Lithuania' , 'Luxembourg' , 'Malta' , 'Monaco' , 'Montenegro' , 'Netherlands' , 'North Macedonia' , 'Norway' , 'Poland' , 'Portugal' , 'Republic of Moldova' , 'Romania' , 'Russian Federation' , 'San Marino' , 'Sark' , 'Serbia' , 'Slovakia' , 'Slovenia' , 'Spain' , 'Svalbard and Jan Mayen Islands' , 'Sweden' , 'Switzerland' , 'Ukraine' , 'United Kingdom of Great Britain and Northern Ireland'
-    //   ],
-    //     "NorthAmerica":['Antigua and Barbuda', 'Aruba' , 'Bahamas' , 'Barbados' , 'Belize' , 'Bermuda' , 'Bonaire, Sint Eustatius and Saba' , 'British Virgin Islands' , 'Canada' , 'Cayman Islands' , 'Costa Rica' , 'Cuba' , 'Curaçao' , 'Dominica' , 'Dominican Republic' , 'El Salvador' , 'Greenland' , 'Grenada' , 'Guadeloupe' , 'Guatemala' , 'Haiti' , 'Honduras' , 'Jamaica' , 'Martinique' , 'Mexico' , 'Montserrat' , 'Nicaragua' , 'Panama' , 'Puerto Rico' , 'Saint Barthélemy' , 'Saint Kitts and Nevis' , 'Saint Lucia' , 'Saint Martin' , 'Saint Pierre and Miquelon' , 'Saint Vincent and the Grenadines' , 'Sint Maarten' , 'Trinidad and Tobago' , 'Turks and Caicos Islands' , 'United States of America' , 'United States Virgin Islands'
-    //   ],
-    //     "Oceania":['American Samoa' , 'Australia' , 'Christmas Island' , 'Cocos (Keeling) Islands' , 'Cook Islands' , 'Fiji' , 'French Polynesia' , 'Guam' , 'Heard Island and McDonald Islands' , 'Kiribati' , 'Marshall Islands' , 'Micronesia (Federated States of)' , 'Nauru' , 'New Caledonia' , 'New Zealand' , 'Niue' , 'Norfolk Island' , 'Northern Mariana Islands' , 'Palau' , 'Papua New Guinea' , 'Pitcairn' , 'Samoa' , 'Solomon Islands' , 'Tokelau' , 'Tonga' , 'Tuvalu' , 'United States Minor Outlying Islands' , 'Vanuatu' , 'Wallis and Futuna Islands'
-    //   ],
-    //     "SouthAmerica":['Argentina' , 'Bolivia' , 'Bouvet Island' , 'Brazil' , 'Chile' , 'Colombia' , 'Ecuador' , 'Falkland Islands (Malvinas)' , 'French Guiana' , 'Guyana' , 'Paraguay' , 'Peru' , 'South Georgia and the South Sandwich Islands' , 'Suriname' , 'Uruguay' , 'Venezuela'
-    //     ],
-    //   }
+ 
       var countries: {[key:string]:{name:string,lng?:number,lat?:number}[]}  ={
         
         Africa:[{name:"Algeria",lng:3,lat:28},{name:"Angola",lng:18.5,lat:-12.5},{name:"Benin",lng:2.25,lat:9.5},{name:"Botswana",lng:24,lat:-22},{name:"British Indian Ocean Territory",lng:71.5,lat:-6},{name:"Burkina Faso",lng:-2,lat:13},{name:"Burundi",lng:30,lat:-3.5},{name:"Cabo Verde",lng:-24,lat:16},{name:"Cameroon",lng:12,lat:6},{name:"Central African Republic",lng:21,lat:7},{name:"Chad",lng:19,lat:15},{name:"Comoros",lng:44.25,lat:-12.1667},{name:"Congo",lng:15,lat:-1},{name:"Côte d’Ivoire",lng:-5,lat:8},{name:"Democratic Republic of the Congo",lng:-4.32244,lat:15.307045},{name:"Djibouti",lng:43,lat:11.5},{name:"Egypt",lng:30,lat:27},{name:"Equatorial Guinea",lng:10,lat:2},{name:"Eritrea",lng:39,lat:15},{name:"Eswatini",lng:-26.522503,lat:31.465866},{name:"Ethiopia",lng:38,lat:8},{name:"French Southern Territories",lng:67,lat:-43},{name:"Gabon",lng:11.75,lat:-1},{name:"Gambia",lng:-16.5667,lat:13.4667},{name:"Ghana",lng:-2,lat:8},{name:"Guinea",lng:-10,lat:11},{name:"Guinea-Bissau",lng:-15,lat:12},{name:"Kenya",lng:38,lat:1},{name:"Lesotho",lng:28.5,lat:-29.5},{name:"Liberia",lng:-9.5,lat:6.5},{name:"Libya",lng:17,lat:25},{name:"Madagascar",lng:47,lat:-20},{name:"Malawi",lng:34,lat:-13.5},{name:"Mali",lng:-4,lat:17},{name:"Mauritania",lng:-12,lat:20},{name:"Mauritius",lng:57.55,lat:-20.2833},{name:"Mayotte",lng:45.1667,lat:-12.8333},{name:"Morocco",lng:-5,lat:32},{name:"Mozambique",lng:35,lat:-18.25},{name:"Namibia",lng:17,lat:-22},{name:"Niger",lng:8,lat:16},{name:"Nigeria",lng:8,lat:10},{name:"Réunion",lng:55.6,lat:-21.1},{name:"Rwanda",lng:30,lat:-2},{name:"Saint Helena",lng:-5.7,lat:-15.9333},{name:"Sao Tome and Principe",lng:12.4167,lat:43.7667},{name:"Senegal",lng:45,lat:25},{name:"Seychelles",lng:21,lat:44},{name:"Sierra Leone",lng:55.6667,lat:-4.5833},{name:"Somalia",lng:159,lat:-8},{name:"South Africa",lng:49,lat:10},{name:"South Sudan",lng:-37,lat:-54.5},{name:"Sudan",lng:81,lat:7},{name:"Togo",lng:125.5167,lat:-8.55},{name:"Tunisia",lng:-61,lat:11},{name:"Uganda",lng:178,lat:-8},{name:"United Republic of Tanzania",lng:71,lat:39},{name:"Western Sahara",lng:-176.2,lat:-13.3},{name:"Zambia",lng:48,lat:15},{name:"Zimbabwe",lng:30,lat:-15}
@@ -175,7 +158,7 @@ const UploadModal: React.FC<{}> = ()=> {
     }
     }
 
-    const placeInputBox = ()=>{
+    const placeInputBox: ()=>JSX.Element = ()=>{
       if(uploadData.title){
         return(
           <input 
@@ -194,8 +177,17 @@ const UploadModal: React.FC<{}> = ()=> {
         )
       }
     }
+  
+    function Label():JSX.Element{
+      return(
+      <div className={styles.uploadModal__label}>
+        <p>Upload your favourite photos</p>
+        <p onClick={cancelHandler}>✕</p>
+      </div>
+    )
+    }
 
-    function Dropzone() {
+    function Dropzone():JSX.Element{
 
       const {getRootProps, getInputProps, isDragActive} = useDropzone({
         accept:"image/*",
@@ -211,16 +203,9 @@ const UploadModal: React.FC<{}> = ()=> {
             // Do whatever you want with the file contents
               const binaryStr = reader.result
               //upload as binary/////////
-              
               setUploadData({...uploadData, image:binaryStr})
-              // setPreview(binaryStr)
-              //////////////////////////
-            
-              //save as local path///////
-            
-              ///////////////////////////
+  
             }
-
             //upload as binary//
             reader.readAsDataURL(file)
             /////////////////////
@@ -229,11 +214,11 @@ const UploadModal: React.FC<{}> = ()=> {
 
       const preview = (
         <div>
-        <img 
-          src={uploadData.image}
-          className={styles.uploadModal__dropContainer__previewPhoto}
-          />
-      </div>
+            <img 
+              src={uploadData.image}
+              className={styles.uploadModal__dropContainer__previewPhoto}
+              />
+        </div>
       )
 
       return (
@@ -258,14 +243,10 @@ const UploadModal: React.FC<{}> = ()=> {
       )
     }
     
-
-    
-
     //////////////////////////////////////////
     
 
     return(
-
       <div 
         className={styles.uploadModal}
         style={{
@@ -273,72 +254,65 @@ const UploadModal: React.FC<{}> = ()=> {
           "pointerEvents":uploadModalState?  "auto": "none"
         }}
         >
-        <div className={styles.uploadModal__label}>
-          <p>Upload your favourite photos</p>
-          <p onClick={cancelHandler}>✕</p>
-        </div>
+        <Label/>
         <Dropzone/>
         <animated.div 
           className={styles.uploadModal__upperContainer}
           style={spring}  
         >
-          <div 
-            className={styles.uploadModal__upperContainer__left}
-          >
-                  <p>Region:<br/>
-                      <select 
-                        name="region" 
-                        onChange={setRegionHandler}
-                        value = {uploadData.region}
-                      >
-                          <option hidden >Select Region</option>
-                          <option value="Africa">Africa</option>
-                          <option value="Asia">Asia</option>
-                          <option value="Europe">Europe</option>
-                          <option value="NorthAmerica">NorthAmerica</option>
-                          <option value="Oceania">Oceania</option>
-                          <option value="SouthAmerica">SouthAmerica</option>
-                      </select><br/>
-                  </p>
-                  <p>Country:<br/>
-                      <select 
-                        name="country"
-                        onChange={setCountryHandler}
-                        value= {uploadData.country === undefined? "Select Country": uploadData.country}     
-                      >
-                        <option hidden value="Select Country" >Select Country</option>
-                        {countryMap()}
-                      </select>
-                  </p>
-                  <p>Title:<br/>
-                    {placeInputBox()}
-                  </p>
-                  <p>Location(Select Country, then GeoMap is shown)<br/>
-                    latitude:{mapGeoCode.latitude && (mapGeoCode.latitude)}
-                    <br/>
-                    longitude:{mapGeoCode.longitude && (mapGeoCode.longitude)}
-                  </p>
-          </div>
-          <div className={styles.uploadModal__upperContainer__right}>
-
+            <div 
+              className={styles.uploadModal__upperContainer__left}
+            >
+                    <p>Region:<br/>
+                        <select 
+                          name="region" 
+                          onChange={setRegionHandler}
+                          value = {uploadData.region}
+                        >
+                            <option hidden >Select Region</option>
+                            <option value="Africa">Africa</option>
+                            <option value="Asia">Asia</option>
+                            <option value="Europe">Europe</option>
+                            <option value="NorthAmerica">NorthAmerica</option>
+                            <option value="Oceania">Oceania</option>
+                            <option value="SouthAmerica">SouthAmerica</option>
+                        </select><br/>
+                    </p>
+                    <p>Country:<br/>
+                        <select 
+                          name="country"
+                          onChange={setCountryHandler}
+                          value= {uploadData.country === undefined? "Select Country": uploadData.country}     
+                        >
+                          <option hidden value="Select Country" >Select Country</option>
+                          {countryMap()}
+                        </select>
+                    </p>
+                    <p>Title:<br/>
+                      {placeInputBox()}
+                    </p>
+                    <p>Location(Select Country, then GeoMap is shown)<br/>
+                      latitude:{mapGeoCode.latitude && (mapGeoCode.latitude)}
+                      <br/>
+                      longitude:{mapGeoCode.longitude && (mapGeoCode.longitude)}
+                    </p>
+            </div>
+            <div className={styles.uploadModal__upperContainer__right}>
                   <WorldMap 
                     lat={mapGeoCode.latitude} 
                     lng={mapGeoCode.longitude}
-                    icon={uploadData.image}
                     zoom={3}
                     onClick={setLocationHandler}
                   />
                 
               </div>
-          </animated.div>
+        </animated.div>
         <div className={styles.uploadModal__lowerContainer}> 
-          <button onClick={()=>console.log(uploadData)}>preview</button>
-          {/* <button onClick={()=>console.log(mapGeoCode)}>GeoCode</button> */}
-          {/* <button onClick={()=>console.log(countries["Asia"])}>countries</button> */}
+            <button onClick={()=>console.log(uploadData)}>preview</button>
             <button type="button" className="btn btn-primary" onClick={uploadHandler}>Upload</button>
             <button type="button" className="btn btn-success" onClick={cancelHandler}>Cancel</button>
-          </div>
         </div>
+      </div>
     )
 }
 
