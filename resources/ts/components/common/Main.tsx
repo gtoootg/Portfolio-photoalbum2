@@ -1,20 +1,19 @@
-import React, {useState, useEffect, useContext}from 'react';
-import ReactDOM from 'react-dom';
+import React, {useEffect, useContext}from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 import styles from '../../../styles/main.module.scss';
-import {TravelPostsContext, DummyTravelPostsContext, SelectedPostIdContext, uploadModalStateContext } from '../../index';
+import {TravelPostsContext,TravelPostObject, DummyTravelPostsContext, SelectedPostIdContext, uploadModalStateContext } from '../../index';
 
 
-const Main = ()=> {
+const Main: React.FC<{}> = ()=> {
     
     const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;
     const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);
     const {selectedPostId, setSelectedPostId} = useContext(SelectedPostIdContext);
     const {uploadModalState, setUploadModalState} = useContext(uploadModalStateContext);
 
-    const loadTravelPosts = () => {
+    const loadTravelPosts:()=>void = () => {
         //API connection to MAMP local server/////////////
         // axios.get('http://127.0.0.1:8000/api/travelposts')
         //////////////////////////////////////////////////
@@ -31,10 +30,10 @@ const Main = ()=> {
 
     useEffect(loadTravelPosts,[]);
 
-
-    let Posts = travelPosts.map((travelPost:any,index:number) =>{
+    const Posts : React.FC<{}>= travelPosts.map((travelPost:TravelPostObject,index:number) =>{
         return(
             <Link
+                key={index}
                 className={styles.main__imageContainer}
                 to={"/detail"}
                 style={{"backgroundImage":`url(${travelPost.image})`}} 
@@ -46,24 +45,12 @@ const Main = ()=> {
                     </h6>
                 </div>
             </Link>
-                
-            
-            
-            
         )
     })
 
     return (
-        <div 
-            className="container"
-            // style = {{
-            //     "opacity": "1",
-            //     "pointerEvents": uploadModalState!==false? "auto":"none"
-            // }}
-        >
-            <main 
-                className ={styles.main}  
-            >
+        <div className="container">
+            <main className ={styles.main}  >
                 {Posts}
             </main>            
         </div>

@@ -6,13 +6,14 @@ import {TravelPostsContext, DummyTravelPostsContext, SelectedPostIdContext} from
 import WorldMap from "../common/WorldMap";
 import styles from '../../../styles/detail.module.scss';
 
-import {GoogleMap,LoadScript, Marker,InfoWindow } from "@react-google-maps/api";
+const Detail:(()=>JSX.Element) = () => {
 
-const Detail = () => {
     const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;    
     const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);   
     const {selectedPostId, setSelectedPostId} = useContext(SelectedPostIdContext);
 
+
+    //Handler///////////////////////////////////
     const IncrementPostIdHandler = (e: React.MouseEvent<HTMLElement>)=>{
         if(selectedPostId !== dummyTravelPosts.length-1){
             setSelectedPostId(selectedPostId+1)
@@ -25,7 +26,7 @@ const Detail = () => {
         }
     }
 
-    const deleteHandler = ()=>{
+    const deleteHandler = (e: React.MouseEvent<HTMLElement>)=>{
         // setEditTaskData({id,name,description})
         axios.delete('api/detail/delete/'+ travelPosts[selectedPostId].id, 
         travelPosts[travelPosts[selectedPostId].id]
@@ -40,6 +41,58 @@ const Detail = () => {
     }
 
 
+
+    //jsx//////////////////////////////////////////////////
+    function UpperContainer(){
+        return(
+            <div className={styles.upperContainer}>
+                <div className="container">
+                    <div className={styles.upperContainer__selectedPhotoContainer}>   
+                        <p onClick={DecrementPostIdHandler}>
+                            &lt;
+                        </p>
+                        <img src={dummyTravelPosts[selectedPostId].image} style={{"width":"50%"}}/>
+                        <p onClick={IncrementPostIdHandler}>
+                            &gt;
+                        </p>
+                    </div><br/>
+                    <div 
+                        className={styles.upperContainer__bottomImageList}
+                        style={{"justifyContent": selectedPostId >= dummyTravelPosts.length-2? "flex-end":""}}    
+                    >
+                        {photos}
+                    </div>  
+                </div>
+            </div>
+        )
+    }
+
+    function LowerContainer(){
+
+        var date = new Date()
+
+        return(
+            <div className="container">
+            <div className={styles.lowerContainer}>
+                <div className={styles.lowerContainer__left}>
+                    <h4>{dummyTravelPosts[selectedPostId].title}</h4>
+                    <h6>region: {dummyTravelPosts[selectedPostId].region}</h6>
+                    <h6>country: {dummyTravelPosts[selectedPostId].country}</h6>
+                    <button className="btn btn-danger" onClick={deleteHandler}>Delete</button>
+                    
+                </div>
+                <div className={styles.lowerContainer__right}>
+                    <WorldMap
+                        lat={Number(dummyTravelPosts[selectedPostId].latitude)}
+                        lng={Number(dummyTravelPosts[selectedPostId].longitude)}
+                        zoom={12} 
+                    />    
+                </div>
+            </div>
+            </div>
+        )
+    }
+
     let ids:[number,number,number,number,number] = [
         selectedPostId-2,
         selectedPostId-1,
@@ -48,12 +101,12 @@ const Detail = () => {
         selectedPostId+2
     ]
 
-    const photos = ids.map(id=>{
+    const photos: (JSX.Element | undefined)[] = ids.map(id=>{
         if(id>=0 && id<dummyTravelPosts.length){
             return(
                 <img 
                     src={dummyTravelPosts[id].image}
-                    className={styles.bottomImageList__images}
+                    className={styles.upperContainer__bottomImageList__images}
                     style={{
                         "opacity": id===selectedPostId? "1":"0.5"
                     }}
@@ -61,71 +114,20 @@ const Detail = () => {
             )
         }
     })        
-
-    // const googleMap = ()=>{
-
-    //     const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: Input API keys of myself
-
-    //     return(
-    //         <LoadScript googleMapsApiKey={API_KEY}>
-    //             <GoogleMap
-    //             mapContainerStyle={ {width: "100%", height: "100%" }}
-    //             center={{
-    //                 lat: 10,
-    //                 // dummyTravelPosts[selectedPostId].lattitude,
-    //                 lng: 10,
-    //                 // dummyTravelPosts[selectedPostId].longitude,
-    //             }}
-    //             zoom={3}
-    //             >
-    //            
-    //             {/* <Marker position={{
-    //                 lat: dummyTravelPosts[selectedPostId].lattitude,
-    //                 lng: dummyTravelPosts[selectedPostId].longitude,
-    //                 icon: dummyTravelPosts[selectedPostId].image
-    //                 }}/> */}
-    //             </GoogleMap>
-    //         </LoadScript>
-    //     )
-    // }
-
+    ///////////////////////////////////////////////////////
     
+    const date =  new Date()
     
 
     return (
         <>
             <Head unusedIconOpacity={"0.5"} unusedIconSelect={"none"}/>
-            <div className="container">
-                <div className={styles.SelectedPhotoContainer}>   
-                    <p onClick={DecrementPostIdHandler}>
-                        &lt;
-                    </p>
-                    <img src={dummyTravelPosts[selectedPostId].image} style={{"width":"50%"}}/>
-                    <p onClick={IncrementPostIdHandler}>
-                        &gt;
-                    </p>
-                </div><br/>
-                <div 
-                    className={styles.bottomImageList}
-                    style={{"justifyContent": selectedPostId >= dummyTravelPosts.length-2? "flex-end":""}}    
-                >
-                    {photos}
-                </div>  
-                 
-            </div>
-            <div className={styles.map}>
-            <WorldMap 
-                lat={Number(dummyTravelPosts[selectedPostId].latitude)}
-                lng={Number(dummyTravelPosts[selectedPostId].longitude)} 
-                icon={dummyTravelPosts[selectedPostId].image} 
-            />    
-            </div>
-            <button onClick={()=>deleteHandler()}>Delete</button>
-            <button onClick={()=>console.log(typeof(dummyTravelPosts[selectedPostId].latitude))}>type</button>
-                
+            <UpperContainer/>
+            <LowerContainer/>
             
+            <button onClick={()=>console.log(typeof(date))}>Delete</button>
+
         </>
-       
     );
 }
 

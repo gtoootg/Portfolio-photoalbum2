@@ -45,14 +45,14 @@ const Head: React.FC<HeadProps> = (props)=> {
         return(
             <Link
             　　to ={link? `${link}`:""}
-                className={styles.header__menu__menuIcon}
                 onClick = {onClick}
                 style={{
                     "opacity":unusedIconOpacity,
                     "pointerEvents":unusedIconSelect
                 }}
             >
-                <img className={styles.header__menu__menuIcon__image} src={path()} />
+                {/* <img className={styles.header__menu__menuIcon__image} src={path()} /> */}
+                <nav>{fileName}</nav>
             </Link>
         )
     }
@@ -68,13 +68,13 @@ const Head: React.FC<HeadProps> = (props)=> {
                     to={"/"}
                     className={styles.header__logo}
                 >
-                    <h3>GoTo Travels </h3>
+                    <p>GoTo Travels </p>
                 </Link>
-                <div className={styles.header__menu}>
-                    <MenuIcon name={"Home"} link={"/"} fileName={"home.jpg"}/>   
-                    <MenuIcon name={"Upload"} fileName={"upload.jpg"} unusedIconOpacity={unusedIconOpacity}  unusedIconSelect={unusedIconSelect} onClick={setUploadModalStateHandler}/>
-                    <MenuIcon name={"Sort"} fileName={"sort.png"} unusedIconOpacity={unusedIconOpacity} unusedIconSelect={unusedIconSelect} onClick={setSortModalStateHandler}/>    
-                    <MenuIcon name={"Map"} fileName={"map.png"} unusedIconOpacity={unusedIconOpacity} />         
+                <div className={styles.header__navigation}>
+                    <MenuIcon name={"Home"} link={"/"} fileName={"Home"}/>   
+                    <MenuIcon name={"Upload"} fileName={"Upload"} unusedIconOpacity={unusedIconOpacity}  unusedIconSelect={unusedIconSelect} onClick={setUploadModalStateHandler}/>
+                    <MenuIcon name={"Sort"} fileName={"Sort"} unusedIconOpacity={unusedIconOpacity} unusedIconSelect={unusedIconSelect} onClick={setSortModalStateHandler}/>    
+                    <MenuIcon name={"Map"} fileName={"Map"} unusedIconOpacity={unusedIconOpacity} />         
                 </div>
             </div>
             </div>

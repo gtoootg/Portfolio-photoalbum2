@@ -20,8 +20,8 @@ export type TravelPostObject = {
     image: any;
     latitude: number;
     longitude: number;
-    created_at: any;
-    updated_at: any;
+    created_at: number;
+    updated_at: number;
 }
 
 
