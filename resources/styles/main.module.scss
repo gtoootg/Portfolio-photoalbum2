@@ -2,15 +2,18 @@
     // border:solid gray;
 
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-
     transition:0.8s;
-
     background-color: whitesmoke;
 
-    &__imageContainer{
+    @media (max-width:599px){
+        flex-direction: column;
+    }
 
+
+    &__imageContainer{
         display:flex;
         justify-content: flex-end;
         align-items: flex-end;
@@ -22,6 +25,11 @@
         transition:0.5s;
         width: 30%;
         text-decoration: none;   
+
+        @media (max-width:599px){
+            width:60%;
+            margin:30px auto;
+        }
 
         &__title{
             display:flex;
