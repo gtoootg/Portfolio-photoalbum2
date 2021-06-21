@@ -11595,16 +11595,12 @@ var Head = function Head(props) {
 
     return react_1["default"].createElement(react_router_dom_1.Link, {
       to: link ? "" + link : "",
-      className: head_module_scss_1["default"].header__menu__menuIcon,
       onClick: onClick,
       style: {
         "opacity": unusedIconOpacity,
         "pointerEvents": unusedIconSelect
       }
-    }, react_1["default"].createElement("img", {
-      className: head_module_scss_1["default"].header__menu__menuIcon__image,
-      src: path()
-    }));
+    }, react_1["default"].createElement("nav", null, fileName));
   };
 
   return react_1["default"].createElement("div", {
@@ -11616,27 +11612,27 @@ var Head = function Head(props) {
   }, react_1["default"].createElement(react_router_dom_1.Link, {
     to: "/",
     className: head_module_scss_1["default"].header__logo
-  }, react_1["default"].createElement("h3", null, "GoTo Travels ")), react_1["default"].createElement("div", {
-    className: head_module_scss_1["default"].header__menu
+  }, react_1["default"].createElement("p", null, "GoTo Travels ")), react_1["default"].createElement("div", {
+    className: head_module_scss_1["default"].header__navigation
   }, react_1["default"].createElement(MenuIcon, {
     name: "Home",
     link: "/",
-    fileName: "home.jpg"
+    fileName: "Home"
   }), react_1["default"].createElement(MenuIcon, {
     name: "Upload",
-    fileName: "upload.jpg",
+    fileName: "Upload",
     unusedIconOpacity: unusedIconOpacity,
     unusedIconSelect: unusedIconSelect,
     onClick: setUploadModalStateHandler
   }), react_1["default"].createElement(MenuIcon, {
     name: "Sort",
-    fileName: "sort.png",
+    fileName: "Sort",
     unusedIconOpacity: unusedIconOpacity,
     unusedIconSelect: unusedIconSelect,
     onClick: setSortModalStateHandler
   }), react_1["default"].createElement(MenuIcon, {
     name: "Map",
-    fileName: "map.png",
+    fileName: "Map",
     unusedIconOpacity: unusedIconOpacity
   })))), react_1["default"].createElement("div", {
     style: {
@@ -11746,6 +11742,7 @@ var Main = function Main() {
   react_1.useEffect(loadTravelPosts, []);
   var Posts = travelPosts.map(function (travelPost, index) {
     return react_1["default"].createElement(react_router_dom_1.Link, {
+      key: index,
       className: main_module_scss_1["default"].main__imageContainer,
       to: "/detail",
       style: {
@@ -12371,7 +12368,6 @@ var UploadModal = function UploadModal() {
   };
 
   var setLocationHandler = function setLocationHandler(e) {
-    // console.log(e.latLng.lat(),e.latLng.lng())
     var lat = e.latLng.lat();
     var lng = e.latLng.lng();
     setUploadData(__assign(__assign({}, uploadData), {
@@ -12401,14 +12397,15 @@ var UploadModal = function UploadModal() {
   }); //////////////////////////////////////////
   //Api/////////////////////////////////////
 
-  var uploadHandler = function uploadHandler(event) {
+  var uploadHandler = function uploadHandler() {
     axios_1["default"].post('api/upload', uploadData).then(function () {
       var slice = travelPosts.slice();
       slice.push(uploadData);
       setTravelPosts(slice);
     }).then(function () {
       setUploadData(initialUploadData);
-      setMapGeoCode(initialMapGeoCode); // setUploadModalState(false);
+      setMapGeoCode(initialMapGeoCode);
+      setUploadModalState(false);
     }).then(function () {
       setUploadModalState(false);
     })["catch"](function (error) {
@@ -12416,21 +12413,6 @@ var UploadModal = function UploadModal() {
     });
   }; //////////////////////////////////////////
   //jsx component///////////////////////////
-  // const countries: {[key:string]:string[]} ={
-  //     "Initial":['Select Region'],
-  //     "Africa":['Algeria' , 'Angola' , 'Benin' , 'Botswana' , 'British Indian Ocean Territory' , 'Burkina Faso' , 'Burundi' , 'Cabo Verde' , 'Cameroon' , 'Central African Republic' , 'Chad' , 'Comoros' , 'Congo' , 'Côte d’Ivoire' , 'Democratic Republic of the Congo' , 'Djibouti' , 'Egypt' , 'Equatorial Guinea' , 'Eritrea' , 'Eswatini' , 'Ethiopia' , 'French Southern Territories' , 'Gabon' , 'Gambia' , 'Ghana' , 'Guinea' , 'Guinea-Bissau' , 'Kenya' , 'Lesotho' , 'Liberia' , 'Libya' , 'Madagascar' , 'Malawi' , 'Mali' , 'Mauritania' , 'Mauritius' , 'Mayotte' , 'Morocco' , 'Mozambique' , 'Namibia' , 'Niger' , 'Nigeria' , 'Réunion' , 'Rwanda' , 'Saint Helena' , 'Sao Tome and Principe' , 'Senegal' , 'Seychelles' , 'Sierra Leone' , 'Somalia' , 'South Africa' , 'South Sudan' , 'Sudan' , 'Togo' , 'Tunisia' , 'Uganda' , 'United Republic of Tanzania' , 'Western Sahara' , 'Zambia' , 'Zimbabwe'
-  //   ],
-  //     "Asia":['Afghanistan' , 'Armenia' , 'Azerbaijan' , 'Bahrain' , 'Bangladesh' , 'Bhutan' , 'Brunei Darussalam' , 'Cambodia' , 'China' , 'China, Hong Kong Special Administrative Region' , 'China, Macao Special Administrative Region' , 'Cyprus' , 'North Korea' , 'Georgia' , 'India' , 'Indonesia' , 'Iran' , 'Iraq' , 'Israel' , 'Japan' , 'Jordan' , 'Kazakhstan' , 'Kuwait' , 'Kyrgyzstan' , 'Laos' , 'Lebanon' , 'Malaysia' , 'Maldives' , 'Mongolia' , 'Myanmar' , 'Nepal' , 'Oman' , 'Pakistan' , 'Philippines' , 'Qatar' , 'Republic of Korea' , 'Saudi Arabia' , 'Singapore' , 'Sri Lanka' , 'State of Palestine' , 'Syrian Arab Republic' , 'Tajikistan' , 'Thailand' , 'Timor-Leste' , 'Turkey' , 'Turkmenistan' , 'United Arab Emirates' , 'Uzbekistan' , 'Viet Nam' , 'Yemen'
-  //   ],
-  //     "Europe":['Åland Islands' , 'Albania' , 'Andorra' , 'Austria' , 'Belarus' , 'Belgium' , 'Bosnia and Herzegovina' , 'Bulgaria' , 'Croatia' , 'Czechia' , 'Denmark' , 'Estonia' , 'Faroe Islands' , 'Finland' , 'France' , 'Germany' , 'Gibraltar' , 'Greece' , 'Guernsey' , 'Holy See' , 'Hungary' , 'Iceland' , 'Ireland' , 'Isle of Man' , 'Italy' , 'Jersey' , 'Latvia' , 'Liechtenstein' , 'Lithuania' , 'Luxembourg' , 'Malta' , 'Monaco' , 'Montenegro' , 'Netherlands' , 'North Macedonia' , 'Norway' , 'Poland' , 'Portugal' , 'Republic of Moldova' , 'Romania' , 'Russian Federation' , 'San Marino' , 'Sark' , 'Serbia' , 'Slovakia' , 'Slovenia' , 'Spain' , 'Svalbard and Jan Mayen Islands' , 'Sweden' , 'Switzerland' , 'Ukraine' , 'United Kingdom of Great Britain and Northern Ireland'
-  //   ],
-  //     "NorthAmerica":['Antigua and Barbuda', 'Aruba' , 'Bahamas' , 'Barbados' , 'Belize' , 'Bermuda' , 'Bonaire, Sint Eustatius and Saba' , 'British Virgin Islands' , 'Canada' , 'Cayman Islands' , 'Costa Rica' , 'Cuba' , 'Curaçao' , 'Dominica' , 'Dominican Republic' , 'El Salvador' , 'Greenland' , 'Grenada' , 'Guadeloupe' , 'Guatemala' , 'Haiti' , 'Honduras' , 'Jamaica' , 'Martinique' , 'Mexico' , 'Montserrat' , 'Nicaragua' , 'Panama' , 'Puerto Rico' , 'Saint Barthélemy' , 'Saint Kitts and Nevis' , 'Saint Lucia' , 'Saint Martin' , 'Saint Pierre and Miquelon' , 'Saint Vincent and the Grenadines' , 'Sint Maarten' , 'Trinidad and Tobago' , 'Turks and Caicos Islands' , 'United States of America' , 'United States Virgin Islands'
-  //   ],
-  //     "Oceania":['American Samoa' , 'Australia' , 'Christmas Island' , 'Cocos (Keeling) Islands' , 'Cook Islands' , 'Fiji' , 'French Polynesia' , 'Guam' , 'Heard Island and McDonald Islands' , 'Kiribati' , 'Marshall Islands' , 'Micronesia (Federated States of)' , 'Nauru' , 'New Caledonia' , 'New Zealand' , 'Niue' , 'Norfolk Island' , 'Northern Mariana Islands' , 'Palau' , 'Papua New Guinea' , 'Pitcairn' , 'Samoa' , 'Solomon Islands' , 'Tokelau' , 'Tonga' , 'Tuvalu' , 'United States Minor Outlying Islands' , 'Vanuatu' , 'Wallis and Futuna Islands'
-  //   ],
-  //     "SouthAmerica":['Argentina' , 'Bolivia' , 'Bouvet Island' , 'Brazil' , 'Chile' , 'Colombia' , 'Ecuador' , 'Falkland Islands (Malvinas)' , 'French Guiana' , 'Guyana' , 'Paraguay' , 'Peru' , 'South Georgia and the South Sandwich Islands' , 'Suriname' , 'Uruguay' , 'Venezuela'
-  //     ],
-  //   }
 
 
   var countries = {
@@ -13469,6 +13451,14 @@ var UploadModal = function UploadModal() {
     }
   };
 
+  function Label() {
+    return react_1["default"].createElement("div", {
+      className: uploadmodal_module_scss_1["default"].uploadModal__label
+    }, react_1["default"].createElement("p", null, "Upload your favourite photos"), react_1["default"].createElement("p", {
+      onClick: cancelHandler
+    }, "\u2715"));
+  }
+
   function Dropzone() {
     var _a = react_dropzone_1.useDropzone({
       accept: "image/*",
@@ -13491,10 +13481,7 @@ var UploadModal = function UploadModal() {
 
             setUploadData(__assign(__assign({}, uploadData), {
               image: binaryStr
-            })); // setPreview(binaryStr)
-            //////////////////////////
-            //save as local path///////
-            ///////////////////////////
+            }));
           }; //upload as binary//
 
 
@@ -13525,11 +13512,7 @@ var UploadModal = function UploadModal() {
       "opacity": uploadModalState ? 1 : 0,
       "pointerEvents": uploadModalState ? "auto" : "none"
     }
-  }, react_1["default"].createElement("div", {
-    className: uploadmodal_module_scss_1["default"].uploadModal__label
-  }, react_1["default"].createElement("p", null, "Upload your favourite photos"), react_1["default"].createElement("p", {
-    onClick: cancelHandler
-  }, "\u2715")), react_1["default"].createElement(Dropzone, null), react_1["default"].createElement(react_spring_1.animated.div, {
+  }, react_1["default"].createElement(Label, null), react_1["default"].createElement(Dropzone, null), react_1["default"].createElement(react_spring_1.animated.div, {
     className: uploadmodal_module_scss_1["default"].uploadModal__upperContainer,
     style: spring
   }, react_1["default"].createElement("div", {
@@ -13564,7 +13547,6 @@ var UploadModal = function UploadModal() {
   }, react_1["default"].createElement(WorldMap_1["default"], {
     lat: mapGeoCode.latitude,
     lng: mapGeoCode.longitude,
-    icon: uploadData.image,
     zoom: 3,
     onClick: setLocationHandler
   }))), react_1["default"].createElement("div", {
@@ -13616,7 +13598,6 @@ var API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキ�
 var WorldMap = function WorldMap(_a) {
   var lat = _a.lat,
       lng = _a.lng,
-      icon = _a.icon,
       zoom = _a.zoom,
       onClick = _a.onClick;
 
@@ -13644,13 +13625,10 @@ var WorldMap = function WorldMap(_a) {
         lat: lat,
         lng: lng
       },
-      icon: {
-        url: icon,
-        scaledSize: {
-          width: 60,
-          height: 40
-        }
-      },
+      // icon={{
+      //   url:icon,
+      //   scaledSize: {width: 60, height: 40},
+      // }}
       opacity: 0.9
     })));
   }
@@ -13738,7 +13716,8 @@ var Detail = function Detail() {
 
   var _c = react_1.useContext(index_1.SelectedPostIdContext),
       selectedPostId = _c.selectedPostId,
-      setSelectedPostId = _c.setSelectedPostId;
+      setSelectedPostId = _c.setSelectedPostId; //Handler///////////////////////////////////
+
 
   var IncrementPostIdHandler = function IncrementPostIdHandler(e) {
     if (selectedPostId !== dummyTravelPosts.length - 1) {
@@ -13752,66 +13731,82 @@ var Detail = function Detail() {
     }
   };
 
-  var deleteHandler = function deleteHandler() {
+  var deleteHandler = function deleteHandler(e) {
     // setEditTaskData({id,name,description})
     axios_1["default"]["delete"]('api/detail/delete/' + travelPosts[selectedPostId].id, travelPosts[travelPosts[selectedPostId].id]).then(function () {
       alert('deleted!!');
     })["catch"](function (error) {
       console.log(error);
     });
-  };
+  }; //jsx//////////////////////////////////////////////////
+
+
+  function UpperContainer() {
+    return react_1["default"].createElement("div", {
+      className: detail_module_scss_1["default"].upperContainer
+    }, react_1["default"].createElement("div", {
+      className: "container"
+    }, react_1["default"].createElement("div", {
+      className: detail_module_scss_1["default"].upperContainer__selectedPhotoContainer
+    }, react_1["default"].createElement("p", {
+      onClick: DecrementPostIdHandler
+    }, "<"), react_1["default"].createElement("img", {
+      src: dummyTravelPosts[selectedPostId].image,
+      style: {
+        "width": "50%"
+      }
+    }), react_1["default"].createElement("p", {
+      onClick: IncrementPostIdHandler
+    }, ">")), react_1["default"].createElement("br", null), react_1["default"].createElement("div", {
+      className: detail_module_scss_1["default"].upperContainer__bottomImageList,
+      style: {
+        "justifyContent": selectedPostId >= dummyTravelPosts.length - 2 ? "flex-end" : ""
+      }
+    }, photos)));
+  }
+
+  function LowerContainer() {
+    var date = new Date();
+    return react_1["default"].createElement("div", {
+      className: "container"
+    }, react_1["default"].createElement("div", {
+      className: detail_module_scss_1["default"].lowerContainer
+    }, react_1["default"].createElement("div", {
+      className: detail_module_scss_1["default"].lowerContainer__left
+    }, react_1["default"].createElement("h4", null, dummyTravelPosts[selectedPostId].title), react_1["default"].createElement("h6", null, "region: ", dummyTravelPosts[selectedPostId].region), react_1["default"].createElement("h6", null, "country: ", dummyTravelPosts[selectedPostId].country), react_1["default"].createElement("button", {
+      className: "btn btn-danger",
+      onClick: deleteHandler
+    }, "Delete")), react_1["default"].createElement("div", {
+      className: detail_module_scss_1["default"].lowerContainer__right
+    }, react_1["default"].createElement(WorldMap_1["default"], {
+      lat: Number(dummyTravelPosts[selectedPostId].latitude),
+      lng: Number(dummyTravelPosts[selectedPostId].longitude),
+      zoom: 12
+    }))));
+  }
 
   var ids = [selectedPostId - 2, selectedPostId - 1, selectedPostId, selectedPostId + 1, selectedPostId + 2];
   var photos = ids.map(function (id) {
     if (id >= 0 && id < dummyTravelPosts.length) {
       return react_1["default"].createElement("img", {
         src: dummyTravelPosts[id].image,
-        className: detail_module_scss_1["default"].bottomImageList__images,
+        className: detail_module_scss_1["default"].upperContainer__bottomImageList__images,
         style: {
           "opacity": id === selectedPostId ? "1" : "0.5"
         }
       });
     }
-  });
+  }); ///////////////////////////////////////////////////////
+
+  var date = new Date();
   return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(Head_1["default"], {
     unusedIconOpacity: "0.5",
     unusedIconSelect: "none"
-  }), react_1["default"].createElement("div", {
-    className: "container"
-  }, react_1["default"].createElement("div", {
-    className: detail_module_scss_1["default"].SelectedPhotoContainer
-  }, react_1["default"].createElement("p", {
-    onClick: DecrementPostIdHandler
-  }, "<"), react_1["default"].createElement("img", {
-    src: dummyTravelPosts[selectedPostId].image,
-    style: {
-      "width": "50%"
-    }
-  }), react_1["default"].createElement("p", {
-    onClick: IncrementPostIdHandler
-  }, ">")), react_1["default"].createElement("br", null), react_1["default"].createElement("div", {
-    className: detail_module_scss_1["default"].bottomImageList,
-    style: {
-      "justifyContent": selectedPostId >= dummyTravelPosts.length - 2 ? "flex-end" : ""
-    }
-  }, photos), react_1["default"].createElement("div", {
-    className: detail_module_scss_1["default"].discription
-  }, react_1["default"].createElement("div", null), react_1["default"].createElement("div", {
-    className: detail_module_scss_1["default"].discription__map
-  }, react_1["default"].createElement(WorldMap_1["default"], {
-    lat: Number(dummyTravelPosts[selectedPostId].latitude),
-    lng: Number(dummyTravelPosts[selectedPostId].longitude),
-    zoom: 6,
-    icon: dummyTravelPosts[selectedPostId].image
-  }))), react_1["default"].createElement("button", {
+  }), react_1["default"].createElement(UpperContainer, null), react_1["default"].createElement(LowerContainer, null), react_1["default"].createElement("button", {
     onClick: function onClick() {
-      return deleteHandler();
+      return console.log(_typeof(date));
     }
-  }, "Delete"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(_typeof(dummyTravelPosts[selectedPostId].latitude));
-    }
-  }, "type")));
+  }, "Delete"));
 };
 
 exports.default = Detail;
@@ -14048,14 +14043,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ctePdS1wI5wqOc81do0Y {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.ctePdS1wI5wqOc81do0Y p {\n  font-size: 10vh;\n  margin: 5vh;\n}\n\n._1TTmsLSAJ_vg_keLv4ZdBM {\n  display: flex;\n  margin: 0 auto;\n  margin-bottom: 5vh;\n  width: 35%;\n}\n._3ofIYn_V7wj4wjAFOpWXg2 {\n  width: 18%;\n  margin: 1%;\n}\n\n._3lASKXBJI8xeXvQjiv2G9e {\n  display: flex;\n  justify-content: space-between;\n  height: 50vh;\n  width: 90%;\n  margin: 0 auto;\n  border: solid 1px black;\n}\n._17z4H3zMYBiAyB0X9nLCtw {\n  width: 40%;\n  height: 100%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._15OGne5rNBYc7s--clPNLj {\n  background-color: #232323;\n}\n._1XBJspNu7vmRNHKK4mIUaX {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n._1XBJspNu7vmRNHKK4mIUaX p {\n  font-size: 10vh;\n  margin: 5vh;\n  color: aliceblue;\n}\n._1RdrAKQhuKyw-eHLjD4Ro3 {\n  display: flex;\n  margin: 0 auto;\n  margin-bottom: 5vh;\n  width: 35%;\n}\n._28_LKM-s0HH3RotsD_qQ74 {\n  width: 18%;\n  margin: 1%;\n}\n\n._1x3TcEsUsn8aEp4AKCpTMQ {\n  display: flex;\n  justify-content: space-between;\n  height: 250px;\n  width: 60%;\n  margin: 0 auto;\n}\n._1OrYxRBC30p_ZxBiJYQXil {\n  width: 40%;\n}\n._24MeGF1AiKZk-6Hd2uwTrE {\n  width: 60%;\n  height: 100%;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"SelectedPhotoContainer": "ctePdS1wI5wqOc81do0Y",
-	"bottomImageList": "_1TTmsLSAJ_vg_keLv4ZdBM",
-	"bottomImageList__images": "_3ofIYn_V7wj4wjAFOpWXg2",
-	"discription": "_3lASKXBJI8xeXvQjiv2G9e",
-	"discription__map": "_17z4H3zMYBiAyB0X9nLCtw"
+	"upperContainer": "_15OGne5rNBYc7s--clPNLj",
+	"upperContainer__selectedPhotoContainer": "_1XBJspNu7vmRNHKK4mIUaX",
+	"upperContainer__bottomImageList": "_1RdrAKQhuKyw-eHLjD4Ro3",
+	"upperContainer__bottomImageList__images": "_28_LKM-s0HH3RotsD_qQ74",
+	"lowerContainer": "_1x3TcEsUsn8aEp4AKCpTMQ",
+	"lowerContainer__left": "_1OrYxRBC30p_ZxBiJYQXil",
+	"lowerContainer__right": "_24MeGF1AiKZk-6Hd2uwTrE"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14079,16 +14076,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._1viuQRh8aoGjbI5h7ZkJy3 {\n  display: flex;\n  justify-content: space-between;\n  height: 10vh;\n}\n._37qPKLbynC1SLXfrWS1pVB {\n  display: flex;\n  align-items: center;\n  margin-left: 3%;\n  text-decoration: none;\n  color: black;\n}\n._37qPKLbynC1SLXfrWS1pVB:hover {\n  color: black;\n}\n.bxT7r9ciRp_-dWUbCOg8G {\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  width: 50%;\n  margin-right: 3%;\n}\n._3DI44kMUIxSWaPl5L9vvZ {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  height: 100%;\n  width: 10%;\n}\n._2PZe_ilLy6DAKEpKxSgA2K {\n  height: 50%;\n  width: 50%;\n  margin: 0 auto;\n}\n._3ly_RBfQWTXTrXYX-V6vwB {\n  height: 30%;\n}\n\n._1-GvywGoJwawZvhUN7C5z {\n  border: solid pink;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._1viuQRh8aoGjbI5h7ZkJy3 {\n  display: flex;\n  justify-content: space-between;\n  height: 80px;\n}\n@media (max-width: 599px) {\n  ._1viuQRh8aoGjbI5h7ZkJy3 {\n    height: 40px;\n  }\n}\n._37qPKLbynC1SLXfrWS1pVB {\n  text-decoration: none;\n}\n._37qPKLbynC1SLXfrWS1pVB p {\n  font-family: \"YuGothic M\";\n  font-size: 35px;\n  padding-top: 10px;\n  color: black;\n}\n@media (max-width: 599px) {\n  ._37qPKLbynC1SLXfrWS1pVB p {\n    font-size: 17px;\n    padding-top: 10px;\n  }\n}\n._37qPKLbynC1SLXfrWS1pVB p:hover {\n  color: black;\n}\n._2eV2s5xClcvhe0vPZEJoqd {\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  height: 100%;\n}\n._2eV2s5xClcvhe0vPZEJoqd nav {\n  font-size: 20px;\n  margin-right: 30px;\n}\n@media (max-width: 599px) {\n  ._2eV2s5xClcvhe0vPZEJoqd nav {\n    font-size: 10px;\n    margin-right: 10px;\n  }\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"header": "_1viuQRh8aoGjbI5h7ZkJy3",
 	"header__logo": "_37qPKLbynC1SLXfrWS1pVB",
-	"header__menu": "bxT7r9ciRp_-dWUbCOg8G",
-	"header__menu__menuIcon": "_3DI44kMUIxSWaPl5L9vvZ",
-	"header__menu__menuIcon__image": "_2PZe_ilLy6DAKEpKxSgA2K",
-	"header__menu__menuIcon__name": "_3ly_RBfQWTXTrXYX-V6vwB",
-	"logo": "_1-GvywGoJwawZvhUN7C5z"
+	"header__navigation": "_2eV2s5xClcvhe0vPZEJoqd"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14112,7 +14105,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._1Cc32-fQZOb059UqLat31G {\n  position: relative;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._1Cc32-fQZOb059UqLat31G {\n  position: relative;\n  margin: 0 auto;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"home": "_1Cc32-fQZOb059UqLat31G"
@@ -14139,7 +14132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  background-size: cover;\n  aspect-ratio: 3/2;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 30%;\n  text-decoration: none;\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 20%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ h6 {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover h6 {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n@media (max-width: 599px) {\n  ._3_RSgvGBn9xtKkPa-PQs2u {\n    flex-direction: column;\n  }\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  background-size: cover;\n  aspect-ratio: 3/2;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 30%;\n  text-decoration: none;\n}\n@media (max-width: 599px) {\n  ._3eW-qiNOof7lMUNmSgKAyZ {\n    width: 60%;\n    margin: 30px auto;\n  }\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 20%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ h6 {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover h6 {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"main": "_3_RSgvGBn9xtKkPa-PQs2u",
