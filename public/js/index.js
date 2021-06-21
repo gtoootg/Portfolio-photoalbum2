@@ -13557,10 +13557,6 @@ var UploadModal = function UploadModal() {
     }
   }, "preview"), react_1["default"].createElement("button", {
     type: "button",
-    className: "btn btn-primary",
-    onClick: uploadHandler
-  }, "Upload"), react_1["default"].createElement("button", {
-    type: "button",
     className: "btn btn-success",
     onClick: cancelHandler
   }, "Cancel")));
@@ -13624,6 +13620,16 @@ var WorldMap = function WorldMap(_a) {
       position: {
         lat: lat,
         lng: lng
+      },
+      // icon={{
+      //   url:icon,
+      //   scaledSize: {width: 60, height: 40},
+      // }}
+      opacity: 0.9
+    }), react_1["default"].createElement(api_1.Marker, {
+      position: {
+        lat: 15,
+        lng: 40
       },
       // icon={{
       //   url:icon,
