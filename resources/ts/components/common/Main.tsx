@@ -6,7 +6,7 @@ import styles from '../../../styles/main.module.scss';
 import {TravelPostsContext,TravelPostObject, DummyTravelPostsContext, SelectedPostIdContext, uploadModalStateContext } from '../../index';
 
 
-const Main:()=>JSX.Element = ()=> {
+const Main: React.FC<{}> = ()=> {
     
     const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;
     const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);
@@ -30,7 +30,7 @@ const Main:()=>JSX.Element = ()=> {
 
     useEffect(loadTravelPosts,[]);
 
-    const Posts :()=>JSX.Element= travelPosts.map((travelPost:TravelPostObject,index:number) =>{
+    const Posts : React.FC<{}>= travelPosts.map((travelPost:TravelPostObject,index:number) =>{
         return(
             <Link
                 key={index}
