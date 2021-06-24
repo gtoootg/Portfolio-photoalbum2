@@ -86,6 +86,8 @@ const Detail:(()=>JSX.Element) = () => {
                         lat={Number(dummyTravelPosts[selectedPostId].latitude)}
                         lng={Number(dummyTravelPosts[selectedPostId].longitude)}
                         zoom={12} 
+                        multipleMarker={false}
+                        elements={dummyTravelPosts}
                     />    
                 </div>
             </div>
