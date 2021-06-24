@@ -303,6 +303,8 @@ const UploadModal: React.FC<{}> = ()=> {
                     lng={mapGeoCode.longitude}
                     zoom={3}
                     onClick={setLocationHandler}
+                    multipleMarker={false}
+                    elements={travelPosts}
                   />
                 
               </div>

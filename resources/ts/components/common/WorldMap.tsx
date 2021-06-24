@@ -2,16 +2,59 @@ import React, { useEffect, useState, ReactNode } from "react";
 import {GoogleMap,LoadScript, Marker,InfoWindow } from "@react-google-maps/api";
 
 type Props = {
-  lat:number| undefined
-  lng:number |undefined
+  lat?:number| undefined
+  lng?:number |undefined
   // icon:any
   zoom:number
+  multipleMarker?:boolean
+  elements:object[]
   onClick?:(e:number)=>void
 }
 
 const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキーをここに入力
 
-const WorldMap: React.FC<Props> = ({lat,lng,zoom, onClick}) => {
+const WorldMap: React.FC<Props> = ({lat,lng,zoom, multipleMarker, elements, onClick}) => {
+
+  const [id, setId]= useState<any>()
+
+  const marker = elements.map((element:any,index:number)=>{
+    const setLocationHandler:(e:any)=>void = (e)=>{
+      const lat = e.latLng.lat()
+      const lng =e.latLng.lng()
+      setId(index)
+      // setMapGeoCode({latitude:lat, longitude: lng})
+    }
+    // const [toggle, setToggle] = useState(false);
+    // setToggle({...toggle, index:false})
+    // let createToggleObject:any ={}
+    // createToggleObject.index=false
+    // // setToggle(createToggleObject)
+    
+
+    return(
+      <>
+      <Marker 
+      position={{
+        lat: Number(element.latitude),
+        lng: Number(element.longitude)}}
+      onClick={setLocationHandler}
+      />
+        {id===index&&
+          <InfoWindow 
+            position={{
+              lat: Number(element.latitude),
+              lng: Number(element.longitude)
+            }}    
+            >
+          <img src={element.image} style={{"width":"150px","height":"100px"}}/>
+        </InfoWindow>
+      }
+      </>
+    )
+   
+  })
+
+
 
   if(lat === undefined && lng ===undefined){
     return(
@@ -20,9 +63,9 @@ const WorldMap: React.FC<Props> = ({lat,lng,zoom, onClick}) => {
         Select Country, then google map is shown here
       </div>
       </div>
-      
     )
-  }else{
+  }
+  else{
     return (
       <LoadScript 
         googleMapsApiKey={API_KEY}
@@ -36,18 +79,17 @@ const WorldMap: React.FC<Props> = ({lat,lng,zoom, onClick}) => {
           zoom={zoom}
           onClick={onClick}
         >
-        <Marker 
+        {
+          multipleMarker? <>{marker}</>
+          :
+            <Marker 
             position={{
               lat: lat,
               lng: lng}}
-            // icon={{
-            //   url:icon,
-            //   scaledSize: {width: 60, height: 40},
-            // }}
-            opacity= {0.9}
-            
-            // options={{border=solid 1px white}}
-        />
+            opacity= {0.9} 
+            />
+        }
+        
         </GoogleMap>
         </LoadScript>
     );

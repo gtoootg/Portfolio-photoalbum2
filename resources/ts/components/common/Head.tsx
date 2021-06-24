@@ -18,6 +18,7 @@ const Head: React.FC<HeadProps> = (props)=> {
     const{uploadModalState, setUploadModalState} = useContext(uploadModalStateContext);
     const{sortModalState, setSortModalState} = useContext(sortModalStateContext);
 
+
     //Handler//////////////
     const setUploadModalStateHandler = (e: React.MouseEvent<HTMLElement>) => {
         setUploadModalState(!uploadModalState);
@@ -25,6 +26,7 @@ const Head: React.FC<HeadProps> = (props)=> {
     const setSortModalStateHandler = (e: React.MouseEvent<HTMLElement>) => {
         setSortModalState(!sortModalState);
     }
+
     ///////////////////////
 
     interface MenuIconProps{
@@ -74,7 +76,7 @@ const Head: React.FC<HeadProps> = (props)=> {
                     <MenuIcon name={"Home"} link={"/"} fileName={"Home"}/>   
                     <MenuIcon name={"Upload"} fileName={"Upload"} unusedIconOpacity={unusedIconOpacity}  unusedIconSelect={unusedIconSelect} onClick={setUploadModalStateHandler}/>
                     <MenuIcon name={"Sort"} fileName={"Sort"} unusedIconOpacity={unusedIconOpacity} unusedIconSelect={unusedIconSelect} onClick={setSortModalStateHandler}/>    
-                    <MenuIcon name={"Map"} fileName={"Map"} unusedIconOpacity={unusedIconOpacity} />         
+                    <MenuIcon name={"Map"} link={"/map"} fileName={"Map"} unusedIconOpacity={unusedIconOpacity} unusedIconSelect={unusedIconSelect}/>         
                 </div>
             </div>
             </div>

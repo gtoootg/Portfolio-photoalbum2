@@ -4,6 +4,7 @@ import {BrowserRouter,Route,Switch} from 'react-router-dom';
  
 import Home from './components/home/Home';
 import Detail from './components/detail/Detail';
+import Map from './components/map/Map';
 
 //createContext to controll State on global level
 export const TravelPostsContext = createContext<any>({});
@@ -44,6 +45,7 @@ const App = () => {
                 <Route exact path="/" component={Home}/> 
                 <Switch>
                 <Route path="/detail" children={<Detail/>}/>
+                <Route path="/map" children={<Map/>}/>
                 </Switch> 
             </SelectedPostIdContext.Provider>
             </DummyTravelPostsContext.Provider>
