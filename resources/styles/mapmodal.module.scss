@@ -1,0 +1,46 @@
+.mapModal{
+    position:absolute;
+    z-index: 1;
+    transition:1s;
+
+    height:auto;
+    width:70vw;
+    transform:translateX(15vw);
+    margin-top: 12vh;
+    
+    border: solid 0.05px gray;
+
+    border-radius: 5px;
+    background-color: whitesmoke;
+
+    &__label{
+        display: flex;
+        justify-content: space-between;
+
+        padding-top:1vh;
+        // padding-bottom:1vh;
+        padding-left:1vh;
+        padding-right:1vh;
+        border-bottom:solid 0.5px gray;
+    }
+
+    &__mapContainer{
+        height:500px;
+        width:80%;
+        margin: 0 auto;
+    }
+
+
+    &__buttonContainer{
+        display:flex;
+        justify-content: flex-end;
+        margin-right:5vw;
+        margin-bottom:5vh;
+        
+        button{
+            margin-left:1vw;
+        }
+    }
+  
+
+}
