@@ -11632,8 +11632,10 @@ var Head = function Head(props) {
     onClick: setSortModalStateHandler
   }), react_1["default"].createElement(MenuIcon, {
     name: "Map",
+    link: "/map",
     fileName: "Map",
-    unusedIconOpacity: unusedIconOpacity
+    unusedIconOpacity: unusedIconOpacity,
+    unusedIconSelect: unusedIconSelect
   })))), react_1["default"].createElement("div", {
     style: {
       "borderBottom": "solid 0.5px gray"
@@ -13548,7 +13550,9 @@ var UploadModal = function UploadModal() {
     lat: mapGeoCode.latitude,
     lng: mapGeoCode.longitude,
     zoom: 3,
-    onClick: setLocationHandler
+    onClick: setLocationHandler,
+    multipleMarker: false,
+    elements: travelPosts
   }))), react_1["default"].createElement("div", {
     className: uploadmodal_module_scss_1["default"].uploadModal__lowerContainer
   }, react_1["default"].createElement("button", {
@@ -13575,17 +13579,45 @@ exports.default = UploadModal;
 "use strict";
 
 
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
 };
 
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var api_1 = __webpack_require__(/*! @react-google-maps/api */ "./node_modules/@react-google-maps/api/dist/reactgooglemapsapi.esm.js");
 
@@ -13595,7 +13627,45 @@ var WorldMap = function WorldMap(_a) {
   var lat = _a.lat,
       lng = _a.lng,
       zoom = _a.zoom,
+      multipleMarker = _a.multipleMarker,
+      elements = _a.elements,
       onClick = _a.onClick;
+
+  var _b = react_1.useState(),
+      id = _b[0],
+      setId = _b[1];
+
+  var marker = elements.map(function (element, index) {
+    var setLocationHandler = function setLocationHandler(e) {
+      var lat = e.latLng.lat();
+      var lng = e.latLng.lng();
+      setId(index); // setMapGeoCode({latitude:lat, longitude: lng})
+    }; // const [toggle, setToggle] = useState(false);
+    // setToggle({...toggle, index:false})
+    // let createToggleObject:any ={}
+    // createToggleObject.index=false
+    // // setToggle(createToggleObject)
+
+
+    return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(api_1.Marker, {
+      position: {
+        lat: Number(element.latitude),
+        lng: Number(element.longitude)
+      },
+      onClick: setLocationHandler
+    }), id === index && react_1["default"].createElement(api_1.InfoWindow, {
+      position: {
+        lat: Number(element.latitude),
+        lng: Number(element.longitude)
+      }
+    }, react_1["default"].createElement("img", {
+      src: element.image,
+      style: {
+        "width": "150px",
+        "height": "100px"
+      }
+    })));
+  });
 
   if (lat === undefined && lng === undefined) {
     return react_1["default"].createElement("div", {
@@ -13616,25 +13686,11 @@ var WorldMap = function WorldMap(_a) {
       },
       zoom: zoom,
       onClick: onClick
-    }, react_1["default"].createElement(api_1.Marker, {
+    }, multipleMarker ? react_1["default"].createElement(react_1["default"].Fragment, null, marker) : react_1["default"].createElement(api_1.Marker, {
       position: {
         lat: lat,
         lng: lng
       },
-      // icon={{
-      //   url:icon,
-      //   scaledSize: {width: 60, height: 40},
-      // }}
-      opacity: 0.9
-    }), react_1["default"].createElement(api_1.Marker, {
-      position: {
-        lat: 15,
-        lng: 40
-      },
-      // icon={{
-      //   url:icon,
-      //   scaledSize: {width: 60, height: 40},
-      // }}
       opacity: 0.9
     })));
   }
@@ -13787,7 +13843,9 @@ var Detail = function Detail() {
     }, react_1["default"].createElement(WorldMap_1["default"], {
       lat: Number(dummyTravelPosts[selectedPostId].latitude),
       lng: Number(dummyTravelPosts[selectedPostId].longitude),
-      zoom: 12
+      zoom: 12,
+      multipleMarker: false,
+      elements: dummyTravelPosts
     }))));
   }
 
@@ -13879,7 +13937,8 @@ var Head_1 = __importDefault(__webpack_require__(/*! ../common/Head */ "./resour
 
 var UploadModal_1 = __importDefault(__webpack_require__(/*! ../common/UploadModal */ "./resources/ts/components/common/UploadModal.tsx"));
 
-var SortModal_1 = __importDefault(__webpack_require__(/*! ../common/SortModal */ "./resources/ts/components/common/SortModal.tsx"));
+var SortModal_1 = __importDefault(__webpack_require__(/*! ../common/SortModal */ "./resources/ts/components/common/SortModal.tsx")); // import MapModal from '../common/MapModal';
+
 
 var Main_1 = __importDefault(__webpack_require__(/*! ../common/Main */ "./resources/ts/components/common/Main.tsx"));
 
@@ -13887,7 +13946,8 @@ var home_module_scss_1 = __importDefault(__webpack_require__(/*! ../../../styles
 
 
 exports.uploadModalStateContext = react_1.createContext({});
-exports.sortModalStateContext = react_1.createContext({}); /////////////////////////////////////////////////
+exports.sortModalStateContext = react_1.createContext({}); // export const MapModalStateContext = createContext<any>({});
+/////////////////////////////////////////////////
 
 var Home = function Home() {
   var _a = react_1.useState(false),
@@ -13896,7 +13956,8 @@ var Home = function Home() {
 
   var _b = react_1.useState(false),
       sortModalState = _b[0],
-      setSortModalState = _b[1];
+      setSortModalState = _b[1]; // const [mapModalState, setMapModalState] = useState<boolean>(false);
+
 
   return react_1["default"].createElement("div", {
     className: home_module_scss_1["default"].home
@@ -13917,6 +13978,102 @@ var Home = function Home() {
 };
 
 exports.default = Home;
+
+/***/ }),
+
+/***/ "./resources/ts/components/map/Map.tsx":
+/*!*********************************************!*\
+  !*** ./resources/ts/components/map/Map.tsx ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Head_1 = __importDefault(__webpack_require__(/*! ../common/Head */ "./resources/ts/components/common/Head.tsx"));
+
+var index_1 = __webpack_require__(/*! ../../index */ "./resources/ts/index.tsx");
+
+var WorldMap_1 = __importDefault(__webpack_require__(/*! ../common/WorldMap */ "./resources/ts/components/common/WorldMap.tsx"));
+
+var map_module_scss_1 = __importDefault(__webpack_require__(/*! ../../../styles/map.module.scss */ "./resources/styles/map.module.scss"));
+
+var Map = function Map() {
+  var _a = react_1.useContext(index_1.TravelPostsContext),
+      travelPosts = _a.travelPosts,
+      setTravelPosts = _a.setTravelPosts;
+
+  var _b = react_1.useContext(index_1.DummyTravelPostsContext),
+      dummyTravelPosts = _b.dummyTravelPosts,
+      setDummyTravelPosts = _b.setDummyTravelPosts; //Handler///////////////////////////////////
+  ////////////////////////////////////////////
+  //jsx//////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////
+
+
+  return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(Head_1["default"], {
+    unusedIconOpacity: "0.5",
+    unusedIconSelect: "none"
+  }), react_1["default"].createElement("div", {
+    className: "container"
+  }, react_1["default"].createElement("div", {
+    className: map_module_scss_1["default"].map
+  }, react_1["default"].createElement(WorldMap_1["default"], {
+    lat: 0,
+    lng: 0,
+    zoom: 2,
+    elements: dummyTravelPosts,
+    multipleMarker: true
+  }))));
+};
+
+exports.default = Map;
 
 /***/ }),
 
@@ -13982,7 +14139,9 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 
 var Home_1 = __importDefault(__webpack_require__(/*! ./components/home/Home */ "./resources/ts/components/home/Home.tsx"));
 
-var Detail_1 = __importDefault(__webpack_require__(/*! ./components/detail/Detail */ "./resources/ts/components/detail/Detail.tsx")); //createContext to controll State on global level
+var Detail_1 = __importDefault(__webpack_require__(/*! ./components/detail/Detail */ "./resources/ts/components/detail/Detail.tsx"));
+
+var Map_1 = __importDefault(__webpack_require__(/*! ./components/map/Map */ "./resources/ts/components/map/Map.tsx")); //createContext to controll State on global level
 
 
 exports.TravelPostsContext = react_1.createContext({});
@@ -14025,6 +14184,9 @@ var App = function App() {
   }), react_1["default"].createElement(react_router_dom_1.Switch, null, react_1["default"].createElement(react_router_dom_1.Route, {
     path: "/detail",
     children: react_1["default"].createElement(Detail_1["default"], null)
+  }), react_1["default"].createElement(react_router_dom_1.Route, {
+    path: "/map",
+    children: react_1["default"].createElement(Map_1["default"], null)
   })))))));
 };
 
@@ -14144,6 +14306,33 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"main": "_3_RSgvGBn9xtKkPa-PQs2u",
 	"main__imageContainer": "_3eW-qiNOof7lMUNmSgKAyZ",
 	"main__imageContainer__title": "Uk5LP43fRumrYU5uOiulQ"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[3]!./resources/styles/map.module.scss":
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[3]!./resources/styles/map.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".Zqbj2TBQztr_opqtR3Vll {\n  height: 800px;\n}", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"map": "Zqbj2TBQztr_opqtR3Vll"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -49950,6 +50139,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_3_main_module_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./resources/styles/map.module.scss":
+/*!******************************************!*\
+  !*** ./resources/styles/map.module.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_3_map_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[1]!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[3]!./map.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].oneOf[1].use[3]!./resources/styles/map.module.scss");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_3_map_module_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_8_oneOf_1_use_3_map_module_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
