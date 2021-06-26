@@ -1,57 +1,54 @@
-import React, { useEffect, useState, ReactNode } from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {GoogleMap,LoadScript, Marker,InfoWindow } from "@react-google-maps/api";
+import {Link} from 'react-router-dom';
+
+import {SelectedPostIdContext} from '../../index';
 
 type Props = {
   lat?:number| undefined
   lng?:number |undefined
-  // icon:any
   zoom:number
   multipleMarker?:boolean
   elements:object[]
-  onClick?:(e:number)=>void
+  onClick?:(e:any)=>void
 }
+
 
 const API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキーをここに入力
 
 const WorldMap: React.FC<Props> = ({lat,lng,zoom, multipleMarker, elements, onClick}) => {
 
-  const [id, setId]= useState<any>()
+  const {selectedPostId, setSelectedPostId} = useContext(SelectedPostIdContext);
 
   const marker = elements.map((element:any,index:number)=>{
-    const setLocationHandler:(e:any)=>void = (e)=>{
-      const lat = e.latLng.lat()
-      const lng =e.latLng.lng()
-      setId(index)
-      // setMapGeoCode({latitude:lat, longitude: lng})
-    }
-    // const [toggle, setToggle] = useState(false);
-    // setToggle({...toggle, index:false})
-    // let createToggleObject:any ={}
-    // createToggleObject.index=false
-    // // setToggle(createToggleObject)
-    
-
+   
     return(
       <>
       <Marker 
       position={{
         lat: Number(element.latitude),
         lng: Number(element.longitude)}}
-      onClick={setLocationHandler}
+       onClick={()=>setSelectedPostId(index)}
       />
-        {id===index&&
-          <InfoWindow 
-            position={{
-              lat: Number(element.latitude),
-              lng: Number(element.longitude)
-            }}    
-            >
-          <img src={element.image} style={{"width":"150px","height":"100px"}}/>
-        </InfoWindow>
-      }
+        {selectedPostId===index&&
+            <InfoWindow 
+              position={{
+                lat: Number(element.latitude),
+                lng: Number(element.longitude)
+              }} 
+              >
+                <Link
+                    key={index}
+                    to={"/detail"}
+                    >
+                  <img 
+                    src={element.image} style={{"width":"150px","height":"100px"}}
+                  />
+                </Link>
+            </InfoWindow>
+        }
       </>
     )
-   
   })
 
 
@@ -59,9 +56,7 @@ const WorldMap: React.FC<Props> = ({lat,lng,zoom, multipleMarker, elements, onCl
   if(lat === undefined && lng ===undefined){
     return(
       <div className="d-flex">
-      <div>
         Select Country, then google map is shown here
-      </div>
       </div>
     )
   }

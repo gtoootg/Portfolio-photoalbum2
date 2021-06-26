@@ -150,12 +150,13 @@ const SortModal: React.FC<{}> = ()=> {
 
   //JSX component/////////////////////////////////
     const regions = Object.keys(regionsCheckBox)
-    const regionMap = regions.map(region=>{
+    const regionMap = regions.map((region,index)=>{
         return(
             <div>
               <input 
                 type="checkbox" 
                 id="checkbox"
+                key={index}
                 name={region} 
                 value={region}
                 checked={regionsCheckBox[region]}
@@ -166,12 +167,13 @@ const SortModal: React.FC<{}> = ()=> {
           )
          })
     
-    const countryMap = displayedCountries.map((displayedCountry)=>{
+    const countryMap = displayedCountries.map((displayedCountry, index)=>{
     return(
       <div>
           <input 
           id="checkbox"
           type="checkbox" 
+          key={index}
           name={displayedCountry.country} 
           value={displayedCountry.country} 
           onChange={setSelectedCountriesHandler}

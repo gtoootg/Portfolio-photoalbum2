@@ -17,7 +17,7 @@ const Head: React.FC<HeadProps> = (props)=> {
     // const{display} =props;
     const{uploadModalState, setUploadModalState} = useContext(uploadModalStateContext);
     const{sortModalState, setSortModalState} = useContext(sortModalStateContext);
-
+    /////////////////////////
 
     //Handler//////////////
     const setUploadModalStateHandler = (e: React.MouseEvent<HTMLElement>) => {

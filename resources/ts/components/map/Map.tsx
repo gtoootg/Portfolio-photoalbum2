@@ -1,5 +1,4 @@
 import React, {useState, useContext}from 'react';
-import axios from 'axios';
 import Head from '../common/Head';
 
 import {TravelPostsContext, DummyTravelPostsContext, SelectedPostIdContext} from '../../index';
@@ -10,7 +9,7 @@ const Map:(()=>JSX.Element) = () => {
 
     const{travelPosts, setTravelPosts} = useContext(TravelPostsContext);
     const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);
-
+    const{selectedPostId, setSelectedPostId} = useContext(DummyTravelPostsContext);
     //Handler///////////////////////////////////
     ////////////////////////////////////////////
 
@@ -31,7 +30,7 @@ const Map:(()=>JSX.Element) = () => {
                         zoom={2}
                         elements={dummyTravelPosts}
                         multipleMarker={true}
-                    />
+                />
             </div>
             </div>
         </>
