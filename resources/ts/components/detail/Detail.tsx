@@ -51,7 +51,7 @@ const Detail:(()=>JSX.Element) = () => {
                         <p onClick={DecrementPostIdHandler}>
                             &lt;
                         </p>
-                        <img src={dummyTravelPosts[selectedPostId].image} style={{"width":"50%"}}/>
+                        <img src={dummyTravelPosts[selectedPostId].image} style={{"width":"70%"}}/>
                         <p onClick={IncrementPostIdHandler}>
                             &gt;
                         </p>
@@ -69,8 +69,6 @@ const Detail:(()=>JSX.Element) = () => {
 
     function LowerContainer(){
 
-        var date = new Date()
-
         return(
             <div className="container">
             <div className={styles.lowerContainer}>
@@ -79,7 +77,6 @@ const Detail:(()=>JSX.Element) = () => {
                     <h6>region: {dummyTravelPosts[selectedPostId].region}</h6>
                     <h6>country: {dummyTravelPosts[selectedPostId].country}</h6>
                     <button className="btn btn-danger" onClick={deleteHandler}>Delete</button>
-                    
                 </div>
                 <div className={styles.lowerContainer__right}>
                     <WorldMap
@@ -117,18 +114,13 @@ const Detail:(()=>JSX.Element) = () => {
         }
     })        
     ///////////////////////////////////////////////////////
-    
-    const date =  new Date()
-    
 
     return (
         <>
             <Head unusedIconOpacity={"0.5"} unusedIconSelect={"none"}/>
             <UpperContainer/>
             <LowerContainer/>
-            
-            <button onClick={()=>console.log(typeof(date))}>Delete</button>
-
+            <button onClick={deleteHandler}>Delete</button>
         </>
     );
 }

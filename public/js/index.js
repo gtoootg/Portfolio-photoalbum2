@@ -11570,7 +11570,8 @@ var Head = function Head(props) {
 
   var _b = react_1.useContext(Home_1.sortModalStateContext),
       sortModalState = _b.sortModalState,
-      setSortModalState = _b.setSortModalState; //Handler//////////////
+      setSortModalState = _b.setSortModalState; /////////////////////////
+  //Handler//////////////
 
 
   var setUploadModalStateHandler = function setUploadModalStateHandler(e) {
@@ -12148,20 +12149,22 @@ var SortModal = function SortModal() {
 
 
   var regions = Object.keys(regionsCheckBox);
-  var regionMap = regions.map(function (region) {
+  var regionMap = regions.map(function (region, index) {
     return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
       type: "checkbox",
       id: "checkbox",
+      key: index,
       name: region,
       value: region,
       checked: regionsCheckBox[region],
       onChange: setSortedRegionsHandler
     }), region);
   });
-  var countryMap = displayedCountries.map(function (displayedCountry) {
+  var countryMap = displayedCountries.map(function (displayedCountry, index) {
     return react_1["default"].createElement("div", null, react_1["default"].createElement("input", {
       id: "checkbox",
       type: "checkbox",
+      key: index,
       name: displayedCountry.country,
       value: displayedCountry.country,
       onChange: setSelectedCountriesHandler
@@ -13561,6 +13564,13 @@ var UploadModal = function UploadModal() {
     }
   }, "preview"), react_1["default"].createElement("button", {
     type: "button",
+    className: "btn btn-primary",
+    // onClick={uploadHandler}
+    onClick: function onClick() {
+      return alert("Sorry!! Pictures can be uploaded only by administorator");
+    }
+  }, "Upload"), react_1["default"].createElement("button", {
+    type: "button",
     className: "btn btn-success",
     onClick: cancelHandler
   }, "Cancel")));
@@ -13621,6 +13631,10 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 
 var api_1 = __webpack_require__(/*! @react-google-maps/api */ "./node_modules/@react-google-maps/api/dist/reactgooglemapsapi.esm.js");
 
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+var index_1 = __webpack_require__(/*! ../../index */ "./resources/ts/index.tsx");
+
 var API_KEY = "AIzaSyAhf8RgW3KVsaUK5Oqr-JKTpASBBrHlXd8"; // TODO: 自分のキーをここに入力
 
 var WorldMap = function WorldMap(_a) {
@@ -13631,46 +13645,40 @@ var WorldMap = function WorldMap(_a) {
       elements = _a.elements,
       onClick = _a.onClick;
 
-  var _b = react_1.useState(),
-      id = _b[0],
-      setId = _b[1];
+  var _b = react_1.useContext(index_1.SelectedPostIdContext),
+      selectedPostId = _b.selectedPostId,
+      setSelectedPostId = _b.setSelectedPostId;
 
   var marker = elements.map(function (element, index) {
-    var setLocationHandler = function setLocationHandler(e) {
-      var lat = e.latLng.lat();
-      var lng = e.latLng.lng();
-      setId(index); // setMapGeoCode({latitude:lat, longitude: lng})
-    }; // const [toggle, setToggle] = useState(false);
-    // setToggle({...toggle, index:false})
-    // let createToggleObject:any ={}
-    // createToggleObject.index=false
-    // // setToggle(createToggleObject)
-
-
     return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(api_1.Marker, {
       position: {
         lat: Number(element.latitude),
         lng: Number(element.longitude)
       },
-      onClick: setLocationHandler
-    }), id === index && react_1["default"].createElement(api_1.InfoWindow, {
+      onClick: function onClick() {
+        return setSelectedPostId(index);
+      }
+    }), selectedPostId === index && react_1["default"].createElement(api_1.InfoWindow, {
       position: {
         lat: Number(element.latitude),
         lng: Number(element.longitude)
       }
+    }, react_1["default"].createElement(react_router_dom_1.Link, {
+      key: index,
+      to: "/detail"
     }, react_1["default"].createElement("img", {
       src: element.image,
       style: {
         "width": "150px",
         "height": "100px"
       }
-    })));
+    }))));
   });
 
   if (lat === undefined && lng === undefined) {
     return react_1["default"].createElement("div", {
       className: "d-flex"
-    }, react_1["default"].createElement("div", null, "Select Country, then google map is shown here"));
+    }, "Select Country, then google map is shown here");
   } else {
     return react_1["default"].createElement(api_1.LoadScript, {
       googleMapsApiKey: API_KEY,
@@ -13708,8 +13716,6 @@ exports.default = WorldMap;
 
 "use strict";
 
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -13815,7 +13821,7 @@ var Detail = function Detail() {
     }, "<"), react_1["default"].createElement("img", {
       src: dummyTravelPosts[selectedPostId].image,
       style: {
-        "width": "50%"
+        "width": "70%"
       }
     }), react_1["default"].createElement("p", {
       onClick: IncrementPostIdHandler
@@ -13828,7 +13834,6 @@ var Detail = function Detail() {
   }
 
   function LowerContainer() {
-    var date = new Date();
     return react_1["default"].createElement("div", {
       className: "container"
     }, react_1["default"].createElement("div", {
@@ -13862,14 +13867,11 @@ var Detail = function Detail() {
     }
   }); ///////////////////////////////////////////////////////
 
-  var date = new Date();
   return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(Head_1["default"], {
     unusedIconOpacity: "0.5",
     unusedIconSelect: "none"
   }), react_1["default"].createElement(UpperContainer, null), react_1["default"].createElement(LowerContainer, null), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(_typeof(date));
-    }
+    onClick: deleteHandler
   }, "Delete"));
 };
 
@@ -14051,7 +14053,11 @@ var Map = function Map() {
 
   var _b = react_1.useContext(index_1.DummyTravelPostsContext),
       dummyTravelPosts = _b.dummyTravelPosts,
-      setDummyTravelPosts = _b.setDummyTravelPosts; //Handler///////////////////////////////////
+      setDummyTravelPosts = _b.setDummyTravelPosts;
+
+  var _c = react_1.useContext(index_1.DummyTravelPostsContext),
+      selectedPostId = _c.selectedPostId,
+      setSelectedPostId = _c.setSelectedPostId; //Handler///////////////////////////////////
   ////////////////////////////////////////////
   //jsx//////////////////////////////////////////////////
   ///////////////////////////////////////////////////////
@@ -14300,7 +14306,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n@media (max-width: 599px) {\n  ._3_RSgvGBn9xtKkPa-PQs2u {\n    flex-direction: column;\n  }\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  background-size: cover;\n  aspect-ratio: 3/2;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 30%;\n  text-decoration: none;\n}\n@media (max-width: 599px) {\n  ._3eW-qiNOof7lMUNmSgKAyZ {\n    width: 60%;\n    margin: 30px auto;\n  }\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 20%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ h6 {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover h6 {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n@media (max-width: 599px) {\n  ._3_RSgvGBn9xtKkPa-PQs2u {\n    flex-direction: column;\n  }\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  background-size: cover;\n  aspect-ratio: 3/2;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 32%;\n  text-decoration: none;\n}\n@media (max-width: 599px) {\n  ._3eW-qiNOof7lMUNmSgKAyZ {\n    width: 60%;\n    margin: 30px auto;\n  }\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 20%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ h6 {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover h6 {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"main": "_3_RSgvGBn9xtKkPa-PQs2u",
