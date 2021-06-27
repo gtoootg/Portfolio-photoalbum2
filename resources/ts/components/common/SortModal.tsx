@@ -202,7 +202,7 @@ const SortModal: React.FC<{}> = ()=> {
           }}
         >
           <div className={styles.sortModal__label}>
-              <h3>Sort pictures by your preference</h3>
+              <p>Sort pictures by your preference</p>
               <p onClick={cancelHandler}>✕</p>
           </div>
           <div className={styles.sortModal__mainContainer}>
@@ -226,7 +226,6 @@ const SortModal: React.FC<{}> = ()=> {
           <div className={styles.sortModal__buttonContainer}>
               <button type="button" className="btn btn-primary" onClick={setSortedPostsHandler}>Sort</button>
               <button type="button" className="btn btn-secondary" onClick= {cancelHandler}>Cancel</button>
-              <button onClick={()=>{setTravelPosts(dummyTravelPosts)}}>aaa</button>
           </div>
         </div>
       )
