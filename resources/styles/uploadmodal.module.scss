@@ -10,32 +10,53 @@
         position:absolute;
         z-index: 1;
         transition:1s;
-
         height:auto;
         width:70vw;
         transform:translateX(15vw);
         margin-top: 12vh;
-        
         border: solid 0.05px gray;
-
         border-radius: 5px;
         background-color: whitesmoke;
+
+        @media (max-width:599px){
+            width:95vw;
+            transform:translateX(2.5vw);
+        }
+
+
         &__label{
             display: flex;
             justify-content: space-between;
+            height:75px;
 
-            padding-top:1vh;
-            padding-bottom:1vh;
-            padding-left:1vh;
-            padding-right:1vh;
-            margin-bottom:2vh;
+            padding-top:15px;
+            padding-bottom:15px;
+            padding-left:10px;
+            padding-right:10px;
+            margin-bottom:15px;
             border-bottom:solid 0.5px gray;
+            p{
+                font-size: 30px;
+            }
+
+            @media (max-width:599px){
+                height: 25px;
+                padding-top: 2px;
+                padding-bottom: 2px;
+                padding-left: 2px;
+                padding-right: 2px;
+                margin-bottom: 2px;
+                p{
+                    font-size: 15px;
+                }
+            }
+    
         }
 
         &__dropContainer{
             // border: solid 0.5px green;
-            height:50vh;
-            width:auto;
+            width:45vw;
+            height:auto;
             aspect-ratio: 3/2;
             margin:0 auto;
 
@@ -43,6 +64,11 @@
             align-items: center;
             justify-content: center;
             border-radius: 2vh;
+
+            @media (max-width:599px){
+                width:80vw;
+                height:auto;
+            }
 
             &__previewPhoto{
           
@@ -65,31 +91,52 @@
         &__upperContainer{
             display: flex;
             justify-content: space-between;
-
-            // height: auto;
-            margin:5vh;
+            margin:15px;
             overflow: hidden;
+
+            @media (max-width:599px){
+                flex-direction: column;
+                margin:5px;
+            }
 
             &__left{
                 width:50%;
+                @media (max-width:599px){
+                    width:auto;
+                    margin: 3px;
+                }
             }
 
-    
             &__right{
                 display: flex;
                 justify-content: center;
                 align-items: center;
 
                 width:50%;
-                height: 40vh;
+                aspect-ratio: 3/2;
                 border:0.5px dashed  gray;
+                @media (max-width:599px){
+                    width: auto;
+                    margin: 3px;
+                    aspect-ratio: 3/2;
+                }
             }
         }
 
         &__lowerContainer{
             display: flex;
             justify-content: flex-end;
-            margin-right: 5%;
+            button{
+                margin-right: 10px;
+                margin-bottom: 10px;
+                @media (max-width:599px){
+                    margin-right: 3px;
+                    margin-bottom: 3px;
+                }
+            }
+
+            
+            
         }
 
 }

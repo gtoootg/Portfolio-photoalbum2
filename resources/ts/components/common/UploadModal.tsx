@@ -310,7 +310,7 @@ const UploadModal: React.FC<{}> = ()=> {
               </div>
         </animated.div>
         <div className={styles.uploadModal__lowerContainer}> 
-            <button onClick={()=>console.log(uploadData)}>preview</button>
+            {/* <button onClick={()=>console.log(uploadData)}>preview</button> */}
             <button 
                 type="button" 
                 className="btn btn-primary" 

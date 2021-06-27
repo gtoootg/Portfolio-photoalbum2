@@ -120,7 +120,6 @@ const Detail:(()=>JSX.Element) = () => {
             <Head unusedIconOpacity={"0.5"} unusedIconSelect={"none"}/>
             <UpperContainer/>
             <LowerContainer/>
-            <button onClick={deleteHandler}>Delete</button>
         </>
     );
 }

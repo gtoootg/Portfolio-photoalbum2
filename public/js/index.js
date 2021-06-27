@@ -12189,7 +12189,7 @@ var SortModal = function SortModal() {
     }
   }, react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal__label
-  }, react_1["default"].createElement("h3", null, "Sort pictures by your preference"), react_1["default"].createElement("p", {
+  }, react_1["default"].createElement("p", null, "Sort pictures by your preference"), react_1["default"].createElement("p", {
     onClick: cancelHandler
   }, "\u2715")), react_1["default"].createElement("div", {
     className: sortmodal_module_scss_1["default"].sortModal__mainContainer
@@ -12216,11 +12216,7 @@ var SortModal = function SortModal() {
     type: "button",
     className: "btn btn-secondary",
     onClick: cancelHandler
-  }, "Cancel"), react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      setTravelPosts(dummyTravelPosts);
-    }
-  }, "aaa")));
+  }, "Cancel")));
 };
 
 exports.default = SortModal;
@@ -13559,10 +13555,6 @@ var UploadModal = function UploadModal() {
   }))), react_1["default"].createElement("div", {
     className: uploadmodal_module_scss_1["default"].uploadModal__lowerContainer
   }, react_1["default"].createElement("button", {
-    onClick: function onClick() {
-      return console.log(uploadData);
-    }
-  }, "preview"), react_1["default"].createElement("button", {
     type: "button",
     className: "btn btn-primary",
     // onClick={uploadHandler}
@@ -13870,9 +13862,7 @@ var Detail = function Detail() {
   return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(Head_1["default"], {
     unusedIconOpacity: "0.5",
     unusedIconSelect: "none"
-  }), react_1["default"].createElement(UpperContainer, null), react_1["default"].createElement(LowerContainer, null), react_1["default"].createElement("button", {
-    onClick: deleteHandler
-  }, "Delete"));
+  }), react_1["default"].createElement(UpperContainer, null), react_1["default"].createElement(LowerContainer, null));
 };
 
 exports.default = Detail;
@@ -14362,7 +14352,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._25RaaNS-e_-tozxnFnM6W3 {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: auto;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}\n._2CnzsdRQBNNuuSo7ITe0M6 {\n  display: flex;\n  justify-content: space-between;\n  padding-top: 1vh;\n  padding-left: 1vh;\n  padding-right: 1vh;\n  border-bottom: solid 0.5px gray;\n}\n._1ewtDMhXhaMOM7EM_0EPYF {\n  display: flex;\n  justify-content: space-between;\n  margin-top: 5vh;\n  margin-right: 5vw;\n  margin-left: 5vw;\n  margin-bottom: 5vh;\n}\n._3qQWlg-PSAApKjsW8sy24S {\n  width: 50%;\n}\n._14Uos3ysEkF6tjTpbLCGhj {\n  margin-bottom: 2vh;\n}\n._1sos_spgelQTlVfbfh0iwo {\n  width: 50%;\n}\n._3Oayyq4CELtfsMtOb8KeT_ {\n  margin-bottom: 2vh;\n}\n._3xSAOvS1zd7CG8WE4bHytW {\n  display: flex;\n  justify-content: flex-end;\n  margin-right: 5vw;\n  margin-bottom: 5vh;\n}\n._3xSAOvS1zd7CG8WE4bHytW button {\n  margin-left: 1vw;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._25RaaNS-e_-tozxnFnM6W3 {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: auto;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}\n@media (max-width: 599px) {\n  ._25RaaNS-e_-tozxnFnM6W3 {\n    width: 95vw;\n    transform: translateX(2.5vw);\n  }\n}\n._2CnzsdRQBNNuuSo7ITe0M6 {\n  display: flex;\n  justify-content: space-between;\n  height: 75px;\n  padding-top: 15px;\n  padding-bottom: 15px;\n  padding-left: 10px;\n  padding-right: 10px;\n  margin-bottom: 15px;\n  border-bottom: solid 0.5px gray;\n}\n._2CnzsdRQBNNuuSo7ITe0M6 p {\n  font-size: 30px;\n}\n@media (max-width: 599px) {\n  ._2CnzsdRQBNNuuSo7ITe0M6 {\n    height: 25px;\n    padding-top: 2px;\n    padding-bottom: 2px;\n    padding-left: 2px;\n    padding-right: 2px;\n    margin-bottom: 2px;\n  }\n  ._2CnzsdRQBNNuuSo7ITe0M6 p {\n    font-size: 15px;\n  }\n}\n._1ewtDMhXhaMOM7EM_0EPYF {\n  display: flex;\n  justify-content: space-between;\n  margin-top: 5vh;\n  margin-right: 5vw;\n  margin-left: 5vw;\n  margin-bottom: 5vh;\n}\n@media (max-width: 599px) {\n  ._1ewtDMhXhaMOM7EM_0EPYF {\n    flex-direction: column;\n  }\n}\n._3qQWlg-PSAApKjsW8sy24S {\n  width: 50%;\n  margin-bottom: 20px;\n}\n@media (max-width: 599px) {\n  ._3qQWlg-PSAApKjsW8sy24S {\n    width: auto;\n  }\n}\n._14Uos3ysEkF6tjTpbLCGhj {\n  margin-bottom: 2vh;\n}\n._1sos_spgelQTlVfbfh0iwo {\n  width: 50%;\n}\n._3Oayyq4CELtfsMtOb8KeT_ {\n  margin-bottom: 2vh;\n}\n._3xSAOvS1zd7CG8WE4bHytW {\n  display: flex;\n  justify-content: flex-end;\n  margin-right: 5vw;\n  margin-bottom: 5vh;\n}\n._3xSAOvS1zd7CG8WE4bHytW button {\n  margin-left: 1vw;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"sortModal": "_25RaaNS-e_-tozxnFnM6W3",
@@ -14396,7 +14386,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._3J5UPysSkkbrw99f7Xg8Xe {\n  display: inline-block;\n  height: 100px;\n  border: solid 1px black;\n}\n\n._2Y89ehTDoChaiRZbmhHPkc {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: auto;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}\n.ANa9wU97G_29DiFKbMTyW {\n  display: flex;\n  justify-content: space-between;\n  padding-top: 1vh;\n  padding-bottom: 1vh;\n  padding-left: 1vh;\n  padding-right: 1vh;\n  margin-bottom: 2vh;\n  border-bottom: solid 0.5px gray;\n}\n._2x5-4Nkt4Rf4OkFLXToAfS {\n  height: 50vh;\n  width: auto;\n  aspect-ratio: 3/2;\n  margin: 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  border-radius: 2vh;\n}\n._2iczsVl2vWmjrUg9VnH72U {\n  width: 100%;\n  height: auto;\n  background-color: white;\n  padding: 1%;\n  border: 1px solid gray;\n  border-radius: 2vh;\n}\n._2-Ul9h9M65jjrhuRqdDNFl {\n  display: flex;\n  justify-content: space-between;\n  margin: 5vh;\n  overflow: hidden;\n}\n._3nGfHg9Z5tlsOaI_L-B4Up {\n  width: 50%;\n}\n._3gm_CeeUKPrzuc4HvlVDJR {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 50%;\n  height: 40vh;\n  border: 0.5px dashed gray;\n}\n._2ZOkbtRsPv5Ro-Pcazc55x {\n  display: flex;\n  justify-content: flex-end;\n  margin-right: 5%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._3J5UPysSkkbrw99f7Xg8Xe {\n  display: inline-block;\n  height: 100px;\n  border: solid 1px black;\n}\n\n._2Y89ehTDoChaiRZbmhHPkc {\n  position: absolute;\n  z-index: 1;\n  transition: 1s;\n  height: auto;\n  width: 70vw;\n  transform: translateX(15vw);\n  margin-top: 12vh;\n  border: solid 0.05px gray;\n  border-radius: 5px;\n  background-color: whitesmoke;\n}\n@media (max-width: 599px) {\n  ._2Y89ehTDoChaiRZbmhHPkc {\n    width: 95vw;\n    transform: translateX(2.5vw);\n  }\n}\n.ANa9wU97G_29DiFKbMTyW {\n  display: flex;\n  justify-content: space-between;\n  height: 75px;\n  padding-top: 15px;\n  padding-bottom: 15px;\n  padding-left: 10px;\n  padding-right: 10px;\n  margin-bottom: 15px;\n  border-bottom: solid 0.5px gray;\n}\n.ANa9wU97G_29DiFKbMTyW p {\n  font-size: 30px;\n}\n@media (max-width: 599px) {\n  .ANa9wU97G_29DiFKbMTyW {\n    height: 25px;\n    padding-top: 2px;\n    padding-bottom: 2px;\n    padding-left: 2px;\n    padding-right: 2px;\n    margin-bottom: 2px;\n  }\n  .ANa9wU97G_29DiFKbMTyW p {\n    font-size: 15px;\n  }\n}\n._2x5-4Nkt4Rf4OkFLXToAfS {\n  width: 45vw;\n  height: auto;\n  aspect-ratio: 3/2;\n  margin: 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  border-radius: 2vh;\n}\n@media (max-width: 599px) {\n  ._2x5-4Nkt4Rf4OkFLXToAfS {\n    width: 80vw;\n    height: auto;\n  }\n}\n._2iczsVl2vWmjrUg9VnH72U {\n  width: 100%;\n  height: auto;\n  background-color: white;\n  padding: 1%;\n  border: 1px solid gray;\n  border-radius: 2vh;\n}\n._2-Ul9h9M65jjrhuRqdDNFl {\n  display: flex;\n  justify-content: space-between;\n  margin: 15px;\n  overflow: hidden;\n}\n@media (max-width: 599px) {\n  ._2-Ul9h9M65jjrhuRqdDNFl {\n    flex-direction: column;\n    margin: 5px;\n  }\n}\n._3nGfHg9Z5tlsOaI_L-B4Up {\n  width: 50%;\n}\n@media (max-width: 599px) {\n  ._3nGfHg9Z5tlsOaI_L-B4Up {\n    width: auto;\n    margin: 3px;\n  }\n}\n._3gm_CeeUKPrzuc4HvlVDJR {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 50%;\n  aspect-ratio: 3/2;\n  border: 0.5px dashed gray;\n}\n@media (max-width: 599px) {\n  ._3gm_CeeUKPrzuc4HvlVDJR {\n    width: auto;\n    margin: 3px;\n    aspect-ratio: 3/2;\n  }\n}\n._2ZOkbtRsPv5Ro-Pcazc55x {\n  display: flex;\n  justify-content: flex-end;\n}\n._2ZOkbtRsPv5Ro-Pcazc55x button {\n  margin-right: 10px;\n  margin-bottom: 10px;\n}\n@media (max-width: 599px) {\n  ._2ZOkbtRsPv5Ro-Pcazc55x button {\n    margin-right: 3px;\n    margin-bottom: 3px;\n  }\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"dropBox": "_3J5UPysSkkbrw99f7Xg8Xe",
