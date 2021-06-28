@@ -51,7 +51,10 @@ const Detail:(()=>JSX.Element) = () => {
                         <p onClick={DecrementPostIdHandler}>
                             &lt;
                         </p>
-                        <img src={dummyTravelPosts[selectedPostId].image} style={{"width":"70%"}}/>
+                        <img
+                            className={styles.upperContainer__selectedPhotoContainer_selectedPhoto}
+                            src={dummyTravelPosts[selectedPostId].image} style={{"width":"70%"}}
+                            />
                         <p onClick={IncrementPostIdHandler}>
                             &gt;
                         </p>

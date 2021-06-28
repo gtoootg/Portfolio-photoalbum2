@@ -7,15 +7,17 @@ import axios from 'axios';
 
 import styles from '../../../styles/uploadmodal.module.scss';
 import WorldMap from './WorldMap';
-import {TravelPostsContext} from '../../index';
-import {uploadModalStateContext} from '../home/Home';
+import {TravelPostsContext, DummyTravelPostsContext} from '../../index';
+import {uploadModalStateContext, sortModalStateContext} from '../home/Home';
 
 
 const UploadModal: React.FC<{}> = ()=> {
 
     //useContext//////////////////////
     const{travelPosts, setTravelPosts} = useContext(TravelPostsContext);
+    const{dummyTravelPosts, setDummyTravelPosts} = useContext(DummyTravelPostsContext);
     const{uploadModalState, setUploadModalState} = useContext(uploadModalStateContext);
+    const{sortModalState, setSortModalState} = useContext(sortModalStateContext);
     //////////////////////////////////
 
     //useState////////////////////////
@@ -110,12 +112,12 @@ const UploadModal: React.FC<{}> = ()=> {
     const uploadHandler:()=> void = ()=>{
       axios.post('api/upload', uploadData)
       .then(()=>{
-        const slice = travelPosts.slice();
+        const slice = dummyTravelPosts.slice();
         slice.push(uploadData);
         setTravelPosts(slice);
       })
       .then(()=>{
-        setUploadData(initialUploadData);
+        // setUploadData(initialUploadData);
         setMapGeoCode(initialMapGeoCode)
         setUploadModalState(false);
       }).then(()=>{setUploadModalState(false)})
@@ -124,6 +126,10 @@ const UploadModal: React.FC<{}> = ()=> {
     }
     //////////////////////////////////////////
     
+    
+    //useEffect///////////////////////////////
+    useEffect(()=>setUploadData(initialUploadData), [uploadModalState])
+    //////////////////////////////////////////
 
 
     //jsx component///////////////////////////
@@ -132,7 +138,7 @@ const UploadModal: React.FC<{}> = ()=> {
         
         Africa:[{name:"Algeria",lng:3,lat:28},{name:"Angola",lng:18.5,lat:-12.5},{name:"Benin",lng:2.25,lat:9.5},{name:"Botswana",lng:24,lat:-22},{name:"British Indian Ocean Territory",lng:71.5,lat:-6},{name:"Burkina Faso",lng:-2,lat:13},{name:"Burundi",lng:30,lat:-3.5},{name:"Cabo Verde",lng:-24,lat:16},{name:"Cameroon",lng:12,lat:6},{name:"Central African Republic",lng:21,lat:7},{name:"Chad",lng:19,lat:15},{name:"Comoros",lng:44.25,lat:-12.1667},{name:"Congo",lng:15,lat:-1},{name:"Côte d’Ivoire",lng:-5,lat:8},{name:"Democratic Republic of the Congo",lng:-4.32244,lat:15.307045},{name:"Djibouti",lng:43,lat:11.5},{name:"Egypt",lng:30,lat:27},{name:"Equatorial Guinea",lng:10,lat:2},{name:"Eritrea",lng:39,lat:15},{name:"Eswatini",lng:-26.522503,lat:31.465866},{name:"Ethiopia",lng:38,lat:8},{name:"French Southern Territories",lng:67,lat:-43},{name:"Gabon",lng:11.75,lat:-1},{name:"Gambia",lng:-16.5667,lat:13.4667},{name:"Ghana",lng:-2,lat:8},{name:"Guinea",lng:-10,lat:11},{name:"Guinea-Bissau",lng:-15,lat:12},{name:"Kenya",lng:38,lat:1},{name:"Lesotho",lng:28.5,lat:-29.5},{name:"Liberia",lng:-9.5,lat:6.5},{name:"Libya",lng:17,lat:25},{name:"Madagascar",lng:47,lat:-20},{name:"Malawi",lng:34,lat:-13.5},{name:"Mali",lng:-4,lat:17},{name:"Mauritania",lng:-12,lat:20},{name:"Mauritius",lng:57.55,lat:-20.2833},{name:"Mayotte",lng:45.1667,lat:-12.8333},{name:"Morocco",lng:-5,lat:32},{name:"Mozambique",lng:35,lat:-18.25},{name:"Namibia",lng:17,lat:-22},{name:"Niger",lng:8,lat:16},{name:"Nigeria",lng:8,lat:10},{name:"Réunion",lng:55.6,lat:-21.1},{name:"Rwanda",lng:30,lat:-2},{name:"Saint Helena",lng:-5.7,lat:-15.9333},{name:"Sao Tome and Principe",lng:12.4167,lat:43.7667},{name:"Senegal",lng:45,lat:25},{name:"Seychelles",lng:21,lat:44},{name:"Sierra Leone",lng:55.6667,lat:-4.5833},{name:"Somalia",lng:159,lat:-8},{name:"South Africa",lng:49,lat:10},{name:"South Sudan",lng:-37,lat:-54.5},{name:"Sudan",lng:81,lat:7},{name:"Togo",lng:125.5167,lat:-8.55},{name:"Tunisia",lng:-61,lat:11},{name:"Uganda",lng:178,lat:-8},{name:"United Republic of Tanzania",lng:71,lat:39},{name:"Western Sahara",lng:-176.2,lat:-13.3},{name:"Zambia",lng:48,lat:15},{name:"Zimbabwe",lng:30,lat:-15}
                 ],
-        Asia:[{name:"Afghanistan",lng:65,lat:33},{name:"Armenia",lng:45,lat:40},{name:"Azerbaijan",lng:47.5,lat:40.5},{name:"Bahrain",lng:50.55,lat:26},{name:"Bangladesh",lng:90,lat:24},{name:"Bhutan",lng:90.5,lat:27.5},{name:"Brunei Darussalam",lng:114.6667,lat:4.5},{name:"Cambodia",lng:105,lat:13},{name:"China",lng:105,lat:35},{name:"China, Hong Kong Special Administrative Region",lng:114.1667,lat:22.25},{name:"China, Macao Special Administrative Region",lng:22.210928,lat:113.552971},{name:"Cyprus",lng:33,lat:35},{name:"Democratic People's Republic of Korea",lng:127,lat:40},{name:"Georgia",lng:43.5,lat:42},{name:"India",lng:77,lat:20},{name:"Indonesia",lng:120,lat:-5},{name:"Iran (Islamic Republic of)",lng:53,lat:32},{name:"Iraq",lng:44,lat:33},{name:"Israel",lng:34.75,lat:31.5},{name:"Japan",lng:138,lat:36},{name:"Jordan",lng:36,lat:31},{name:"Kazakhstan",lng:68,lat:48},{name:"Kuwait",lng:47.6581,lat:29.3375},{name:"Kyrgyzstan",lng:75,lat:41},{name:"Lao People's Democratic Republic",lng:105,lat:18},{name:"Lebanon",lng:35.8333,lat:33.8333},{name:"Malaysia",lng:112.5,lat:2.5},{name:"Maldives",lng:73,lat:3.25},{name:"Mongolia",lng:105,lat:46},{name:"Myanmar",lng:98,lat:22},{name:"Nepal",lng:84,lat:28},{name:"Oman",lng:57,lat:21},{name:"Pakistan",lng:70,lat:30},{name:"Philippines",lng:122,lat:13},{name:"Qatar",lng:51.25,lat:25.5},{name:"Republic of Korea",lng:127.5,lat:37},{name:"Saudi Arabia",lng:7,lat:1},{name:"Singapore",lng:-11.5,lat:8.5},{name:"Sri Lanka",lng:-4,lat:40},{name:"State of Palestine",lng:31.9474,lat:35.2272},{name:"Syrian Arab Republic",lng:8,lat:47},{name:"Tajikistan",lng:121,lat:23.5},{name:"Thailand",lng:35,lat:-6},{name:"Timor-Leste",lng:100,lat:15},{name:"Turkey",lng:9,lat:34},{name:"Turkmenistan",lng:35,lat:39},{name:"United Arab Emirates",lng:32,lat:49},{name:"Uzbekistan",lng:-56,lat:-33},{name:"Viet Nam",lng:-66,lat:8},{name:"Yemen",lng:-13,lat:24.5}
+        Asia:[{name:"Afghanistan",lng:65,lat:33},{name:"Armenia",lng:45,lat:40},{name:"Azerbaijan",lng:47.5,lat:40.5},{name:"Bahrain",lng:50.55,lat:26},{name:"Bangladesh",lng:90,lat:24},{name:"Bhutan",lng:90.5,lat:27.5},{name:"Brunei Darussalam",lng:114.6667,lat:4.5},{name:"Cambodia",lng:105,lat:13},{name:"China",lng:105,lat:35},{name:"China, Hong Kong",lng:114.1667,lat:22.25},{name:"China, Macao",lng:113.552971,lat:22.210928},{name:"Cyprus",lng:33,lat:35},{name:"Democratic People's Republic of Korea",lng:127,lat:40},{name:"Georgia",lng:43.5,lat:42},{name:"India",lng:77,lat:20},{name:"Indonesia",lng:120,lat:-5},{name:"Iran (Islamic Republic of)",lng:53,lat:32},{name:"Iraq",lng:44,lat:33},{name:"Israel",lng:34.75,lat:31.5},{name:"Japan",lng:138,lat:36},{name:"Jordan",lng:36,lat:31},{name:"Kazakhstan",lng:68,lat:48},{name:"Kuwait",lng:47.6581,lat:29.3375},{name:"Kyrgyzstan",lng:75,lat:41},{name:"Lao People's Democratic Republic",lng:105,lat:18},{name:"Lebanon",lng:35.8333,lat:33.8333},{name:"Malaysia",lng:112.5,lat:2.5},{name:"Maldives",lng:73,lat:3.25},{name:"Mongolia",lng:105,lat:46},{name:"Myanmar",lng:98,lat:22},{name:"Nepal",lng:84,lat:28},{name:"Oman",lng:57,lat:21},{name:"Pakistan",lng:70,lat:30},{name:"Philippines",lng:122,lat:13},{name:"Qatar",lng:51.25,lat:25.5},{name:"Republic of Korea",lng:127.5,lat:37},{name:"Saudi Arabia",lng:7,lat:1},{name:"Singapore",lng:-11.5,lat:8.5},{name:"Sri Lanka",lng:-4,lat:40},{name:"State of Palestine",lng:31.9474,lat:35.2272},{name:"Syrian Arab Republic",lng:8,lat:47},{name:"Tajikistan",lng:121,lat:23.5},{name:"Thailand",lng:35,lat:-6},{name:"Timor-Leste",lng:100,lat:15},{name:"Turkey",lng:9,lat:34},{name:"Turkmenistan",lng:35,lat:39},{name:"United Arab Emirates",lng:32,lat:49},{name:"Uzbekistan",lng:-56,lat:-33},{name:"Viet Nam",lng:-66,lat:8},{name:"Yemen",lng:-13,lat:24.5}
               ],
         Europe:[{name:"Åland Islands",lng:19.9156,lat:60.1785},{name:"Albania",lng:20,lat:41},{name:"Andorra",lng:1.6,lat:42.5},{name:"Austria",lng:13.3333,lat:47.3333},{name:"Belarus",lng:28,lat:53},{name:"Belgium",lng:4,lat:50.8333},{name:"Bosnia and Herzegovina",lng:18,lat:44},{name:"Bulgaria",lng:25,lat:43},{name:"Croatia",lng:15.5,lat:45.1667},{name:"Czechia",lng:15.5,lat:49.75},{name:"Denmark",lng:10,lat:56},{name:"Estonia",lng:26,lat:59},{name:"Faroe Islands",lng:-7,lat:62},{name:"Finland",lng:26,lat:64},{name:"France",lng:2,lat:46},{name:"Germany",lng:9,lat:51},{name:"Gibraltar",lng:-5.3667,lat:36.1833},{name:"Greece",lng:22,lat:39},{name:"Guernsey",lng:-2.56,lat:49.5},{name:"Holy See",lng:12.45,lat:41.9},{name:"Hungary",lng:20,lat:47},{name:"Iceland",lng:-18,lat:65},{name:"Ireland",lng:-8,lat:53},{name:"Isle of Man",lng:-4.55,lat:54.23},{name:"Italy",lng:12.8333,lat:42.8333},{name:"Jersey",lng:-2.13,lat:49.21},{name:"Latvia",lng:25,lat:57},{name:"Liechtenstein",lng:9.5333,lat:47.1667},{name:"Lithuania",lng:24,lat:56},{name:"Luxembourg",lng:6.1667,lat:49.75},{name:"Malta",lng:14.5833,lat:35.8333},{name:"Monaco",lng:7.4,lat:43.7333},{name:"Montenegro",lng:19,lat:42},{name:"Netherlands",lng:5.75,lat:52.5},{name:"North Macedonia",lng:22,lat:41.8333},{name:"Norway",lng:10,lat:62},{name:"Poland",lng:20,lat:52},{name:"Portugal",lng:-8,lat:39.5},{name:"Republic of Moldova",lng:29,lat:47},{name:"Romania",lng:25,lat:46},{name:"Russian Federation",lng:100,lat:60},{name:"San Marino",lng:-172.3333,lat:-13.5833},{name:"Sark",lng:49.42083165,lat:-2.366165202},{name:"Serbia",lng:-14,lat:14},{name:"Slovakia",lng:103.8,lat:1.3667},{name:"Slovenia",lng:19.5,lat:48.6667},{name:"Spain",lng:30,lat:8},{name:"Svalbard and Jan Mayen Islands",lng:-56,lat:4},{name:"Sweden",lng:31.5,lat:-26.5},{name:"Switzerland",lng:15,lat:62},{name:"Ukraine",lng:32,lat:1},{name:"United Kingdom of Great Britain and Northern Ireland",lng:54,lat:24}
               ],
@@ -292,9 +298,9 @@ const UploadModal: React.FC<{}> = ()=> {
                       {placeInputBox()}
                     </p>
                     <p>Location(Select Country, then GeoMap is shown)<br/>
-                      latitude:{mapGeoCode.latitude && (mapGeoCode.latitude)}
+                      latitude:{mapGeoCode.latitude && (Math.round(mapGeoCode.latitude*100)/100)}
                       <br/>
-                      longitude:{mapGeoCode.longitude && (mapGeoCode.longitude)}
+                      longitude:{mapGeoCode.longitude && (Math.round(mapGeoCode.longitude*100)/100)}
                     </p>
             </div>
             <div className={styles.uploadModal__upperContainer__right}>
@@ -314,8 +320,8 @@ const UploadModal: React.FC<{}> = ()=> {
             <button 
                 type="button" 
                 className="btn btn-primary" 
-                // onClick={uploadHandler}
-                onClick={()=>alert("Sorry!! Pictures can be uploaded only by administorator")}
+                onClick={uploadHandler}
+                // onClick={()=>alert("Sorry!! Pictures can be uploaded only by administorator")}
             >Upload
             </button>
             <button type="button" className="btn btn-success" onClick={cancelHandler}>Cancel</button>

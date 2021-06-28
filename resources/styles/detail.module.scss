@@ -3,18 +3,22 @@
 
 .upperContainer{
     
-    
     background-color: rgb(35,35,35);
-
+    margin-bottom:20px;
 
     &__selectedPhotoContainer{
         display:flex;
         justify-content: center;
         align-items: center;
-        
+        padding-top:20px;
+        &__selectedPhoto{
+            width:45%;
+            height:auto;
+            
+        }
+
         p{
             font-size: 10vh;
-            margin:5vh;
             color:aliceblue;
         }
     }
@@ -22,7 +26,8 @@
     &__bottomImageList{
         display:flex;
         margin:0 auto;
-        margin-bottom:5vh;
+        // padding-top:20px;
+        padding-bottom:20px;
         width:35%;
         &__images{
             width:18%; 

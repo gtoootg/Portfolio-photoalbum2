@@ -1,3 +1,9 @@
 .map{
+    margin-top:20px;
     height:800px;
+    
+    @media (max-width:599px){
+        height:90vh;
+        margin-top:10px;
+    }
 }

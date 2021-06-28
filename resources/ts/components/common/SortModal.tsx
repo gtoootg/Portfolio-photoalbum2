@@ -1,12 +1,10 @@
 import React, {useState, useContext, useEffect, ReactNode} from 'react';
-import axios from "axios";
-import { useSpring, animated, config } from 'react-spring'
+import { useSpring, animated} from 'react-spring'
 
 
 import styles from '../../../styles/sortmodal.module.scss';
 import {TravelPostsContext, DummyTravelPostsContext, TravelPostObject} from '../../index';
 import {sortModalStateContext} from '../home/Home';
-import { fitBounds } from 'google-map-react';
 
 const SortModal: React.FC<{}> = ()=> {
 
@@ -146,6 +144,17 @@ const SortModal: React.FC<{}> = ()=> {
         resolve("sort complete")
       }).then(()=>reset())
   }
+
+
+  //useEffect//////////////////////////////////////
+  useEffect(()=>{
+      setRegionsCheckBox(initialRegionsCheckBox);
+      setSortedRegions(initialSortedRegions);
+      setDisplayedCountries(initialDisplayedCountries);
+      setCountriesCheckBox(initialCountriesCheckBox);
+      setSortedCountries(initalSortedCountries);
+  },[sortModalState])
+  /////////////////////////////////////////////////
 
 
   //JSX component/////////////////////////////////
