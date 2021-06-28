@@ -13609,7 +13609,10 @@ var UploadModal = function UploadModal() {
   }, react_1["default"].createElement("button", {
     type: "button",
     className: "btn btn-primary",
-    onClick: uploadHandler
+    // onClick={uploadHandler}
+    onClick: function onClick() {
+      return alert("Sorry!! Pictures can be uploaded only by administorator");
+    }
   }, "Upload"), react_1["default"].createElement("button", {
     type: "button",
     className: "btn btn-success",
