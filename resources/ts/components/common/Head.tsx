@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom';
 
 import styles from '../../../styles/head.module.scss';
 
-import {uploadModalStateContext, sortModalStateContext} from '../home/Home';
+import { TravelPostsContext,DummyTravelPostsContext, SelectedPostIdContext} from '../../index';
+import {uploadModalStateContext, sortModalStateContext,} from '../home/Home';
 
 interface HeadProps{
     unusedIconOpacity?:string;
@@ -15,16 +16,33 @@ const Head: React.FC<HeadProps> = (props)=> {
     const {unusedIconOpacity,unusedIconSelect} = props
 
     // const{display} =props;
+    const{travelPosts,setTravelPosts} = useContext(TravelPostsContext);
+    const{dummyTravelPosts,setDummyTravelPosts} = useContext(DummyTravelPostsContext);
+    const{SelectedPostId, setSelectedPostId} = useContext(SelectedPostIdContext);
     const{uploadModalState, setUploadModalState} = useContext(uploadModalStateContext);
     const{sortModalState, setSortModalState} = useContext(sortModalStateContext);
     /////////////////////////
 
     //Handler//////////////
     const setUploadModalStateHandler = (e: React.MouseEvent<HTMLElement>) => {
-        setUploadModalState(!uploadModalState);
+        if(!uploadModalState){
+            setUploadModalState(true);
+            setSortModalState(false);
+        }else{
+            setUploadModalState(false);
+        }
+        
     }
     const setSortModalStateHandler = (e: React.MouseEvent<HTMLElement>) => {
-        setSortModalState(!sortModalState);
+        if(!sortModalState){
+            setSortModalState(true);
+            setUploadModalState(false);
+        }
+    }
+
+    const resetTravelPostsHander = ()=>{
+        setTravelPosts(dummyTravelPosts.slice())
+        setSelectedPostId(null)
     }
 
     ///////////////////////
@@ -70,10 +88,14 @@ const Head: React.FC<HeadProps> = (props)=> {
                     to={"/"}
                     className={styles.header__logo}
                 >
-                    <p>GoTo Travels </p>
+                    <p
+                        onClick={resetTravelPostsHander}
+                    >
+                        GoTo Travels 
+                    </p>
                 </Link>
                 <div className={styles.header__navigation}>
-                    <MenuIcon name={"Home"} link={"/"} fileName={"Home"}/>   
+                    <MenuIcon name={"Home"} link={"/"} fileName={"Home"} onClick={resetTravelPostsHander}/>   
                     <MenuIcon name={"Upload"} fileName={"Upload"} unusedIconOpacity={unusedIconOpacity}  unusedIconSelect={unusedIconSelect} onClick={setUploadModalStateHandler}/>
                     <MenuIcon name={"Sort"} fileName={"Sort"} unusedIconOpacity={unusedIconOpacity} unusedIconSelect={unusedIconSelect} onClick={setSortModalStateHandler}/>    
                     <MenuIcon name={"Map"} link={"/map"} fileName={"Map"} unusedIconOpacity={unusedIconOpacity} unusedIconSelect={unusedIconSelect}/>         
