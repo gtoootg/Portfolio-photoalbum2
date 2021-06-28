@@ -11558,28 +11558,55 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 
 var head_module_scss_1 = __importDefault(__webpack_require__(/*! ../../../styles/head.module.scss */ "./resources/styles/head.module.scss"));
 
+var index_1 = __webpack_require__(/*! ../../index */ "./resources/ts/index.tsx");
+
 var Home_1 = __webpack_require__(/*! ../home/Home */ "./resources/ts/components/home/Home.tsx");
 
 var Head = function Head(props) {
   var unusedIconOpacity = props.unusedIconOpacity,
       unusedIconSelect = props.unusedIconSelect; // const{display} =props;
 
-  var _a = react_1.useContext(Home_1.uploadModalStateContext),
-      uploadModalState = _a.uploadModalState,
-      setUploadModalState = _a.setUploadModalState;
+  var _a = react_1.useContext(index_1.TravelPostsContext),
+      travelPosts = _a.travelPosts,
+      setTravelPosts = _a.setTravelPosts;
 
-  var _b = react_1.useContext(Home_1.sortModalStateContext),
-      sortModalState = _b.sortModalState,
-      setSortModalState = _b.setSortModalState; /////////////////////////
+  var _b = react_1.useContext(index_1.DummyTravelPostsContext),
+      dummyTravelPosts = _b.dummyTravelPosts,
+      setDummyTravelPosts = _b.setDummyTravelPosts;
+
+  var _c = react_1.useContext(index_1.SelectedPostIdContext),
+      SelectedPostId = _c.SelectedPostId,
+      setSelectedPostId = _c.setSelectedPostId;
+
+  var _d = react_1.useContext(Home_1.uploadModalStateContext),
+      uploadModalState = _d.uploadModalState,
+      setUploadModalState = _d.setUploadModalState;
+
+  var _e = react_1.useContext(Home_1.sortModalStateContext),
+      sortModalState = _e.sortModalState,
+      setSortModalState = _e.setSortModalState; /////////////////////////
   //Handler//////////////
 
 
   var setUploadModalStateHandler = function setUploadModalStateHandler(e) {
-    setUploadModalState(!uploadModalState);
+    if (!uploadModalState) {
+      setUploadModalState(true);
+      setSortModalState(false);
+    } else {
+      setUploadModalState(false);
+    }
   };
 
   var setSortModalStateHandler = function setSortModalStateHandler(e) {
-    setSortModalState(!sortModalState);
+    if (!sortModalState) {
+      setSortModalState(true);
+      setUploadModalState(false);
+    }
+  };
+
+  var resetTravelPostsHander = function resetTravelPostsHander() {
+    setTravelPosts(dummyTravelPosts.slice());
+    setSelectedPostId(null);
   };
 
   var MenuIcon = function MenuIcon(props) {
@@ -11613,12 +11640,15 @@ var Head = function Head(props) {
   }, react_1["default"].createElement(react_router_dom_1.Link, {
     to: "/",
     className: head_module_scss_1["default"].header__logo
-  }, react_1["default"].createElement("p", null, "GoTo Travels ")), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("p", {
+    onClick: resetTravelPostsHander
+  }, "GoTo Travels")), react_1["default"].createElement("div", {
     className: head_module_scss_1["default"].header__navigation
   }, react_1["default"].createElement(MenuIcon, {
     name: "Home",
     link: "/",
-    fileName: "Home"
+    fileName: "Home",
+    onClick: resetTravelPostsHander
   }), react_1["default"].createElement(MenuIcon, {
     name: "Upload",
     fileName: "Upload",
@@ -12145,8 +12175,17 @@ var SortModal = function SortModal() {
         ];
       });
     });
-  }; //JSX component/////////////////////////////////
+  }; //useEffect//////////////////////////////////////
 
+
+  react_1.useEffect(function () {
+    setRegionsCheckBox(initialRegionsCheckBox);
+    setSortedRegions(initialSortedRegions);
+    setDisplayedCountries(initialDisplayedCountries);
+    setCountriesCheckBox(initialCountriesCheckBox);
+    setSortedCountries(initalSortedCountries);
+  }, [sortModalState]); /////////////////////////////////////////////////
+  //JSX component/////////////////////////////////
 
   var regions = Object.keys(regionsCheckBox);
   var regionMap = regions.map(function (region, index) {
@@ -12314,9 +12353,17 @@ var UploadModal = function UploadModal() {
       travelPosts = _a.travelPosts,
       setTravelPosts = _a.setTravelPosts;
 
-  var _b = react_1.useContext(Home_1.uploadModalStateContext),
-      uploadModalState = _b.uploadModalState,
-      setUploadModalState = _b.setUploadModalState;
+  var _b = react_1.useContext(index_1.DummyTravelPostsContext),
+      dummyTravelPosts = _b.dummyTravelPosts,
+      setDummyTravelPosts = _b.setDummyTravelPosts;
+
+  var _c = react_1.useContext(Home_1.uploadModalStateContext),
+      uploadModalState = _c.uploadModalState,
+      setUploadModalState = _c.setUploadModalState;
+
+  var _d = react_1.useContext(Home_1.sortModalStateContext),
+      sortModalState = _d.sortModalState,
+      setSortModalState = _d.setSortModalState;
 
   var initialUploadData = {
     region: undefined,
@@ -12332,13 +12379,13 @@ var UploadModal = function UploadModal() {
     longitude: undefined
   };
 
-  var _c = react_1.useState(initialUploadData),
-      uploadData = _c[0],
-      setUploadData = _c[1];
+  var _e = react_1.useState(initialUploadData),
+      uploadData = _e[0],
+      setUploadData = _e[1];
 
-  var _d = react_1.useState(initialMapGeoCode),
-      mapGeoCode = _d[0],
-      setMapGeoCode = _d[1]; ////////////////////////////////////
+  var _f = react_1.useState(initialMapGeoCode),
+      mapGeoCode = _f[0],
+      setMapGeoCode = _f[1]; ////////////////////////////////////
   //Handler///////////////////////////////
 
 
@@ -12400,11 +12447,11 @@ var UploadModal = function UploadModal() {
 
   var uploadHandler = function uploadHandler() {
     axios_1["default"].post('api/upload', uploadData).then(function () {
-      var slice = travelPosts.slice();
+      var slice = dummyTravelPosts.slice();
       slice.push(uploadData);
       setTravelPosts(slice);
     }).then(function () {
-      setUploadData(initialUploadData);
+      // setUploadData(initialUploadData);
       setMapGeoCode(initialMapGeoCode);
       setUploadModalState(false);
     }).then(function () {
@@ -12413,8 +12460,13 @@ var UploadModal = function UploadModal() {
       return console.log(error);
     });
   }; //////////////////////////////////////////
-  //jsx component///////////////////////////
+  //useEffect///////////////////////////////
 
+
+  react_1.useEffect(function () {
+    return setUploadData(initialUploadData);
+  }, [uploadModalState]); //////////////////////////////////////////
+  //jsx component///////////////////////////
 
   var countries = {
     Africa: [{
@@ -12695,13 +12747,13 @@ var UploadModal = function UploadModal() {
       lng: 105,
       lat: 35
     }, {
-      name: "China, Hong Kong Special Administrative Region",
+      name: "China, Hong Kong",
       lng: 114.1667,
       lat: 22.25
     }, {
-      name: "China, Macao Special Administrative Region",
-      lng: 22.210928,
-      lat: 113.552971
+      name: "China, Macao",
+      lng: 113.552971,
+      lat: 22.210928
     }, {
       name: "Cyprus",
       lng: 33,
@@ -13543,7 +13595,7 @@ var UploadModal = function UploadModal() {
   }, react_1["default"].createElement("option", {
     hidden: true,
     value: "Select Country"
-  }, "Select Country"), countryMap())), react_1["default"].createElement("p", null, "Title:", react_1["default"].createElement("br", null), placeInputBox()), react_1["default"].createElement("p", null, "Location(Select Country, then GeoMap is shown)", react_1["default"].createElement("br", null), "latitude:", mapGeoCode.latitude && mapGeoCode.latitude, react_1["default"].createElement("br", null), "longitude:", mapGeoCode.longitude && mapGeoCode.longitude)), react_1["default"].createElement("div", {
+  }, "Select Country"), countryMap())), react_1["default"].createElement("p", null, "Title:", react_1["default"].createElement("br", null), placeInputBox()), react_1["default"].createElement("p", null, "Location(Select Country, then GeoMap is shown)", react_1["default"].createElement("br", null), "latitude:", mapGeoCode.latitude && Math.round(mapGeoCode.latitude * 100) / 100, react_1["default"].createElement("br", null), "longitude:", mapGeoCode.longitude && Math.round(mapGeoCode.longitude * 100) / 100)), react_1["default"].createElement("div", {
     className: uploadmodal_module_scss_1["default"].uploadModal__upperContainer__right
   }, react_1["default"].createElement(WorldMap_1["default"], {
     lat: mapGeoCode.latitude,
@@ -13557,10 +13609,7 @@ var UploadModal = function UploadModal() {
   }, react_1["default"].createElement("button", {
     type: "button",
     className: "btn btn-primary",
-    // onClick={uploadHandler}
-    onClick: function onClick() {
-      return alert("Sorry!! Pictures can be uploaded only by administorator");
-    }
+    onClick: uploadHandler
   }, "Upload"), react_1["default"].createElement("button", {
     type: "button",
     className: "btn btn-success",
@@ -13811,6 +13860,7 @@ var Detail = function Detail() {
     }, react_1["default"].createElement("p", {
       onClick: DecrementPostIdHandler
     }, "<"), react_1["default"].createElement("img", {
+      className: detail_module_scss_1["default"].upperContainer__selectedPhotoContainer_selectedPhoto,
       src: dummyTravelPosts[selectedPostId].image,
       style: {
         "width": "70%"
@@ -14207,11 +14257,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._15OGne5rNBYc7s--clPNLj {\n  background-color: #232323;\n}\n._1XBJspNu7vmRNHKK4mIUaX {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n._1XBJspNu7vmRNHKK4mIUaX p {\n  font-size: 10vh;\n  margin: 5vh;\n  color: aliceblue;\n}\n._1RdrAKQhuKyw-eHLjD4Ro3 {\n  display: flex;\n  margin: 0 auto;\n  margin-bottom: 5vh;\n  width: 35%;\n}\n._28_LKM-s0HH3RotsD_qQ74 {\n  width: 18%;\n  margin: 1%;\n}\n\n._1x3TcEsUsn8aEp4AKCpTMQ {\n  display: flex;\n  justify-content: space-between;\n  height: 250px;\n  width: 60%;\n  margin: 0 auto;\n}\n._1OrYxRBC30p_ZxBiJYQXil {\n  width: 40%;\n}\n._24MeGF1AiKZk-6Hd2uwTrE {\n  width: 60%;\n  height: 100%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._15OGne5rNBYc7s--clPNLj {\n  background-color: #232323;\n  margin-bottom: 20px;\n}\n._1XBJspNu7vmRNHKK4mIUaX {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding-top: 20px;\n}\n._266OUCOFjI4d0srPN1jMJg {\n  width: 45%;\n  height: auto;\n}\n._1XBJspNu7vmRNHKK4mIUaX p {\n  font-size: 10vh;\n  color: aliceblue;\n}\n._1RdrAKQhuKyw-eHLjD4Ro3 {\n  display: flex;\n  margin: 0 auto;\n  padding-bottom: 20px;\n  width: 35%;\n}\n._28_LKM-s0HH3RotsD_qQ74 {\n  width: 18%;\n  margin: 1%;\n}\n\n._1x3TcEsUsn8aEp4AKCpTMQ {\n  display: flex;\n  justify-content: space-between;\n  height: 250px;\n  width: 60%;\n  margin: 0 auto;\n}\n._1OrYxRBC30p_ZxBiJYQXil {\n  width: 40%;\n}\n._24MeGF1AiKZk-6Hd2uwTrE {\n  width: 60%;\n  height: 100%;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"upperContainer": "_15OGne5rNBYc7s--clPNLj",
 	"upperContainer__selectedPhotoContainer": "_1XBJspNu7vmRNHKK4mIUaX",
+	"upperContainer__selectedPhotoContainer__selectedPhoto": "_266OUCOFjI4d0srPN1jMJg",
 	"upperContainer__bottomImageList": "_1RdrAKQhuKyw-eHLjD4Ro3",
 	"upperContainer__bottomImageList__images": "_28_LKM-s0HH3RotsD_qQ74",
 	"lowerContainer": "_1x3TcEsUsn8aEp4AKCpTMQ",
@@ -14325,7 +14376,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Zqbj2TBQztr_opqtR3Vll {\n  height: 800px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Zqbj2TBQztr_opqtR3Vll {\n  margin-top: 20px;\n  height: 800px;\n}\n@media (max-width: 599px) {\n  .Zqbj2TBQztr_opqtR3Vll {\n    height: 90vh;\n    margin-top: 10px;\n  }\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"map": "Zqbj2TBQztr_opqtR3Vll"
