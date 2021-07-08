@@ -36,9 +36,10 @@ const Main: React.FC<{}> = ()=> {
                 key={index}
                 className={styles.main__imageContainer}
                 to={"/detail"}
-                style={{"backgroundImage":`url(${travelPost.image})`}} 
+                // style={{"backgroundImage":`url(${travelPost.image})`}} 
                 onClick={()=>setSelectedPostId(index)}
-            >
+            >   
+                <img src={travelPost.image}/>
                 <div className={styles.main__imageContainer__title}>
                     <h6>
                         {travelPost.title}
