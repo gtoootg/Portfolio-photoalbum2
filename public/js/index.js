@@ -11778,13 +11778,13 @@ var Main = function Main() {
       key: index,
       className: main_module_scss_1["default"].main__imageContainer,
       to: "/detail",
-      style: {
-        "backgroundImage": "url(" + travelPost.image + ")"
-      },
+      // style={{"backgroundImage":`url(${travelPost.image})`}} 
       onClick: function onClick() {
         return setSelectedPostId(index);
       }
-    }, react_1["default"].createElement("div", {
+    }, react_1["default"].createElement("img", {
+      src: travelPost.image
+    }), react_1["default"].createElement("div", {
       className: main_module_scss_1["default"].main__imageContainer__title
     }, react_1["default"].createElement("h6", null, travelPost.title)));
   });
@@ -14350,7 +14350,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n@media (max-width: 599px) {\n  ._3_RSgvGBn9xtKkPa-PQs2u {\n    flex-direction: column;\n  }\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  background-size: cover;\n  aspect-ratio: 3/2;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 32%;\n  text-decoration: none;\n}\n@media (max-width: 599px) {\n  ._3eW-qiNOof7lMUNmSgKAyZ {\n    width: 60%;\n    margin: 30px auto;\n  }\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 20%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ h6 {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover h6 {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._3_RSgvGBn9xtKkPa-PQs2u {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  transition: 0.8s;\n  background-color: whitesmoke;\n}\n@media (max-width: 599px) {\n  ._3_RSgvGBn9xtKkPa-PQs2u {\n    flex-direction: column;\n  }\n}\n._3eW-qiNOof7lMUNmSgKAyZ {\n  display: flex;\n  justify-content: flex-end;\n  align-items: flex-end;\n  position: relative;\n  opacity: 0.83;\n  margin-top: 5%;\n  transition: 0.5s;\n  width: 32%;\n  height: auto;\n  text-decoration: none;\n  position: relative;\n}\n._3eW-qiNOof7lMUNmSgKAyZ img {\n  width: 100%;\n  height: auto;\n}\n@media (max-width: 599px) {\n  ._3eW-qiNOof7lMUNmSgKAyZ {\n    width: 60%;\n    margin: 30px auto;\n  }\n}\n.Uk5LP43fRumrYU5uOiulQ {\n  position: absolute;\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  height: 30%;\n  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ h6 {\n  margin-top: auto;\n  display: inline-block;\n  color: white;\n  opacity: 0;\n  padding-top: 3%;\n  padding-right: 3%;\n  transition: 0.4s;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover h6 {\n  opacity: 1;\n}\n._3eW-qiNOof7lMUNmSgKAyZ:hover div {\n  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"main": "_3_RSgvGBn9xtKkPa-PQs2u",
