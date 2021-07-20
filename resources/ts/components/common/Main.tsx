@@ -50,11 +50,11 @@ const Main: React.FC<{}> = ()=> {
     })
 
     return (
-        <div className="container">
+        <>
             <main className ={styles.main}  >
                 {Posts}
             </main>            
-        </div>
+        </>
     );
 }
 

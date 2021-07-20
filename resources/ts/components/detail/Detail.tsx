@@ -46,7 +46,7 @@ const Detail:(()=>JSX.Element) = () => {
     function UpperContainer(){
         return(
             <div className={styles.upperContainer}>
-                <div className="container">
+
                     <div className={styles.upperContainer__selectedPhotoContainer}>   
                         <p onClick={DecrementPostIdHandler}>
                             &lt;
@@ -66,14 +66,13 @@ const Detail:(()=>JSX.Element) = () => {
                         {photos}
                     </div>  
                 </div>
-            </div>
+          
         )
     }
 
     function LowerContainer(){
 
         return(
-            <div className="container">
             <div className={styles.lowerContainer}>
                 <div className={styles.lowerContainer__left}>
                     <h4>{dummyTravelPosts[selectedPostId].title}</h4>
@@ -90,7 +89,6 @@ const Detail:(()=>JSX.Element) = () => {
                         elements={dummyTravelPosts}
                     />    
                 </div>
-            </div>
             </div>
         )
     }

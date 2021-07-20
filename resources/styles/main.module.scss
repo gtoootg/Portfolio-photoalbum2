@@ -1,5 +1,6 @@
 .main{
-
+    width:1296px;
+    margin:0 auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -9,6 +10,7 @@
 
     @media (max-width:599px){
         flex-direction: column;
+        width:100%;
     }
 
 
@@ -32,7 +34,7 @@
         }
 
         @media (max-width:599px){
-            width:60%;
+            width:90%;
             margin:30px auto;
         }
 
