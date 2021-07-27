@@ -11626,7 +11626,8 @@ var Head = function Head(props) {
       onClick: onClick,
       style: {
         "opacity": unusedIconOpacity,
-        "pointerEvents": unusedIconSelect
+        "pointerEvents": unusedIconSelect,
+        "color": "black"
       }
     }, react_1["default"].createElement("nav", null, fileName));
   };
@@ -11644,7 +11645,11 @@ var Head = function Head(props) {
     onClick: resetTravelPostsHander
   }, "GoTo Travels")), react_1["default"].createElement("div", {
     className: head_module_scss_1["default"].header__navigation
-  }, react_1["default"].createElement(MenuIcon, {
+  }, react_1["default"].createElement("nav", null, react_1["default"].createElement("a", {
+    href: "https://github.com/gtoootg0131/Portfolio-photoalbum2"
+  }, react_1["default"].createElement("i", {
+    className: "header-logo fab fa-github"
+  }))), react_1["default"].createElement(MenuIcon, {
     name: "Home",
     link: "/",
     fileName: "Home",
@@ -14288,7 +14293,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "._1viuQRh8aoGjbI5h7ZkJy3 {\n  display: flex;\n  justify-content: space-between;\n  height: 80px;\n}\n@media (max-width: 599px) {\n  ._1viuQRh8aoGjbI5h7ZkJy3 {\n    height: 40px;\n  }\n}\n._37qPKLbynC1SLXfrWS1pVB {\n  text-decoration: none;\n}\n._37qPKLbynC1SLXfrWS1pVB p {\n  font-family: \"YuGothic M\";\n  font-size: 35px;\n  padding-top: 10px;\n  color: black;\n}\n@media (max-width: 599px) {\n  ._37qPKLbynC1SLXfrWS1pVB p {\n    font-size: 17px;\n    padding-top: 10px;\n  }\n}\n._37qPKLbynC1SLXfrWS1pVB p:hover {\n  color: black;\n}\n._2eV2s5xClcvhe0vPZEJoqd {\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  height: 100%;\n}\n._2eV2s5xClcvhe0vPZEJoqd nav {\n  font-size: 20px;\n  margin-right: 30px;\n}\n@media (max-width: 599px) {\n  ._2eV2s5xClcvhe0vPZEJoqd nav {\n    font-size: 13px;\n    margin-right: 10px;\n  }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "._1viuQRh8aoGjbI5h7ZkJy3 {\n  display: flex;\n  justify-content: space-between;\n  height: 80px;\n}\n@media (max-width: 599px) {\n  ._1viuQRh8aoGjbI5h7ZkJy3 {\n    height: 40px;\n  }\n}\n._37qPKLbynC1SLXfrWS1pVB {\n  text-decoration: none;\n}\n._37qPKLbynC1SLXfrWS1pVB p {\n  font-family: \"YuGothic M\";\n  font-size: 35px;\n  padding-top: 10px;\n  color: black;\n}\n@media (max-width: 599px) {\n  ._37qPKLbynC1SLXfrWS1pVB p {\n    font-size: 17px;\n    padding-top: 10px;\n  }\n}\n._37qPKLbynC1SLXfrWS1pVB p:hover {\n  color: black;\n}\n._2eV2s5xClcvhe0vPZEJoqd {\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  height: 100%;\n}\n._2eV2s5xClcvhe0vPZEJoqd nav {\n  font-size: 20px;\n  margin-right: 30px;\n}\n._2eV2s5xClcvhe0vPZEJoqd nav i {\n  color: black;\n  font-size: 30px;\n}\n@media (max-width: 599px) {\n  ._2eV2s5xClcvhe0vPZEJoqd nav {\n    font-size: 13px;\n    margin-right: 5px;\n  }\n  ._2eV2s5xClcvhe0vPZEJoqd nav i {\n    font-size: 20px;\n  }\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"header": "_1viuQRh8aoGjbI5h7ZkJy3",
