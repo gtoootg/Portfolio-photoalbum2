@@ -68,7 +68,8 @@ const Head: React.FC<HeadProps> = (props)=> {
                 onClick = {onClick}
                 style={{
                     "opacity":unusedIconOpacity,
-                    "pointerEvents":unusedIconSelect
+                    "pointerEvents":unusedIconSelect,
+                    "color":"black"
                 }}
             >
                 {/* <img className={styles.header__menu__menuIcon__image} src={path()} /> */}
@@ -95,6 +96,11 @@ const Head: React.FC<HeadProps> = (props)=> {
                     </p>
                 </Link>
                 <div className={styles.header__navigation}>
+                    <nav>
+                        <a href="https://github.com/gtoootg0131/Portfolio-photoalbum2">
+                            <i  className="header-logo fab fa-github"/>
+                        </a>
+                    </nav>
                     <MenuIcon name={"Home"} link={"/"} fileName={"Home"} onClick={resetTravelPostsHander}/>   
                     <MenuIcon name={"Upload"} fileName={"Upload"} unusedIconOpacity={unusedIconOpacity}  unusedIconSelect={unusedIconSelect} onClick={setUploadModalStateHandler}/>
                     <MenuIcon name={"Sort"} fileName={"Sort"} unusedIconOpacity={unusedIconOpacity} unusedIconSelect={unusedIconSelect} onClick={setSortModalStateHandler}/>    
