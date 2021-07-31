@@ -1,4 +1,26 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+This is my portfolio of web application which introduces my favourite places which I have visited.
+
+For this portfolio, the following coding languages are used
+
+(React/Type script)
+    -JSX file to create the layout of web page as SPA application
+    -Control of global/local state with useState, useContext for the following contents
+       ・uploaddata
+       ・data of my post fetched from Backend data base
+       ・Sorting of my post according to selected region, countries
+    -Animation of webpage
+    -Strict typing using TypeScript
+
+(css module)
+    -layout design of webpage using css module
+    
+(Laravel)
+    -Framework of laravel is used to utilize the api connection to transfer data between Front-end and Back-end(mysql)
+
+(MySql)
+    -Clear DB is used to store the data of my post.
+
+<!-- <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -60,3 +82,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+ -->
