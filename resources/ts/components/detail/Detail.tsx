@@ -1,6 +1,7 @@
 import React, {useState, useContext}from 'react';
 import axios from 'axios';
 import Head from '../common/Head';
+import Footer from '../common/Footer'
 
 import {TravelPostsContext, DummyTravelPostsContext, SelectedPostIdContext} from '../../index';
 import WorldMap from "../common/WorldMap";
@@ -121,6 +122,7 @@ const Detail:(()=>JSX.Element) = () => {
             <Head unusedIconOpacity={"0.5"} unusedIconSelect={"none"}/>
             <UpperContainer/>
             <LowerContainer/>
+            <Footer/>
         </>
     );
 }

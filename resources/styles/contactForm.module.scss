@@ -1,0 +1,31 @@
+.contactForm{
+    width:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    h{
+        border-bottom:solid 0.5px gray;
+        font-size:25px;
+    }
+
+    input{
+        border:solid gray 0.5px;
+        border-radius: 5px;
+    }
+
+    textarea{
+        border:solid gray 0.5px;
+        border-radius: 5px;
+        height:100px;
+    }
+
+    &__buttonContainer{
+        display:flex;
+        justify-content: flex-end;
+        button{
+            width:100px;
+            margin-top:20px;
+        }
+    }
+}
