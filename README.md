@@ -2,23 +2,23 @@ This is my portfolio of web application which introduces my favourite places whi
 
 For this portfolio, the following coding languages are used
 
-(React/Type script)
-    -JSX file to create the layout of web page as SPA application
-    -Control of global/local state with useState, useContext for the following contents
-       ・uploaddata
-       ・data of my post fetched from Backend data base
-       ・Sorting of my post according to selected region, countries
-    -Animation of webpage
-    -Strict typing using TypeScript
+(React/Type script) <br/>
+    -JSX file to create the layout of web page as SPA application<br/>
+    -Control of global/local state with useState, useContext for the following contents<br/>
+       ・uploaddata<br/>
+       ・data of my post fetched from Backend data base<br/>
+       ・Sorting of my post according to selected region, countries<br/>
+    -Animation of webpage<br/>
+    -Strict typing using TypeScript<br/>
 
-(css module)
-    -layout design of webpage using css module
+(css module)<br/>
+    -layout design of webpage using css module<br/>
     
-(Laravel)
-    -Framework of laravel is used to utilize the api connection to transfer data between Front-end and Back-end(mysql)
+(Laravel)<br/>
+    -Framework of laravel is used to utilize the api connection to transfer data between Front-end and Back-end(mysql)<br/>
 
-(MySql)
-    -Clear DB is used to store the data of my post.
+(MySql)<br/>
+    -Clear DB is used to store the data of my post.<br/>
 
 <!-- <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
