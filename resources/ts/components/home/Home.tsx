@@ -6,8 +6,8 @@ import axios from 'axios';
 import Head from '../common/Head';
 import UploadModal from '../common/UploadModal';
 import SortModal from '../common/SortModal';
-// import MapModal from '../common/MapModal';
 import Main from '../common/Main';
+import Footer from '../common/Footer';
 
 import styles from '../../../styles/home.module.scss';
 
@@ -34,6 +34,7 @@ const Home = ()=> {
                     {/* <MapModal/> */}
                     <Head unusedIconOpacity={"1"} unusedIconSelect={""}/>
                     <Main/>
+                    <Footer/>
             {/* </MapModalStateContext.Provider> */}
             </sortModalStateContext.Provider>
             </uploadModalStateContext.Provider>              
