@@ -313,8 +313,8 @@ const UploadModal: React.FC<{}> = ()=> {
             <button 
                 type="button" 
                 className="btn btn-primary" 
-                // onClick={uploadHandler}
-                onClick={()=>alert("Sorry!! Pictures can be uploaded only by administorator")}
+                onClick={uploadHandler}
+                // onClick={()=>alert("Sorry!! Pictures can be uploaded only by administorator")}
             >Upload
             </button>
             <button type="button" className="btn btn-success" onClick={cancelHandler}>Cancel</button>
