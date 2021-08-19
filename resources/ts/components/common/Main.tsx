@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from '../../../styles/main.module.scss';
 import {TravelPostsContext,TravelPostObject, DummyTravelPostsContext, SelectedPostIdContext, uploadModalStateContext } from '../../index';
 
+
 const Main: React.FC<{}> = ()=> {
     
     const {travelPosts, setTravelPosts} = useContext(TravelPostsContext)!;
