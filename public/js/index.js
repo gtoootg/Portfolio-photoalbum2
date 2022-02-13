@@ -12746,7 +12746,7 @@ function FooterLeft() {
 function FooterRight() {
   return react_1["default"].createElement("div", {
     className: footer_module_scss_1["default"].footer__right
-  }, react_1["default"].createElement("h2", null, "Michihiro Goto"), react_1["default"].createElement("h5", null, "Master of Science in Mechanical Engineering"), react_1["default"].createElement("h4", null, "Application and Design Engineer"), react_1["default"].createElement("h4", null, "KOYO Deutschland GmbH"), react_1["default"].createElement("h4", null, "email: michihirogoto@yahoo.com"), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("h2", null, "Michihiro Goto"), react_1["default"].createElement("h5", null, "Master of Science in Mechanical Engineering"), react_1["default"].createElement("h4", null, "Junior Frontend Developer"), react_1["default"].createElement("h4", null, "msg systems AG"), react_1["default"].createElement("h4", null, "email: michihirogoto@yahoo.com"), react_1["default"].createElement("div", {
     className: footer_module_scss_1["default"].footer__right__iconContainer
   }, react_1["default"].createElement("a", {
     href: "https://github.com/gtoootg0131/Portfolio-Toppage2"

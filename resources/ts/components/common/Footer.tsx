@@ -17,8 +17,8 @@ function FooterRight(){
         <div className={styles.footer__right}>
             <h2>Michihiro Goto</h2>
             <h5>Master of Science in Mechanical Engineering</h5>
-            <h4>Application and Design Engineer</h4>
-            <h4>KOYO Deutschland GmbH</h4>
+            <h4>Junior Frontend Developer</h4>
+            <h4>msg systems AG</h4>
             <h4>email: michihirogoto@yahoo.com</h4>
             <div className={styles.footer__right__iconContainer}>
                 <a
@@ -35,7 +35,7 @@ function FooterRight(){
                     href="https://www.linkedin.com/in/%E5%80%AB%E5%AE%8F-%E5%BE%8C%E8%97%A4-37b905218/"
                 >
                     <i className="header-logo fab fa-linkedin"></i>
-                </a>            
+                </a>
             </div>
         </div>
     )
