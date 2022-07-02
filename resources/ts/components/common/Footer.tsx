@@ -1,19 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import ContactForm from './ContactForm';
+import ContactForm from "./ContactForm";
 
-import styles from '../../../styles/footer.module.scss';
+import styles from "../../../styles/footer.module.scss";
 
-function FooterLeft(){
-    return(
+function FooterLeft() {
+    return (
         <div className={styles.footer__left}>
-            <ContactForm/>
+            <ContactForm />
         </div>
-    )
+    );
 }
 
-function FooterRight(){
-    return(
+function FooterRight() {
+    return (
         <div className={styles.footer__right}>
             <h2>Michihiro Goto</h2>
             <h5>Master of Science in Mechanical Engineering</h5>
@@ -21,32 +21,26 @@ function FooterRight(){
             <h4>msg systems AG</h4>
             <h4>email: michihirogoto@yahoo.com</h4>
             <div className={styles.footer__right__iconContainer}>
-                <a
-                    href="https://github.com/gtoootg0131/Portfolio-Toppage2"
-                >
-                    <i  className="header-logo fab fa-github"/>
+                <a href="https://github.com/gtoootg0131/Portfolio-Toppage2">
+                    <i className="header-logo fab fa-github" />
                 </a>
-                <a
-                    href="https://www.instagram.com/gt.europa/"
-                >
-                    <i  className="header-logo fab fa-instagram"/>
+                <a>
+                    <i className="header-logo fab fa-instagram" />
                 </a>
-                <a
-                    href="https://www.linkedin.com/in/%E5%80%AB%E5%AE%8F-%E5%BE%8C%E8%97%A4-37b905218/"
-                >
+                <a href="https://www.linkedin.com/in/%E5%80%AB%E5%AE%8F-%E5%BE%8C%E8%97%A4-37b905218/">
                     <i className="header-logo fab fa-linkedin"></i>
                 </a>
             </div>
         </div>
-    )
+    );
 }
 
-function Footer(){
+function Footer() {
     return (
-          <div className={styles.footer}>
-            <FooterLeft/>
-            <FooterRight/>
-          </div>
+        <div className={styles.footer}>
+            <FooterLeft />
+            <FooterRight />
+        </div>
     );
 }
 
